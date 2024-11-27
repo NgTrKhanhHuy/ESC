@@ -1,5 +1,6 @@
 package dao;
 
+import database.DBConnection;
 import model.User;
 
 import java.sql.Connection;
@@ -9,46 +10,54 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 public class UserDao {
-    private final Connection connection;
 
-    public UserDao(Connection connection) {
-        this.connection = connection;
-    }
+//    public UserDao(Connection connection) {
+//        this.connection = connection;
+//    }
+    // Phương thức kiểm tra người dùng đã tồn tại chưa dựa trên username hoặc email
+    public boolean checkUserExists(String username, String email) {
+        boolean exists = false;
+        String sql = "SELECT COUNT(*) FROM `user` WHERE username = ? OR email = ?";
 
-    public boolean register(User user) {
-        String sql = "INSERT INTO User (username, email, password, role) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, user.getUsername());
-            stmt.setString(2, user.getEmail());
-            stmt.setString(3, user.getPassword());
-            stmt.setString(4, user.getRole());
-            return stmt.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-    public Optional<User> login(String username, String password) {
-        String sql = "SELECT * FROM User WHERE username = ? AND password = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, username);
-            stmt.setString(2, password);
-            ResultSet rs = stmt.executeQuery();
+            ps.setString(1, username);
+            ps.setString(2, email);
+            ResultSet rs = ps.executeQuery();
+
             if (rs.next()) {
-                return Optional.of(new User(
-                        rs.getString("username"),
-                        rs.getString("email"),
-                        rs.getString("password"),
-                        rs.getString("role")
-                ));
+                exists = rs.getInt(1) > 0;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return Optional.empty();
-
+        return exists;
     }
+    // Phương thức lưu thông tin người dùng vào cơ sở dữ liệu
+    public boolean saveUser(User user) {
+        boolean isSaved = false;
+        String sql = "INSERT INTO `user` (username, password, email, phone, role) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, user.getEmail());
+            ps.setString(4, user.getPhone());
+            ps.setString(5, user.getRole().toString());
+
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                isSaved = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return isSaved;
+    }
+
 }
 //    public void addProduct(Product product) {
 //        String query = "INSERT INTO products (name, description, price, image) VALUES (?, ?, ?, ?)";

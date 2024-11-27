@@ -1,3 +1,13 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Khanh Huy Studios
+  Date: 27/11/2024
+  Time: 10:56 CH
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -149,7 +159,12 @@
             <div class="col-md-6">
                 <div class="card shadow-lg p-4">
                     <h2 class="text-center mb-4">Register</h2>
-                    <form id="registerForm">
+
+                    <!-- Hiển thị thông báo lỗi nếu có -->
+                    <c:if test="${not empty error}">
+                        <p style="color: red;">${error}</p>
+                    </c:if>
+                    <form id="registerForm" action="register" method="POST">
                         <div class="mb-3">
                             <label for="registerName" class="form-label">Username</label>
                             <input type="text" class="form-control" id="registerName" name="username" required>
@@ -213,7 +228,7 @@
 
 
     form.addEventListener('submit', function(event) {
-       // event.preventDefault();
+        // event.preventDefault();
 
         if (passwordInput.value !== confirmPasswordInput.value) {
             errorMessage.style.display = 'block';
@@ -231,3 +246,4 @@
 </body>
 
 </html>
+

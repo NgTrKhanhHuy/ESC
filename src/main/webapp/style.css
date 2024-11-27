@@ -50,7 +50,6 @@ footer p, footer a {
 footer a:hover {
     color: #fff;
 }
-
 /* Hiệu ứng di chuột lên sản phẩm */
 .card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -60,7 +59,6 @@ footer a:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
-
 /* Sidebar Styles */
 .sidebar {
     position: fixed;
@@ -96,7 +94,7 @@ footer a:hover {
 }
 
 .navbar-nav .nav-item:hover .nav-link {
-    color: #007bff;
+    color: #ff2600;
     text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -112,7 +110,7 @@ footer a:hover {
 }
 
 .dropdown-item:hover {
-    background-color: #007bff;
+    background-color: #ff2600;
     color: #fff;
 }
 
@@ -139,22 +137,31 @@ footer a:hover {
     padding: 10px;
 }
 
-.card .btn-primary {
-    background-color: #007bff;
+/* .card .btn-primary {
+    background-color: #ff2600;
+    border: none;
+    padding: 10px;
+    transition: background-color 0.3s ease;
+} */
+.btn-primary {
+    background-color: rgb(34, 34, 32);
+    color:#eed7d7 ;
     border: none;
     padding: 10px;
     transition: background-color 0.3s ease;
 }
 
-.card .btn-primary:hover {
-    background-color: #0056b3;
+/* .card .btn-primary:hover {
+    background-color: #ff2600;
+} */
+.btn-primary:hover {
+    background-color: #ff2600;
 }
 
 .card p {
     text-align: center;
     margin-top: 10px;
 }
-
 .btn i {
     margin-right: 8px;
     transition: transform 0.3s;
@@ -170,14 +177,13 @@ footer a:hover {
 }
 
 .nav-link:hover i {
-    color: #007bff;
+    color: #ff2600;
     transform: scale(1.1);
 }
 
 .dropdown-item i {
     margin-right: 5px;
 }
-
 /* General header and navbar styles */
 header {
     background-color: #f8f9fa;
@@ -192,7 +198,7 @@ header {
 
 .navbar-brand i {
     margin-right: 8px;
-    color: #007bff;
+    color: #ff2600;
 }
 
 /* Navbar items */
@@ -209,7 +215,7 @@ header {
 }
 
 .navbar-nav .nav-link:hover {
-    color: #007bff;
+    color: #ff2600;
     transform: scale(1.1);
 }
 
@@ -231,6 +237,7 @@ header {
 
 .dropdown-item:hover {
     background-color: #f1f1f1;
+    color: #ff2600;
 }
 
 /* Cart icon */
@@ -246,7 +253,7 @@ header {
 }
 
 .dropdown-item:hover i {
-    color: #007bff;
+    color: #ff2600;
     transform: scale(1.1);
 }
 
@@ -257,7 +264,6 @@ header {
         text-align: center;
     }
 }
-
 /* Search bar styling */
 .search-bar {
     max-width: 400px;
@@ -277,7 +283,7 @@ header {
 
 /* Add hover effect to the search button */
 .search-bar .btn:hover i {
-    color: #007bff;
+    color: #ebd7d3;
     transform: scale(1.1);
     transition: color 0.3s, transform 0.3s;
 }
@@ -333,7 +339,7 @@ header {
 }
 
 .dropdown-item:hover i {
-    color: #007bff;
+    color: #ff2600;
     transform: scale(1.1);
 }
 
@@ -348,8 +354,8 @@ header {
 /* Login & Register Pages Styles */
 .login-page, .register-page {
     background-color: #f0f2f5;
-    height: 100vh;
-    display: flex;
+    height: 90vh;
+    display: inline;
     align-items: center;
     justify-content: center;
 }
