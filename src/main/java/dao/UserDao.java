@@ -50,3 +50,14 @@ public class UserDao {
 
     }
 }
+//    public void addProduct(Product product) {
+//        String query = "INSERT INTO products (name, description, price, image) VALUES (?, ?, ?, ?)";
+//        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+//            stmt.setString(1, product.getName());
+//            stmt.setString(2, product.getDescription());
+//            stmt.setDouble(3, product.getPrice());
+//            stmt.setString(4, product.getImagePath());
+//            stmt.executeUpdate();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }

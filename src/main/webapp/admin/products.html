@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý Sản phẩm</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+  <h2>Quản lý Sản phẩm</h2>
+
+  <!-- Tìm kiếm -->
+  <div class="mb-3">
+    <input type="text" id="search" class="form-control" placeholder="Tìm kiếm sản phẩm...">
+  </div>
+
+  <!-- Bảng sản phẩm -->
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Tên sản phẩm</th>
+      <th>Giá</th>
+      <th>Hành động</th>
+    </tr>
+    </thead>
+    <tbody id="product-table">
+    <tr>
+      <td>1</td>
+      <td>Sản phẩm 1</td>
+      <td>100,000 VNĐ</td>
+      <td>
+        <button class="btn btn-warning" onclick="editProduct(1, 'Sản phẩm 1', 100000)">Sửa</button>
+      </td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Sản phẩm 2</td>
+      <td>200,000 VNĐ</td>
+      <td>
+        <button class="btn btn-warning" onclick="editProduct(2, 'Sản phẩm 2', 200000)">Sửa</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Phân trang -->
+  <nav>
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="#">Trang trước</a></li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">Trang sau</a></li>
+    </ul>
+  </nav>
+
+  <!-- Nút Thêm -->
+  <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addProductModal">Thêm sản phẩm</button>
+</div>
+
+<!-- Modal Thêm Sản Phẩm -->
+<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addProductModalLabel">Thêm Sản Phẩm</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addProductForm">
+          <div class="mb-3">
+            <label for="productName" class="form-label">Tên sản phẩm</label>
+            <input type="text" class="form-control" id="productName" required>
+          </div>
+          <div class="mb-3">
+            <label for="productPrice" class="form-label">Giá</label>
+            <input type="number" class="form-control" id="productPrice" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-primary" onclick="saveProduct()">Lưu</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Sửa Sản Phẩm -->
+<div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editProductModalLabel">Sửa Sản Phẩm</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editProductForm">
+          <div class="mb-3">
+            <label for="editProductName" class="form-label">Tên sản phẩm</label>
+            <input type="text" class="form-control" id="editProductName" required>
+          </div>
+          <div class="mb-3">
+            <label for="editProductPrice" class="form-label">Giá</label>
+            <input type="number" class="form-control" id="editProductPrice" required>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-primary" onclick="updateProduct()">Cập nhật</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Hàm mở modal Sửa và điền dữ liệu sản phẩm vào modal
+  function editProduct(id, name, price) {
+    document.getElementById('editProductModalLabel').innerText = 'Sửa Sản Phẩm';
+    document.getElementById('editProductName').value = name;
+    document.getElementById('editProductPrice').value = price;
+    const modal = new bootstrap.Modal(document.getElementById('editProductModal'));
+    modal.show();
+  }
+
+  // Hàm lưu sản phẩm mới (thêm sản phẩm)
+  function saveProduct() {
+    const name = document.getElementById('productName').value;
+    const price = document.getElementById('productPrice').value;
+    console.log('Thêm sản phẩm:', name, price);
+    // Logic lưu vào database hoặc xử lý thêm sản phẩm ở đây
+    const modal = bootstrap.Modal.getInstance(document.getElementById('addProductModal'));
+    modal.hide();
+  }
+
+  // Hàm cập nhật sản phẩm (sửa sản phẩm)
+  function updateProduct() {
+    const name = document.getElementById('editProductName').value;
+    const price = document.getElementById('editProductPrice').value;
+    console.log('Cập nhật sản phẩm:', name, price);
+    // Logic cập nhật sản phẩm ở đây
+    const modal = bootstrap.Modal.getInstance(document.getElementById('editProductModal'));
+    modal.hide();
+  }
+
+  // Tính năng tìm kiếm sản phẩm
+  document.getElementById('search').addEventListener('input', function(event) {
+    const searchText = event.target.value.toLowerCase();
+    const rows = document.querySelectorAll('#product-table tr');
+    rows.forEach(row => {
+      const name = row.cells[1].textContent.toLowerCase();
+      if (name.includes(searchText)) {
+        row.style.display = '';
+      } else {
+        row.style.display = 'none';
+      }
+    });
+  });
+</script>
+</body>
+</html>

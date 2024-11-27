@@ -18,36 +18,35 @@ public class AuthenticationFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
 
-        HttpServletRequest request = (HttpServletRequest) req;
-        HttpServletResponse response = (HttpServletResponse) res;
-        HttpSession session = request.getSession(false);
-        String uri = request.getRequestURI();
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
+        HttpSession session = httpRequest.getSession(false);  // Lấy session, nếu có
+        String path = httpRequest.getRequestURI();  // Lấy đường dẫn của request
 
-//        User user = (User) session.getAttribute("user");
-//        if (user != null) {
-//            if (uri.contains("/admin/") && !user.getRole().equals("ADMIN")) {
-//                response.sendRedirect("accessDenied.jsp");
-//                return;
-//            }
-//        }
-        if (session != null) {
-            // Giả sử thông tin role được lưu trong session
-            String userRole = (String) session.getAttribute("role");  // Lấy role từ session (hoặc nơi bạn lưu trữ)
-
-            // Kiểm tra role của người dùng
-            if (userRole != null && userRole.equals("ADMIN")) {
-                // Nếu người dùng có role ADMIN, cho phép tiếp tục truy cập tài nguyên
-                chain.doFilter(request, response);
-            } else {
-                // Nếu không có quyền truy cập, chuyển hướng đến trang lỗi hoặc trang đăng nhập
-                response.sendRedirect(request.getContextPath() + "/access-denied");
+        // Kiểm tra các đường dẫn không cho phép nếu không có session
+        if (session == null) {
+            // Nếu là trang yêu cầu đăng nhập mà không có session, lưu lại đường dẫn và chuyển đến trang login
+            if (path.contains("/admin/") || path.contains("/cart") || path.contains("/checkout") || path.contains("/order")) {
+                httpRequest.getSession().setAttribute("redirectAfterLogin", path);  // Lưu lại đường dẫn
+                httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
+                return;  // Dừng chuỗi xử lý, chuyển hướng về login
             }
         } else {
-            // Nếu không có session, chuyển hướng về trang đăng nhập
-            chain.doFilter(request, response);
+            // Nếu có session, kiểm tra quyền truy cập
+            String role = (String) session.getAttribute("role");  // Giả sử role lưu trong session
+
+            if (role == null || (!role.equals("admin") && path.contains("/admin/"))) {
+                // Nếu không phải admin và cố gắng truy cập /admin, chuyển hướng đến trang lỗi hoặc trang khác
+                httpResponse.sendRedirect(httpRequest.getContextPath() + "/error.jsp");
+                return;
+            }
         }
+
+        // Tiếp tục chuỗi lọc nếu không có vấn đề
+        chain.doFilter(request, response);
     }
 
     @Override
