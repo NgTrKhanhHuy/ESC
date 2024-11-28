@@ -48,7 +48,7 @@ public class RegisterControl extends HttpServlet {
             // Lưu người dùng mới
             User user = new User(username, hashedPassword, email, phone, role);
             if (userDao.saveUser(user)) {
-                response.sendRedirect("login.html");
+                response.sendRedirect(request.getContextPath() + "/login");
             } else {
                 String registerMess = messages.getString("register.error");
                 request.setAttribute("error", registerMess);

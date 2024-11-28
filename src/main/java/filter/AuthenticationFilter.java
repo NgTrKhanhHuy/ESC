@@ -1,5 +1,6 @@
 package filter;
 
+import model.Role;
 import model.User;
 
 import javax.servlet.*;
@@ -23,31 +24,66 @@ public class AuthenticationFilter implements Filter {
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
-        HttpSession session = httpRequest.getSession(false);  // Lấy session, nếu có
-        String path = httpRequest.getRequestURI();  // Lấy đường dẫn của request
+        HttpSession session = httpRequest.getSession(false);
 
-        // Kiểm tra các đường dẫn không cho phép nếu không có session
-        if (session == null) {
-            // Nếu là trang yêu cầu đăng nhập mà không có session, lưu lại đường dẫn và chuyển đến trang login
-            if (path.contains("/admin/") || path.contains("/cart") || path.contains("/checkout") || path.contains("/order")) {
-                httpRequest.getSession().setAttribute("redirectAfterLogin", path);  // Lưu lại đường dẫn
-                httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
-                return;  // Dừng chuỗi xử lý, chuyển hướng về login
-            }
-        } else {
-            // Nếu có session, kiểm tra quyền truy cập
-            String role = (String) session.getAttribute("role");  // Giả sử role lưu trong session
+        // Lấy URL yêu cầu
+        String requestURI = httpRequest.getRequestURI();
 
-            if (role == null || (!role.equals("admin") && path.contains("/admin/"))) {
-                // Nếu không phải admin và cố gắng truy cập /admin, chuyển hướng đến trang lỗi hoặc trang khác
-                httpResponse.sendRedirect(httpRequest.getContextPath() + "/error.jsp");
-                return;
+
+        // Kiểm tra nếu người dùng đã đăng nhập nhưng lại truy cập trang login hoặc register
+        if (session != null && session.getAttribute("user") != null) {
+         //   session.setAttribute("redirectUrl", requestURI);
+            // Nếu người dùng đã đăng nhập và đang cố truy cập /login hoặc /register
+            if (requestURI.contains("/login") || requestURI.contains("/register")) {
+                // Chuyển hướng về trang home, mã hóa session vào URL
+                httpResponse.sendRedirect(httpRequest.getContextPath() + "/home");
+                return; // Dừng việc xử lý và không cho phép tiếp tục vào các trang này
             }
         }
 
-        // Tiếp tục chuỗi lọc nếu không có vấn đề
+        // Nếu người dùng chưa đăng nhập và yêu cầu truy cập các trang bảo vệ
+        if (isProtectedPage(requestURI)) {
+            if (session == null || session.getAttribute("user") == null) {
+                // Nếu không có session, chuyển hướng người dùng về trang login
+                // Sử dụng encodeURL để đảm bảo session ID được mã hóa vào URL
+                String loginURL = httpRequest.getContextPath() + "/login";
+                httpResponse.sendRedirect(httpResponse.encodeRedirectURL(loginURL));
+                return; // Ngừng xử lý và trả về
+            }
+
+            // Nếu có session, lấy role người dùng từ session
+            User user = (User) session.getAttribute("user");
+            Role role = user.getRole();
+          //  String role = (String) session.getAttribute("role");  // Lấy role từ session
+           // session.setAttribute("redirectUrl", requestURI);
+
+            // Kiểm tra quyền truy cập dựa trên role
+            if (requestURI.contains("/admin/") && (role == null || !role.equals(Role.ADMIN))) {
+                // Nếu yêu cầu trang admin nhưng người dùng không phải ADMIN
+                String accessDeniedURL = httpRequest.getContextPath() + "/home";
+                httpResponse.sendRedirect(httpResponse.encodeRedirectURL(accessDeniedURL));
+                return; // Ngừng xử lý và trả về
+            } else if (!requestURI.contains("/admin/") && role != null && role.equals(Role.ADMIN)) {
+                // Tránh trường hợp ADMIN truy cập các trang của CUSTOMER mà không muốn
+                if (!requestURI.contains("/admin/")) {
+                    // Trường hợp không phải ADMIN mà truy cập vào các trang chỉ dành cho ADMIN
+                    String accessDeniedURL = httpRequest.getContextPath() + "/home";
+                    httpResponse.sendRedirect(httpResponse.encodeRedirectURL(accessDeniedURL));
+                    return;
+                }
+            }
+        }
+
+        // Tiếp tục xử lý chuỗi filter (đi qua các filter tiếp theo)
         chain.doFilter(request, response);
     }
+
+    // Kiểm tra xem URL có thuộc các trang cần bảo vệ không
+    private boolean isProtectedPage(String requestURI) {
+        return requestURI.contains("/cart") || requestURI.contains("/checkout")
+                || requestURI.contains("/orders") || requestURI.contains("/admin/");
+    }
+
 
     @Override
     public void destroy() {

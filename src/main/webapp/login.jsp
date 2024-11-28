@@ -1,3 +1,12 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Khanh Huy Studios
+  Date: 28/11/2024
+  Time: 12:00 SA
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -68,7 +77,10 @@
             <div class="col-md-6">
                 <div class="card shadow-lg p-4">
                     <h2 class="text-center mb-4">Login</h2>
-                    <form>
+                    <c:if test="${not empty error}">
+                        <p style="color: red;">${error}</p>
+                    </c:if>
+                    <form action="login" method="POST">
                         <div class="mb-3">
                             <label for="loginUsername" class="form-label">User name</label>
                             <input type="text" class="form-control" id="loginUsername" name="username" required>
@@ -111,3 +123,4 @@
 </body>
 
 </html>
+
