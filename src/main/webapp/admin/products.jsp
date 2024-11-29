@@ -47,7 +47,6 @@
     </li>
 
     <!-- Bảng sản phẩm -->
-    <!-- Bảng sản phẩm -->
     <table class="table table-bordered">
         <thead>
         <tr>
@@ -76,7 +75,10 @@
                 <td>${product.createdAt}</td>
                 <td>${product.discountPercentage}</td>
                 <td>
-                    <button class="btn btn-warning" onclick="editProduct(${product.productId}, '${product.name}', ${product.price})">Sửa</button>
+                    <button class="btn btn-warning" onclick="editProduct(${product.productId}, '${product.name}', ${product.price} ,
+                            '${product.description}', '${product.category}', ${product.discountPercentage},
+                            ${product.stock}, '${product.imagePath}' )">Sửa</button>
+<%--                <a href="updateProduct?productId=${product.productId}" class="btn btn-warning">Sửa</a>--%>
                 </td>
             </tr>
         </c:forEach>
@@ -208,15 +210,46 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editProductForm">
+                <form id="editProductForm" enctype="multipart/form-data">
+                    <input type="hidden" id="editProductId" name="productId" > <!-- Ẩn id sản phẩm để gửi lên server -->
+
                     <div class="mb-3">
                         <label for="editProductName" class="form-label">Tên sản phẩm</label>
-                        <input type="text" class="form-control" id="editProductName" required>
+                        <input type="text" class="form-control" id="editProductName" name="name">
+
                     </div>
+
                     <div class="mb-3">
                         <label for="editProductPrice" class="form-label">Giá</label>
-                        <input type="number" class="form-control" id="editProductPrice" required>
+                        <input type="number" class="form-control" id="editProductPrice" name="price">
                     </div>
+
+                    <div class="mb-3">
+                        <label for="editProductDescription" class="form-label">Mô tả</label>
+                        <textarea class="form-control" id="editProductDescription" name="description"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editProductCategory" class="form-label">Danh mục</label>
+                        <input type="text" class="form-control" id="editProductCategory" name="category">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editProductImage" class="form-label">Ảnh sản phẩm (để trống nếu không thay đổi)</label>
+                        <input type="file" class="form-control" id="editProductImage" name="image">
+                            <input type="hidden" id="editOldProductImage" name="oldImg ">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editDiscountPercentage" class="form-label">Giảm giá (%)</label>
+                        <input type="number" class="form-control" id="editDiscountPercentage" name="discountPercentage" step="0.01">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="editProductStock" class="form-label">Số lượng</label>
+                        <input type="number" class="form-control" id="editProductStock" name="stock">
+                    </div>
+
                 </form>
             </div>
             <div class="modal-footer">
@@ -227,18 +260,10 @@
     </div>
 </div>
 
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Hàm mở modal Sửa và điền dữ liệu sản phẩm vào modal
-    function editProduct(id, name, price) {
-        document.getElementById('editProductModalLabel').innerText = 'Sửa Sản Phẩm';
-        document.getElementById('editProductName').value = name;
-        document.getElementById('editProductPrice').value = price;
-        const modal = new bootstrap.Modal(document.getElementById('editProductModal'));
-        modal.show();
-    }
-
-  //  Hàm lưu sản phẩm mới (thêm sản phẩm)
+    //  Hàm lưu sản phẩm mới (thêm sản phẩm)
     function saveProduct() {
         const form = document.getElementById('addProductForm');
         const formData = new FormData(form);
@@ -261,16 +286,74 @@
             });
     }
 
+   // Hàm mở modal sửa sản phẩm
+    function editProduct(productId , name, price, description, category, discountPercentage, stock, imagePath) {
+        // Điền thông tin sản phẩm vào form
+        document.getElementById('editProductId').value = productId;
+        document.getElementById('editProductName').value = name;
+        document.getElementById('editProductPrice').value = price;
+        document.getElementById('editProductDescription').value = description;
+        document.getElementById('editProductCategory').value = category;
+        document.getElementById('editDiscountPercentage').value = discountPercentage;
+        document.getElementById('editProductStock').value = stock;
+        document.getElementById('editOldProductImage').value = imagePath;
 
-    // Hàm cập nhật sản phẩm (sửa sản phẩm)
-    function updateProduct() {
-        const name = document.getElementById('editProductName').value;
-        const price = document.getElementById('editProductPrice').value;
-        console.log('Cập nhật sản phẩm:', name, price);
-        // Logic cập nhật sản phẩm ở đây
-        const modal = bootstrap.Modal.getInstance(document.getElementById('editProductModal'));
-        modal.hide();
+        // Nếu có ảnh sản phẩm, ta có thể hiển thị ảnh này cho người dùng
+        // Nếu bạn muốn hiển thị ảnh, cần phải cập nhật phần này
+
+        const modal = new bootstrap.Modal(document.getElementById('editProductModal'));
+        modal.show();
     }
+
+    // Hàm cập nhật sản phẩm
+    function updateProduct() {
+        const form = document.getElementById('editProductForm');
+        const formData = new FormData(form);
+
+        // Lấy id của sản phẩm cần cập nhật
+        const productId = document.getElementById('editProductId').value;
+
+        // Thêm id vào formData để server biết cần cập nhật sản phẩm nào
+        formData.append('productId', productId);
+
+        // Gửi dữ liệu form qua AJAX
+        fetch('updateProduct', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.text())
+            .then(responseText => {
+                alert(responseText); // Hiển thị thông báo từ server
+                if (responseText.includes("Sản phẩm đã được cập nhật thành công")) {
+                    window.location.reload(); // Reload trang sản phẩm nếu thành công
+                }
+            })
+            .catch(error => {
+                console.error('Lỗi:', error);
+                alert('Có lỗi xảy ra');
+            });
+    }
+
+    // // Hàm mở modal Sửa và điền dữ liệu sản phẩm vào modal
+    // function editProduct(id, name, price) {
+    //     document.getElementById('editProductModalLabel').innerText = 'Sửa Sản Phẩm';
+    //     document.getElementById('editProductName').value = name;
+    //     document.getElementById('editProductPrice').value = price;
+    //     const modal = new bootstrap.Modal(document.getElementById('editProductModal'));
+    //     modal.show();
+    // }
+    //
+    //
+    //
+    // // Hàm cập nhật sản phẩm (sửa sản phẩm)
+    // function updateProduct() {
+    //     const name = document.getElementById('editProductName').value;
+    //     const price = document.getElementById('editProductPrice').value;
+    //     console.log('Cập nhật sản phẩm:', name, price);
+    //     // Logic cập nhật sản phẩm ở đây
+    //     const modal = bootstrap.Modal.getInstance(document.getElementById('editProductModal'));
+    //     modal.hide();
+    // }
 
     // Tính năng tìm kiếm sản phẩm
     document.getElementById('search').addEventListener('input', function(event) {

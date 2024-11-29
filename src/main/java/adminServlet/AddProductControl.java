@@ -95,19 +95,6 @@ public class AddProductControl extends HttpServlet {
 
         ProductDao dao = new ProductDao();
 
-        // Giả sử bạn đã có một Part đối tượng hình ảnh từ frontend, đây chỉ là một ví dụ
-       // String imagePath = "product1.jpg"; // Bạn có thể chỉ cần truyền tên ảnh mà không cần sử dụng Part
-        // Thêm sản phẩm vào cơ sở dữ liệu
-//        try {
-//            if (dao.addProduct(product)) {
-//                response.sendRedirect(request.getContextPath() + "/admin/home");
-//            } else {
-//                request.setAttribute("message", "Failed to add product.");
-//                request.getRequestDispatcher("/admin/product.jsp").forward(request, response);
-//            }
-//        } catch (SQLException e) {
-//            throw new ServletException("Error adding product", e);
-//        }
         try {
             boolean isAdded = dao.addProduct(product);  // Giả sử bạn đã có phương thức này trong ProductDao
             if (isAdded) {

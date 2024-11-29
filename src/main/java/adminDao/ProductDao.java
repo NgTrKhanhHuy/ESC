@@ -74,6 +74,91 @@ public class ProductDao {
             return statement.executeUpdate() > 0;
         }
     }
+    // Lấy sản phẩm theo ID
+    public Product getProductById(int productId) {
+        Product product = null;
+        String sql = "SELECT * FROM product WHERE product_id = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setInt(1, productId);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                product = new Product(
+                        resultSet.getInt("product_id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("description"),
+                        resultSet.getBigDecimal("price"),
+                        resultSet.getInt("stock"),
+                        resultSet.getString("category"),
+                        resultSet.getString("imagePath"),
+                        resultSet.getTimestamp("created_at"),
+                        resultSet.getBigDecimal("discount_percentage")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return product;
+    }
+
+    // Cập nhật sản phẩm
+    public boolean updateProduct(Product product) {
+        String sql = "UPDATE product SET name = ?, description = ?, price = ?, stock = ?, category = ?, imagePath = ?, discount_percentage = ? WHERE product_id = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setString(1, product.getName());
+            statement.setString(2, product.getDescription());
+            statement.setBigDecimal(3, product.getPrice());
+            statement.setInt(4, product.getStock());
+            statement.setString(5, product.getCategory());
+            statement.setString(6, product.getImagePath());
+
+            statement.setBigDecimal(7, product.getDiscountPercentage());
+            statement.setInt(8, product.getProductId());
+
+            int rowsAffected = statement.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+//    public boolean updateProduct(Product product) throws SQLException {
+//        // Câu lệnh SQL cập nhật các thông tin sản phẩm
+//        String sql = "UPDATE product SET name = ?, description = ?, price = ?, category = ?, stock = ?, discount_percentage = ?, imagePath = ? WHERE 	product_id = ?";
+//
+//        try (Connection conn = DBConnection.getConnection();
+//             PreparedStatement statement = conn.prepareStatement(sql)) {
+//
+//            // Set các giá trị từ đối tượng Product vào câu lệnh SQL
+//            statement.setString(1, product.getName());
+//            statement.setString(2, product.getDescription());
+//            statement.setBigDecimal(3, product.getPrice());
+//            statement.setString(4, product.getCategory());
+//            statement.setInt(5, product.getStock());
+//            statement.setBigDecimal(6, product.getDiscountPercentage());
+//
+//            // Kiểm tra nếu có ảnh mới thì set lại, nếu không có thì không thay đổi trường imagePath
+//            if (product.getImagePath() != null && !product.getImagePath().isEmpty()) {
+//                statement.setString(7, product.getImagePath());  // Cập nhật ảnh mới nếu có
+//            } else {
+//                // Nếu không có ảnh mới, giữ nguyên giá trị cũ trong database (không set lại imagePath)
+//                statement.setString(7, null);  // Hoặc để null nếu không có ảnh mới
+//            }
+//
+//            // Set ID sản phẩm để cập nhật đúng sản phẩm
+//            statement.setInt(8, product. getProductId());
+//
+//            // Thực thi câu lệnh SQL và trả về kết quả
+//            return statement.executeUpdate() > 0; // Trả về true nếu cập nhật thành công
+//        }
+//    }
+
     // Hàm lưu ảnh vào thư mục /img/ và trả về tên file ảnh
 //    private String saveImage(Part imagePart) {
 //        String fileName = imagePart.getSubmittedFileName();

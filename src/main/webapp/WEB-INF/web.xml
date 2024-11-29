@@ -12,10 +12,10 @@
 <!--    <tracking-mode>URL</tracking-mode>-->
 
   </session-config>
-  <servlet-mapping>
-    <servlet-name>default</servlet-name>
-    <url-pattern>/img/*</url-pattern> <!-- Đảm bảo rằng servlet sẽ phục vụ các tệp trong thư mục img -->
-  </servlet-mapping>
+<!--  <servlet-mapping>-->
+<!--    <servlet-name>default</servlet-name>-->
+<!--    <url-pattern>/img/*</url-pattern> &lt;!&ndash; Đảm bảo rằng servlet sẽ phục vụ các tệp trong thư mục img &ndash;&gt;-->
+<!--  </servlet-mapping>-->
   <context-param>
     <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
     <param-value>resources.messages</param-value>

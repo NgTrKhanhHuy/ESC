@@ -125,7 +125,7 @@
             <!-- Placeholder for 10 products (you can dynamically load them via JSP/Servlet) -->
             <div class="col-md-2 product-item">
                 <div class="card">
-                    <img src="img/product1.webp" class="card-img-top" alt="Product 1">
+                    <img src="img/product1.webp" class="card-img-top" width=480 alt="Product 1">
                     <div class="card-body">
                         <h5 class="card-title">Product 1</h5>
                         <p class="card-text">$499.99</p>
@@ -135,7 +135,7 @@
             </div>
             <div class="col-md-2 product-item">
                 <div class="card">
-                    <img src="img/product2.webp" class="card-img-top" alt="Product 2">
+                    <img src="img/product2.webp" class="card-img-top" width=480 alt="Product 2">
                     <div class="card-body">
                         <h5 class="card-title">Product 2</h5>
                         <p class="card-text">$799.99</p>
@@ -145,7 +145,7 @@
             </div>
             <div class="col-md-2 product-item">
                 <div class="card">
-                    <img src="img/product1.webp" class="card-img-top" alt="Product 3">
+                    <img src="img/product1.webp" class="card-img-top" width=480 alt="Product 3">
                     <div class="card-body">
                         <h5 class="card-title">Product 1</h5>
                         <p class="card-text">$499.99</p>
@@ -155,7 +155,7 @@
             </div>
             <div class="col-md-2 product-item">
                 <div class="card">
-                    <img src="img/product1.webp" class="card-img-top" alt="Product 4">
+                    <img src="img/product1.webp" class="card-img-top" width=480 alt="Product 4">
                     <div class="card-body">
                         <h5 class="card-title">Product 1</h5>
                         <p class="card-text">$499.99</p>
@@ -165,7 +165,7 @@
             </div>
             <div class="col-md-2 product-item">
                 <div class="card">
-                    <img src="img/product1.webp" class="card-img-top" alt="Product 5">
+                    <img src="img/product1.webp" class="card-img-top" width=480 alt="Product 5">
                     <div class="card-body">
                         <h5 class="card-title">Product 1</h5>
                         <p class="card-text">$499.99</p>
@@ -175,7 +175,7 @@
             </div>
             <div class="col-md-2 product-item">
                 <div class="card">
-                    <img src="img/product1.webp" class="card-img-top" alt="Product 6">
+                    <img src="img/product1.webp" class="card-img-top" width="480" alt="Product 6">
                     <div class="card-body">
                         <h5 class="card-title">Product 1</h5>
                         <p class="card-text">$499.99</p>
