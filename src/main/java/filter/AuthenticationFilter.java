@@ -67,7 +67,7 @@ public class AuthenticationFilter implements Filter {
                 // Tránh trường hợp ADMIN truy cập các trang của CUSTOMER mà không muốn
                 if (!requestURI.contains("/admin/")) {
                     // Trường hợp không phải ADMIN mà truy cập vào các trang chỉ dành cho ADMIN
-                    String accessDeniedURL = httpRequest.getContextPath() + "/home";
+                    String accessDeniedURL = httpRequest.getContextPath() + "/admin/home";
                     httpResponse.sendRedirect(httpResponse.encodeRedirectURL(accessDeniedURL));
                     return;
                 }

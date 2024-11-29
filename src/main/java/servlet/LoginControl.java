@@ -46,7 +46,7 @@ public class LoginControl extends HttpServlet{
 //        }else {
 //            // Phân quyền
             if (user.getRole().equals(Role.ADMIN)) {
-                response.sendRedirect(response.encodeRedirectURL(request.getContextPath()+"/admin/dashboard"));
+                response.sendRedirect(response.encodeRedirectURL(request.getContextPath()+"/admin/home"));
             } else {
             //   request.getRequestDispatcher("/home").forward(request, response);
 //                response.sendRedirect( "home");

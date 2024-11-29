@@ -13,236 +13,42 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+    .product-slider {
+        position: relative;
+        margin-top: 20px;
 
+    }
+
+    .product-item {
+        display: none; /* Hide all products initially */
+        margin-bottom: 20px;
+    }
+
+    #prevBtn, #nextBtn {
+        margin: 0 10px;
+        padding: 10px 20px;
+        cursor: pointer;
+    }
+
+    #prevBtn:hover, #nextBtn:hover {
+        background-color: #ddd;
+    }
+
+    @media (max-width: 768px) {
+        .product-item {
+            display: inline-block;
+            width: 100%; /* On smaller screens, show one product per slide */
+        }
+    }
+
+</style>
 </head>
 
 <body>
 
-<!-- Header -->
-<!-- <header class="bg-dark text-light">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-4">
-                <a href="index.html" class="navbar-brand text-white">Tech Shop</a>
-            </div>
-            <div class="col-md-4">
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search for products">
-                    <button class="btn btn-primary" type="submit">Search</button>
-                </form>
-            </div>
-            <div class="col-md-4 text-end">
-                <a href="cart.html" class="text-white">Cart <span class="badge bg-light text-dark">2</span></a>
-            </div>
-        </div>
-    </div>
-</header> -->
-
-<!-- Navigation Bar -->
-<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="index.html">Home</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="products.html" id="navbarDropdown" role="button">Products</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Laptops</a></li>
-                        <li><a class="dropdown-item" href="#">Smartphones</a></li>
-                        <li><a class="dropdown-item" href="#">Accessories</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="login.html">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav> -->
-
-
-<!-- <header class="bg-dark text-light">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-4">
-                <a href="index.html" class="navbar-brand text-white">Tech Shop</a>
-            </div>
-            <div class="col-md-4">
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search for products">
-                    <button class="btn btn-primary" type="submit">Search</button>
-                </form>
-            </div>
-            <div class="col-md-4 text-end">
-                <a href="#" id="loginBtn" class="text-white">Login</a> |
-                <a href="#" id="registerBtn" class="text-white">Register</a>
-            </div>
-        </div>
-    </div>
-</header> -->
-
-<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">Home</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button">Products</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Laptops</a></li>
-                        <li><a class="dropdown-item" href="#">Smartphones</a></li>
-                        <li><a class="dropdown-item" href="#">Accessories</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="about.html">About</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav> -->
-<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">
-        <i class="fas fa-store"></i> MyShop
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="fas fa-bars"></i>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-home"></i> Home
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-box"></i> Products
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-shopping-cart"></i> Cart
-                </a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-user"></i> User
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i> Profile</a></li>
-                    <li><a class="dropdown-item" href="#"><i class="fas fa-box"></i> Orders</a></li>
-                    <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-</nav> -->
-<header>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-        <div class="container-fluid">
-            <!-- Logo -->
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-store"></i> MyShop
-            </a>
-            <!-- Toggle button for mobile view -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- Navbar items -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">
-                            <i class="fas fa-home"></i> Home
-
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="fas fa-box"></i> Products
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="fas fa-tags"></i> Categories
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="fas fa-info-circle"></i> About
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="fas fa-address-book"></i> Contact
-                        </a>
-                    </li>
-                </ul>
-                <!-- Search form -->
-                <form class="d-flex mx-auto search-bar" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search products..." aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </form>
-                <!-- Right side (user and cart) -->
-                <ul class="navbar-nav ms-auto">
-                    <!-- User dropdown -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-user"></i> Account
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                            <c:if test="${empty sessionScope.user}">
-                                <li><a class="dropdown-item" href="login"><i class="fas fa-sign-in-alt"></i> Login</a>
-                                </li>
-                                <li><a class="dropdown-item" href="register"><i class="fas fa-user-plus"></i> Register</a>
-                                </li>
-<%--                                <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i>  ${sessionScope.user.username}</a></li>--%>
-
-                            </c:if>
-                            <c:if test="${not empty sessionScope.user}">
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i>  ${sessionScope.user.username}</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-box"></i> Orders</a></li>
-                            <li><a class="dropdown-item" href="logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                            </c:if>
-
-
-
-                        </ul>
-                    </li>
-
-                    <!-- Cart -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="cart.html">
-                            <i class="fas fa-shopping-cart"></i> Cart <span class="badge bg-danger">3</span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
+<!-- Include Header -->
+<jsp:include page="includes/header.jsp" />
 
 
 <!-- Sidebar for login and register -->
@@ -309,38 +115,177 @@
     </button>
 </div>
 
-<!-- Product Section -->
 <section class="container mt-5">
-    <h2 class="text-center">All Products</h2>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card">
-                <img src="img/product1.webp" class="card-img-top" alt="Product 1">
-                <div class="card-body">
-                    <h5 class="card-title">Product 1</h5>
-                    <p class="card-text">$499.99</p>
-                    <a href="product-detail.html" class="btn btn-primary">View Details</a>
+    <h2 class="text-center">Newest Products</h2>
+
+    <!-- Product Slider -->
+    <div class="product-slider">
+        <!-- Product List Container -->
+        <div class="row">
+            <!-- Placeholder for 10 products (you can dynamically load them via JSP/Servlet) -->
+            <div class="col-md-2 product-item">
+                <div class="card">
+                    <img src="img/product1.webp" class="card-img-top" alt="Product 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Product 1</h5>
+                        <p class="card-text">$499.99</p>
+                        <a href="product-detail.html" class="btn btn-primary">View Details</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card">
-                <img src="img/product1.webp" class="card-img-top" alt="Product 2">
-                <div class="card-body">
-                    <h5 class="card-title">Product 2</h5>
-                    <p class="card-text">$799.99</p>
-                    <a href="product-detail.html" class="btn btn-primary">View Details</a>
+            <div class="col-md-2 product-item">
+                <div class="card">
+                    <img src="img/product2.webp" class="card-img-top" alt="Product 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Product 2</h5>
+                        <p class="card-text">$799.99</p>
+                        <a href="product-detail.html" class="btn btn-primary">View Details</a>
+                    </div>
                 </div>
             </div>
+            <div class="col-md-2 product-item">
+                <div class="card">
+                    <img src="img/product1.webp" class="card-img-top" alt="Product 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Product 1</h5>
+                        <p class="card-text">$499.99</p>
+                        <a href="product-detail.html" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 product-item">
+                <div class="card">
+                    <img src="img/product1.webp" class="card-img-top" alt="Product 4">
+                    <div class="card-body">
+                        <h5 class="card-title">Product 1</h5>
+                        <p class="card-text">$499.99</p>
+                        <a href="product-detail.html" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 product-item">
+                <div class="card">
+                    <img src="img/product1.webp" class="card-img-top" alt="Product 5">
+                    <div class="card-body">
+                        <h5 class="card-title">Product 1</h5>
+                        <p class="card-text">$499.99</p>
+                        <a href="product-detail.html" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 product-item">
+                <div class="card">
+                    <img src="img/product1.webp" class="card-img-top" alt="Product 6">
+                    <div class="card-body">
+                        <h5 class="card-title">Product 1</h5>
+                        <p class="card-text">$499.99</p>
+                        <a href="product-detail.html" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 product-item">
+                <div class="card">
+                    <img src="img/product1.webp" class="card-img-top" alt="Product 7">
+                    <div class="card-body">
+                        <h5 class="card-title">Product 1</h5>
+                        <p class="card-text">$499.99</p>
+                        <a href="product-detail.html" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 product-item">
+                <div class="card">
+                    <img src="img/product1.webp" class="card-img-top" alt="Product 8">
+                    <div class="card-body">
+                        <h5 class="card-title">Product 1</h5>
+                        <p class="card-text">$499.99</p>
+                        <a href="product-detail.html" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 product-item">
+                <div class="card">
+                    <img src="img/product1.webp" class="card-img-top" alt="Product 9">
+                    <div class="card-body">
+                        <h5 class="card-title">Product 1</h5>
+                        <p class="card-text">$499.99</p>
+                        <a href="product-detail.html" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 product-item">
+                <div class="card">
+                    <img src="img/product1.webp" class="card-img-top" alt="Product 10">
+                    <div class="card-body">
+                        <h5 class="card-title">Product 1</h5>
+                        <p class="card-text">$499.99</p>
+                        <a href="product-detail.html" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Add 8 more products here for a total of 10 products -->
         </div>
-        <!-- Add more products similarly -->
+
+        <!-- Navigation Buttons -->
+        <div class="text-center mt-4">
+            <button id="prevBtn" class="btn btn-secondary" onclick="changeSlide(-1)">
+                <i class="fas fa-arrow-left"></i> Previous
+            </button>
+            <button id="nextBtn" class="btn btn-secondary" onclick="changeSlide(1)">
+                Next <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
     </div>
 </section>
+
 <!-- Footer -->
-<footer class="bg-dark text-light mt-5 p-4 text-center">
-    <p>&copy; 2024 Modern Tech Shop. All Rights Reserved.</p>
-</footer>
+<jsp:include page="includes/footer.jsp" />
+
 <!-- Thêm tệp JavaScript trong trang index.html -->
+<script>
+    // JavaScript to control the product slider
+    let currentIndex = 0;
+    const productsPerSlide = 6; // Number of products shown per slide
+    const products = document.querySelectorAll('.product-item'); // All product items
+    const totalProducts = products.length; // Total number of products
+
+    // Initially hide all products
+    function hideAllProducts() {
+        products.forEach(product => {
+            product.style.display = 'none';
+        });
+    }
+
+    // Show products for the current slide
+    function showCurrentSlide() {
+        hideAllProducts(); // Hide all products first
+        // Show products for the current slide
+        for (let i = currentIndex; i < currentIndex + productsPerSlide && i < totalProducts; i++) {
+            products[i].style.display = 'block';
+        }
+    }
+
+    // Move to the previous/next slide
+    function changeSlide(direction) {
+        currentIndex += direction * productsPerSlide; // Adjust current index based on direction
+
+        // If reached the beginning, loop back to the last set of products
+        if (currentIndex < 0) {
+            currentIndex = totalProducts - productsPerSlide;
+        }
+
+        // If reached the end, loop back to the first set of products
+        if (currentIndex >= totalProducts) {
+            currentIndex = 0;
+        }
+
+        showCurrentSlide(); // Show products for the new current slide
+    }
+
+    // Initial call to show the first slide
+    showCurrentSlide();
+
+</script>
 <script src="app.js"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist"/>

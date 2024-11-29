@@ -16,59 +16,15 @@
     <title>Login - Tech Shop</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
 
 <!-- Header -->
-<header class="bg-dark text-light">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-4">
-                <a href="index.html" class="navbar-brand text-white">Tech Shop</a>
-            </div>
-            <div class="col-md-4">
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search for products">
-                    <button class="btn btn-primary" type="submit">Search</button>
-                </form>
-            </div>
-            <div class="col-md-4 text-end">
-                <a href="cart.html" class="text-white">Cart <span class="badge bg-light text-dark">2</span></a>
-            </div>
-        </div>
-    </div>
-</header>
+<jsp:include page="includes/header.jsp" />
 
 <!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="index.html">Home</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button">Products</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Laptops</a></li>
-                        <li><a class="dropdown-item" href="#">Smartphones</a></li>
-                        <li><a class="dropdown-item" href="#">Accessories</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="login.html">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
 
 <!-- Login Form -->
 <section class="login-page">
@@ -114,11 +70,12 @@
 </section> -->
 
 <!-- Footer -->
-<footer class="bg-dark text-light mt-5 p-4 text-center">
-    <p>&copy; 2024 Modern Tech Shop. All Rights Reserved.</p>
-</footer>
+<jsp:include page="includes/footer.jsp" />
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist"/>
+
 <script src="app.js"></script>
 </body>
 
