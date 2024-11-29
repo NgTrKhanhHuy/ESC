@@ -26,13 +26,13 @@ public class ProductDao {
                 Product temp = new Product(rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getDouble(4),
-                        rs.getDouble(5),
+                        rs.getBigDecimal(4),
+                        rs.getInt(5),
                         rs.getString(6),
-                        rs.getDate(7),
-                        rs.getString(8),
-                        rs.getDouble(9));
-
+                        rs.getString(7),
+                        rs.getTimestamp(8),
+                        rs.getBigDecimal(9)
+                );
                 list.add(temp);
             }
 
@@ -80,12 +80,12 @@ public class ProductDao {
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getDouble(4),
-                        rs.getDouble(5),
+                        rs.getBigDecimal(4),
+                        rs.getInt(5),
                         rs.getString(6),
-                        rs.getDate(7),
-                        rs.getString(8),
-                        rs.getDouble(9)
+                        rs.getString(7),
+                        rs.getTimestamp(8),
+                        rs.getBigDecimal(9)
                 );
                 list.add(temp);
             }
@@ -111,12 +111,12 @@ public class ProductDao {
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
-                        rs.getDouble(4),
-                        rs.getDouble(5),
+                        rs.getBigDecimal(4),
+                        rs.getInt(5),
                         rs.getString(6),
-                        rs.getDate(7),
-                        rs.getString(8),
-                        rs.getDouble(9)
+                        rs.getString(7),
+                        rs.getTimestamp(8),
+                        rs.getBigDecimal(9)
                 );
                 list.add(temp);
             }
