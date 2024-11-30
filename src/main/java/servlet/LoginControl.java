@@ -24,13 +24,24 @@ public class LoginControl extends HttpServlet{
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+
+
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         UserDao userDao = new UserDao();
         User user = userDao.getUserByUsername(username);
        // UserDAO userDAO = new UserDAO();
         //User user = userDAO.getUserByUsername(username);
-        ResourceBundle messages = ResourceBundle.getBundle("messages", Locale.getDefault());
+      //  ResourceBundle messages = ResourceBundle.getBundle("messages", Locale.getDefault());
+        // Lấy ngôn ngữ từ application scope
+        String lang = (String) getServletContext().getAttribute("lang");
+        if (lang == null) {
+            lang = "en";  // Mặc định là tiếng Anh nếu không có ngôn ngữ trong application scope
+        }
+        // Đặt locale theo ngôn ngữ người dùng chọn
+        Locale locale = new Locale(lang);
+        ResourceBundle messages = ResourceBundle.getBundle("messages", locale);
 
 
         if (user != null && BCrypt.checkpw(password, user.getPassword())) {

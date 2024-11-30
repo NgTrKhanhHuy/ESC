@@ -18,6 +18,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 @WebServlet("/admin/addProduct")
 
 @MultipartConfig(
@@ -34,6 +37,9 @@ public class AddProductControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
+
+        ResourceBundle messages = ResourceBundle.getBundle("messages", Locale.getDefault());
+
 
         // Đảm bảo rằng request là multipart (chứa tệp ảnh)
         if (!ServletFileUpload.isMultipartContent(request)) {
@@ -97,10 +103,14 @@ public class AddProductControl extends HttpServlet {
 
         try {
             boolean isAdded = dao.addProduct(product);  // Giả sử bạn đã có phương thức này trong ProductDao
+
             if (isAdded) {
-                response.getWriter().write("Sản phẩm đã được thêm thành công");
+                String addSuccess = messages.getString("add.success");
+                response.getWriter().write(addSuccess);
             } else {
-                response.getWriter().write("Thêm sản phẩm thất bại");
+                String  addError = messages.getString("add.error");
+
+                response.getWriter().write(addError);
             }
         } catch (SQLException e) {
             response.getWriter().write("Có lỗi xảy ra: " + e.getMessage());

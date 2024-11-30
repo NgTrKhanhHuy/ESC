@@ -17,6 +17,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 @MultipartConfig(
         location = "D:/LT_FE/ESC/tmp", // Thư mục tạm lưu trữ file, có thể thay đổi
         maxFileSize = 10485760, // 10MB, dung lượng tối đa cho file tải lên
@@ -143,6 +146,17 @@ public class UpdateProductControl extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
 
+        //ResourceBundle messages = ResourceBundle.getBundle("messages", Locale.getDefault());
+        // Lấy ngôn ngữ từ application scope
+        String lang = (String) getServletContext().getAttribute("lang");
+
+        if (lang == null) {
+            lang = "en";  // Mặc định là tiếng Anh nếu không có ngôn ngữ trong application scope
+        }
+        // Đặt locale theo ngôn ngữ người dùng chọn
+        Locale locale = new Locale(lang);
+        ResourceBundle messages = ResourceBundle.getBundle("messages", locale);
+
         if (!ServletFileUpload.isMultipartContent(request)) {
             response.getWriter().write("Form must be multipart/form-data");
             return;
@@ -218,11 +232,15 @@ public class UpdateProductControl extends HttpServlet {
         // Cập nhật sản phẩm trong cơ sở dữ liệu
         ProductDao productDao = new ProductDao();
         try {
+            String updateSuccess = messages.getString("update.success");
+            String updateError = messages.getString("update.error");
+
+
             boolean isAdded = productDao.updateProduct(product);  // Giả sử bạn đã có phương thức này trong ProductDao
             if (isAdded) {
-                response.getWriter().write("Sản phẩm đã được cập nhật thành công");
+                response.getWriter().write(updateSuccess);
             } else {
-                response.getWriter().write("Cập nhật sản phẩm thất bại");
+                response.getWriter().write(updateError);
             }
         } catch (Exception e) {
             response.getWriter().write("Có lỗi xảy ra: " + e.getMessage());

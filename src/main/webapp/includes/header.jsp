@@ -71,7 +71,7 @@
                 <li><a class="dropdown-item" href="register"><i class="fas fa-user-plus"></i> Register</a></li>
               </c:if>
               <c:if test="${not empty sessionScope.user}">
-                <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i>  ${sessionScope.user.username}</a></li>
+                <li><a class="dropdown-item" href="user"><i class="fas fa-user-circle"></i>  ${sessionScope.user.username}</a></li>
                 <li><a class="dropdown-item" href="#"><i class="fas fa-box"></i> Orders</a></li>
                 <li><a class="dropdown-item" href="logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
               </c:if>
@@ -83,6 +83,26 @@
             <a class="nav-link" href="cart.html">
               <i class="fas fa-shopping-cart"></i> Cart <span class="badge bg-danger">3</span>
             </a>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-language"></i> Language
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+              <!-- Tiếng Việt -->
+              <li>
+                <a class="dropdown-item" href="language?lang=vi">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Vietnam.svg" alt="Vietnam Flag" width="20" class="me-2"> Tiếng Việt
+                </a>
+              </li>
+              <!-- Tiếng Anh -->
+              <li>
+                <a class="dropdown-item" href="language?lang=en">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_States.svg" alt="US Flag" width="20" class="me-2"> English
+                </a>
+              </li>
+            </ul>
           </li>
         </ul>
       </div>

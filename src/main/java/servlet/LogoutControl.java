@@ -22,4 +22,6 @@ public class LogoutControl extends HttpServlet{
         // Chuyển hướng về trang hiện tại
         response.sendRedirect(referer);
     }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        doGet(request,response);}
 }
