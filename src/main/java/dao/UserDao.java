@@ -91,6 +91,72 @@ public class UserDao {
         }
         return isSaved;
     }
+
+    public User getUserById(int userId) {
+        User user = null;
+        String sql = "SELECT * FROM user WHERE user_id = ?";  // Câu lệnh SQL truy vấn người dùng theo username
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, String.valueOf(userId));  // Đặt giá trị cho tham số trong câu lệnh SQL
+
+            ResultSet rs = stmt.executeQuery();  // Thực hiện truy vấn
+
+            // Nếu có kết quả, lấy thông tin người dùng từ ResultSet
+            if (rs.next()) {
+                int id = rs.getInt("user_id");
+                String userName = rs.getString("username");
+                String password = rs.getString("password");
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String roleStr = rs.getString("role");
+
+                // Giả sử bạn có lớp Role, bạn có thể chuyển đổi roleStr thành đối tượng Role
+                Role role = Role.valueOf(roleStr);  // Cần phải xử lý nếu role là enum
+
+                // Tạo đối tượng User và gán giá trị
+                user = new User(id, userName, password, email, phone, role);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  // Log lỗi nếu có
+        }
+
+        return user;  // Trả về đối tượng User nếu tìm thấy, nếu không thì null
+    }
+
+    public boolean updateUser(User user) {
+        String sql = "UPDATE user SET username = ?, email = ?, phone = ? WHERE user_id = ?";
+        try (Connection conn = DBConnection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPhone());
+            ps.setInt(4, user.getId());
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0; // Nếu có dòng bị ảnh hưởng, tức là cập nhật thành công
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Cập nhật mật khẩu người dùng
+    public boolean updatePassword(int userId, String newPassword) {
+
+        String sql = "UPDATE user SET password = ? WHERE user_id = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, newPassword);
+            stmt.setInt(2, userId);
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     public static void main(String[] args) {
         try {
             // Tạo kết nối đến cơ sở dữ liệu

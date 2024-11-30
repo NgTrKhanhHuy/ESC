@@ -1,3 +1,12 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: Khanh Huy Studios
+  Date: 30/11/2024
+  Time: 9:07 CH
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,72 +16,37 @@
     <title>User Profile - Tech Shop</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
 <body>
 
 <!-- Header -->
-<header class="bg-dark text-light">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-4">
-                <a href="index.html" class="navbar-brand text-white">Tech Shop</a>
-            </div>
-            <div class="col-md-4">
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search for products">
-                    <button class="btn btn-primary" type="submit">Search</button>
-                </form>
-            </div>
-            <div class="col-md-4 text-end">
-                <a href="cart.html" class="text-white">Cart <span class="badge bg-light text-dark">2</span></a>
-            </div>
-        </div>
-    </div>
-</header>
 
 <!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="index.html">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="user.html">Profile</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="about.html">About</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<jsp:include page="includes/header.jsp" />
 
 <!-- User Profile Section -->
 <section class="container mt-5">
     <h2 class="text-center">User Profile</h2>
-    <div class="row justify-content-center">
+<c:if test="${not empty sessionScope.user}">
+<div class="row justify-content-center">
         <div class="col-md-6">
+            <c:if test="${not empty error}">
+                <p style="color: red">${error}</p>
+            </c:if>
             <form>
                 <div class="mb-3">
                     <label for="fullName" class="form-label">Full Name</label>
-                    <input type="text" class="form-control" id="fullName" value="John Doe" readonly>
+                    <input type="text" class="form-control" id="fullName" value="${sessionScope.user.username}"  readonly>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="email" value="johndoe@example.com" readonly>
+                    <input type="email" class="form-control" id="email" value="${sessionScope.user.email}" readonly>
                 </div>
                 <div class="mb-3">
                     <label for="phone" class="form-label">Phone</label>
-                    <input type="text" class="form-control" id="phone" value="+1234567890" readonly>
+                    <input type="text" class="form-control" id="phone" value="${sessionScope.user.phone}" readonly>
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
@@ -82,8 +56,33 @@
                 <button class="btn btn-secondary ms-2" type="button" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Change Password</button>
             </form>
         </div>
+    </c:if>
+
+    <c:if test="${empty sessionScope.user}">
+            <p class="text-center text-danger">You are not logged in. Please log in to view your profile.</p>
+        </c:if>
     </div>
 </section>
+<!-- Modal thông báo lỗi -->
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Error</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Hiển thị thông báo lỗi ở đây -->
+                <c:if test="${not empty error}">
+                    <p>${error}</p>
+                </c:if>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Edit Profile Modal -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -94,24 +93,25 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form id="editProfileForm" method="post" action="">
                     <div class="mb-3">
                         <label for="editFullName" class="form-label">Full Name</label>
-                        <input type="text" class="form-control" id="editFullName" value="John Doe">
+                        <input type="text" class="form-control" id="editFullName" name="username" value="${sessionScope.user.username}" required>
                     </div>
                     <div class="mb-3">
                         <label for="editEmail" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="editEmail" value="johndoe@example.com">
+                        <input type="email" class="form-control" id="editEmail" name="email" value="${sessionScope.user.email}" required>
                     </div>
                     <div class="mb-3">
                         <label for="editPhone" class="form-label">Phone</label>
-                        <input type="text" class="form-control" id="editPhone" value="+1234567890">
+                        <input type="text" class="form-control" id="editPhone" name="phone" value="${sessionScope.user.phone}" >
                     </div>
+                    <input type="hidden" name="userId" value="${sessionScope.user.id}">
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save Changes</button>
+                <button type="submit" form="editProfileForm" class="btn btn-primary">Save Changes</button>
             </div>
         </div>
     </div>
@@ -140,9 +140,8 @@
 </div>
 
 <!-- Footer -->
-<footer class="bg-dark text-light mt-5 p-4 text-center">
-    <p>&copy; 2024 Modern Tech Shop. All Rights Reserved.</p>
-</footer>
+<jsp:include page="includes/footer.jsp" />
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="app.js"></script>
