@@ -35,16 +35,31 @@
 
             <div class="col-md-3">
                 <div class="card">
-                    <img src="${pageContext.request.contextPath}/img/${product.imagePath}"  alt="image"  loading="lazy">
+                    <img src="${pageContext.request.contextPath}/img/${product.imagePath}" alt="image" loading="lazy">
                     <div class="card-body">
                         <h5 class="card-title">${product.name}</h5>
+
+                        <!-- Giá sau khi giảm giá -->
                         <p class="card-text">
-                            <fmt:formatNumber value = "${product.price}" type="currency" currencySymbol="VND" pattern="#,##0.00"/>
+                            <fmt:formatNumber value="${product.price-(product.price * (product.discountPercentage/100))}" type="currency" currencySymbol="VND" pattern="#,##0.00"/>đ
                         </p>
+
+                        <!-- Giá gốc với chữ nhỏ và dấu gạch ngang -->
+                        <p class="card-text text-muted" style="text-decoration: line-through; font-size: 0.8em;">
+                            <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="đ" pattern="#,##0.00"/>đ
+                        </p>
+
+                        <!-- Giảm giá phần trăm với mũi tên đi xuống -->
+                        <div class="discount-badge" style="position: absolute; top: 10px; right: 10px; background-color: #ff6f61; color: white; padding: 5px 10px; border-radius: 5px; display: flex; align-items: center;">
+                            <span>${product.discountPercentage}%</span>
+                            <span style="margin-left: 5px; font-size: 10px; transform: rotate(45deg);">&#x2193;</span> <!-- Mũi tên đi xuống -->
+                        </div>
+
                         <a href="product-detail.html" class="btn btn-primary">View Details</a>
                     </div>
                 </div>
             </div>
+
         </c:forEach>
 
 

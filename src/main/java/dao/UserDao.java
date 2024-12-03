@@ -4,10 +4,8 @@ import database.DBConnection;
 import model.User;
 import model.Role;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.io.File;
+import java.sql.*;
 import java.util.Optional;
 
 public class UserDao {
@@ -140,6 +138,88 @@ public class UserDao {
             return false;
         }
     }
+    // Tìm người dùng theo email
+    public User findByEmail(String email) {
+        try (Connection conn = DBConnection.getConnection()) {
+            String query = "SELECT * FROM user WHERE email = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return new User(
+                        rs.getInt("user_id"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        Role.valueOf(rs.getString("role"))
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // Lưu token reset mật khẩu và thời gian hết hạn vào cơ sở dữ liệu
+    public void saveResetToken(int userId, String token, Date expiryDate) {
+        try (Connection conn = DBConnection.getConnection()) {
+            String query = "UPDATE user SET reset_token = ?, reset_token_expiry = ? WHERE user_id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, token);
+            ps.setTimestamp(2, new Timestamp(expiryDate.getTime())); // Lưu thời gian hết hạn
+            ps.setInt(3, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Kiểm tra token và lấy người dùng
+    public User findByResetToken(String token) {
+        try (Connection conn = DBConnection.getConnection()) {
+            String query = "SELECT * FROM user WHERE reset_token = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, token);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                // Kiểm tra nếu token đã hết hạn
+                Timestamp expiry = rs.getTimestamp("reset_token_expiry");
+                if (expiry != null && expiry.before(new Timestamp(System.currentTimeMillis()))) {
+                    return null; // Token hết hạn
+                }
+
+                return new User(
+                        rs.getInt("user_id"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        Role.valueOf(rs.getString("role"))
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // Cập nhật mật khẩu người dùng QUÊN MK
+    public void updateFPassword(int userId, String newPassword) {
+        try (Connection conn = DBConnection.getConnection()) {
+            String query = "UPDATE user SET password = ?, reset_token = NULL, reset_token_expiry = NULL WHERE user_id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, newPassword);
+            ps.setInt(2, userId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     // Cập nhật mật khẩu người dùng
     public boolean updatePassword(int userId, String newPassword) {
@@ -158,24 +238,30 @@ public class UserDao {
         }
     }
     public static void main(String[] args) {
-        try {
-            // Tạo kết nối đến cơ sở dữ liệu
-           UserDao userDao = new UserDao();
+//        try {
+//            // Tạo kết nối đến cơ sở dữ liệu
+//           UserDao userDao = new UserDao();
+//
+//            // Kiểm tra phương thức getUserByUsername
+//            String usernameToSearch = "chuotcon"; // Giả sử đây là username bạn muốn tìm
+//
+//            User user = userDao.getUserByUsername(usernameToSearch);
+//
+//            if (user != null) {
+//                System.out.println("Thông tin người dùng: " + user);
+//            } else {
+//                System.out.println("Không tìm thấy người dùng với username: " + usernameToSearch);
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        File file = new File(".env");
+        System.out.println("File exists: " + file.exists());
+        System.out.println(System.getenv("SENDGRID_API_KEY"));
 
-            // Kiểm tra phương thức getUserByUsername
-            String usernameToSearch = "chuotcon"; // Giả sử đây là username bạn muốn tìm
 
-            User user = userDao.getUserByUsername(usernameToSearch);
 
-            if (user != null) {
-                System.out.println("Thông tin người dùng: " + user);
-            } else {
-                System.out.println("Không tìm thấy người dùng với username: " + usernameToSearch);
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }
 
