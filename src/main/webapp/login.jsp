@@ -47,7 +47,9 @@
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Login</button>
                     </form>
-                    <p class="mt-3">Don't have an account? <a href="register.html">Register</a>.</p>
+                    <p class="mt-3">Don't have an account? <a href="register">Register</a>.</p>
+                    <p class="mt-3">forgot password? <a href="forgot-password">Forgot Password</a>.</p>
+
                 </div>
             </div>
         </div>
