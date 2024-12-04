@@ -200,7 +200,7 @@ public class UpdateProductControl extends HttpServlet {
         if (filePart != null && filePart.getSize() > 0) {
             String fileName = filePart.getSubmittedFileName();
             imagePath = "img/" + fileName;
-            String uploadPath = "D:/LT_FE/ESC/src/main/webapp/" + imagePath;
+            String uploadPath = "D:/LT_FE/" + imagePath;
 
             try (InputStream inputStream = filePart.getInputStream();
                  OutputStream outputStream = new FileOutputStream(uploadPath)) {
