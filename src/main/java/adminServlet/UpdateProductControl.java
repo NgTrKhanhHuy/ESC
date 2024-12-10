@@ -200,7 +200,7 @@ public class UpdateProductControl extends HttpServlet {
         if (filePart != null && filePart.getSize() > 0) {
             String fileName = filePart.getSubmittedFileName();
             imagePath = "img/" + fileName;
-            String uploadPath = "D:/LT_FE/ESC/src/main/webapp/" + imagePath;
+            String uploadPath = "D:/LT_FE/" + imagePath;
 
             try (InputStream inputStream = filePart.getInputStream();
                  OutputStream outputStream = new FileOutputStream(uploadPath)) {
@@ -232,14 +232,15 @@ public class UpdateProductControl extends HttpServlet {
         // Cập nhật sản phẩm trong cơ sở dữ liệu
         ProductDao productDao = new ProductDao();
         try {
-            String updateSuccess = messages.getString("update.success");
-            String updateError = messages.getString("update.error");
 
 
             boolean isAdded = productDao.updateProduct(product);  // Giả sử bạn đã có phương thức này trong ProductDao
             if (isAdded) {
-                response.getWriter().write(updateSuccess);
+                String updateSuccess = messages.getString("update.success");
+
+                response.getWriter().write("Sản phẩm đã được cập nhật thành công");
             } else {
+                String updateError = messages.getString("update.error");
                 response.getWriter().write(updateError);
             }
         } catch (Exception e) {

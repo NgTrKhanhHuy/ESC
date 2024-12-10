@@ -46,28 +46,70 @@ public class AddProductControl extends HttpServlet {
             response.getWriter().write("Form must be multipart/form-data");
             return;
         }
+        String name =request.getParameter("name");
+        if (name == null|| name.isEmpty()){
+            ProductDao productDao = new ProductDao();
+            int p ;
+            try {
+                 p = productDao.getTotalProducts();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            name = "product " + p;
+        }
 
-        String name = request.getParameter("name");
+
+
         String description = request.getParameter("description");
-        BigDecimal price = new BigDecimal(request.getParameter("price"));
-        int stock = Integer.parseInt(request.getParameter("stock"));
+        String priceStr = request.getParameter("price");
+        BigDecimal price ;
+        if (priceStr == null || priceStr.isEmpty()){
+            price = BigDecimal.valueOf(0);
+        }else {
+            price= new BigDecimal(priceStr);
+        }
+        String stockStr = request.getParameter("stock");
+        int stock;
+        if (stockStr == null|| stockStr.isEmpty() ){
+            stock =0;
+        }else {
+            stock= Integer.parseInt(stockStr);
+        }
+
         String category = request.getParameter("category");
-        BigDecimal discountPercentage = new BigDecimal(request.getParameter("discountPercentage"));
+
+        String discount = request.getParameter("discountPercentage");
+        BigDecimal discountPercentage ;
+        if (discount == null || discount.isEmpty()){
+            discountPercentage = BigDecimal.valueOf(0);
+        }else {
+            discountPercentage= new BigDecimal(discount);
+        }
 
         Part filePart = request.getPart("image"); // Lấy ảnh từ form
-        String fileName = filePart.getSubmittedFileName();
-        String imagePath = "img/" + fileName;
+        String fileName = null;
+        if (filePart==null || filePart.getHeaderNames().isEmpty()){
+            response.getWriter().write("bạn chưa chọn ảnh");
+            return;
+        }else {
+             fileName = filePart.getSubmittedFileName();
+            String imagePath = "img/" + fileName;
 
-        // Lưu file ảnh vào thư mục
-        String uploadPath = "D:/LT_FE/ESC/src/main/webapp/" + imagePath;
-        try (InputStream inputStream = filePart.getInputStream();
-             OutputStream outputStream = new FileOutputStream(uploadPath)) {
-            byte[] buffer = new byte[4096];
-            int bytesRead;
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
+            // Lưu file ảnh vào thư mục
+            String uploadPath = "D:/LT_FE/" + imagePath;
+            try (InputStream inputStream = filePart.getInputStream();
+                 OutputStream outputStream = new FileOutputStream(uploadPath)) {
+                byte[] buffer = new byte[4096];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+            }catch (Exception e){
+                response.getWriter().write("bạn đã không thêm ảnh. ");
+
             }
         }
+
         // Tạo đối tượng Product
 //        Product product = new Product(name, description, price, stock, category, discountPercentage);
 //
@@ -106,7 +148,7 @@ public class AddProductControl extends HttpServlet {
 
             if (isAdded) {
                 String addSuccess = messages.getString("add.success");
-                response.getWriter().write(addSuccess);
+                response.getWriter().write("Sản phẩm đã được thêm thành công");
             } else {
                 String  addError = messages.getString("add.error");
 

@@ -45,6 +45,20 @@
       <artifactId>commons-fileupload</artifactId>
       <version>1.4</version> <!-- Sử dụng phiên bản mới nhất -->
     </dependency>
+    <dependency>
+      <groupId>com.sendgrid</groupId>
+      <artifactId>sendgrid-java</artifactId>
+      <version>4.8.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/io.github.cdimascio/dotenv-java -->
+    <dependency>
+      <groupId>io.github.cdimascio</groupId>
+      <artifactId>dotenv-java</artifactId>
+      <version>3.0.0</version>
+    </dependency>
+
+
+
 
   </dependencies>
   <build>

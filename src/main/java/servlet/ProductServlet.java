@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-@WebServlet("/ProductServlet")
+@WebServlet("/product")
 public class ProductServlet extends HttpServlet {
     private static final int PRODUCTS_PER_PAGE = 12; // Số lượng sản phẩm mỗi trang
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

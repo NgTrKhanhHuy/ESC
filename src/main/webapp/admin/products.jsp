@@ -195,7 +195,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary" onclick="saveProduct()" >Lưu</button>
+                <button type="button" class="btn btn-primary" onclick="return saveProduct()" >Lưu</button>
             </div>
         </div>
     </div>
@@ -264,8 +264,35 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     //  Hàm lưu sản phẩm mới (thêm sản phẩm)
+    // function saveProduct() {
+    //     const form = document.getElementById('addProductForm');
+    //     const formData = new FormData(form);
+    //
+    //     // Gửi dữ liệu form qua AJAX
+    //     fetch('addProduct', {
+    //         method: 'POST',
+    //         body: formData
+    //     })
+    //         .then(response => response.text())  // Đọc phản hồi từ server dưới dạng text
+    //         .then(responseText => {
+    //             alert(responseText); // Hiển thị thông báo từ server
+    //             if (responseText.includes("Sản phẩm đã được thêm thành công")) {
+    //                 window.location.reload(); // Reload trang sản phẩm nếu thành công
+    //             }
+    //         })
+    //         .catch(error => {
+    //             console.error('Lỗi:', error);
+    //             alert('Có lỗi xảy ra');
+    //         });
+    // }
+
     function saveProduct() {
         const form = document.getElementById('addProductForm');
+        // Check if form is valid before submitting
+        if (!validateProductForm()) {
+            return; // Prevent form submission if validation fails
+        }
+
         const formData = new FormData(form);
 
         // Gửi dữ liệu form qua AJAX
@@ -284,6 +311,37 @@
                 console.error('Lỗi:', error);
                 alert('Có lỗi xảy ra');
             });
+    }
+
+    function validateProductForm() {
+        const form = document.getElementById('addProductForm');
+        let isValid = true;
+
+        // Check each required field for emptiness
+        const requiredFields = ['productName', 'productPrice', 'productDescription', 'productCategory', 'productImage', 'discountPercentage', 'stock'];
+        for (const field of requiredFields) {
+            const inputElement = document.getElementById(field);
+            if (!inputElement.value.trim()) {
+
+                isValid = false;
+
+                inputElement.classList.add('is-invalid'); // Add Bootstrap class for invalid field
+
+                // Display error message (optional)
+                const errorMessage = document.createElement('div');
+                errorMessage.classList.add('invalid-feedback');
+                errorMessage.textContent = 'Trường này không được để trống.';
+                inputElement.parentElement.appendChild(errorMessage);
+            } else {
+                inputElement.classList.remove('is-invalid'); // Remove invalid class if field is filled
+                const errorMessage = inputElement.parentElement.querySelector('.invalid-feedback');
+                if (errorMessage) {
+                    errorMessage.remove(); // Remove error message if previously displayed
+                }
+            }
+        }
+
+        return isValid; // Return true if all required fields are valid, false otherwise
     }
 
    // Hàm mở modal sửa sản phẩm
