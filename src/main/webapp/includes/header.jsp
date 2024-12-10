@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <header>
   <!-- Navbar -->
@@ -25,12 +26,12 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link active" href="#">
+            <a class="nav-link active" href="home">
               <i class="fas fa-home"></i> Home
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="product">
               <i class="fas fa-box"></i> Products
             </a>
           </li>
@@ -51,8 +52,8 @@
           </li>
         </ul>
         <!-- Search form -->
-        <form class="d-flex mx-auto search-bar" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search products..." aria-label="Search">
+        <form class="d-flex mx-auto search-bar" role="search" method="get" action="product">
+          <input class="form-control me-2" type="text" name="search" value="${param.search}" placeholder="Search products..." aria-label="Search">
           <button class="btn btn-outline-success" type="submit">
             <i class="fas fa-search"></i>
           </button>
@@ -80,8 +81,15 @@
 
           <!-- Cart -->
           <li class="nav-item">
-            <a class="nav-link" href="cart.html">
-              <i class="fas fa-shopping-cart"></i> Cart <span class="badge bg-danger">3</span>
+            <a class="nav-link" href="cart">
+              <i class="fas fa-shopping-cart"></i> Cart <span class="badge bg-danger"><c:choose>
+              <c:when test="${not empty sessionScope.totalItems}">
+                ${sessionScope.totalItems}
+              </c:when>
+              <c:otherwise>
+                0
+              </c:otherwise>
+            </c:choose></span>
             </a>
           </li>
 

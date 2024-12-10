@@ -1,5 +1,7 @@
 package servlet;
+import dao.CartDao;
 import dao.UserDao;
+import model.Cart;
 import model.Role;
 import model.User;
 import org.mindrot.jbcrypt.BCrypt;
@@ -48,6 +50,15 @@ public class LoginControl extends HttpServlet{
             HttpSession session = request.getSession();
 
             session.setAttribute("user", user);
+
+            // Lấy giỏ hàng của người dùng và lưu vào session
+            CartDao cartDao = new CartDao();
+            Cart cart = cartDao.getCartByUserId(user.getId());
+            session.setAttribute("cart", cart);
+
+            // Tính tổng số lượng sản phẩm trong giỏ và lưu vào session
+            int totalItems = cartDao.getTotalItems(cart.getId());
+            session.setAttribute("totalItems", totalItems);
             // Kiểm tra nếu có URL yêu cầu được lưu trong session (trường hợp người dùng truy cập trang yêu cầu đăng nhập trước đó)
             String redirectUrl = (String) session.getAttribute("redirectUrl");
             //chuyển hướng đến trang trước khi đăng nhập
