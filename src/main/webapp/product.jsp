@@ -55,7 +55,7 @@
                             <span style="margin-left: 5px; font-size: 10px; transform: rotate(45deg);">&#x2193;</span> <!-- Mũi tên đi xuống -->
                         </div>
 
-                        <a href="product-detail.html" class="btn btn-primary">View Details</a>
+                        <a href="productdetail?id=${product.productId}"  class="btn btn-primary">View Details</a>
                     </div>
                 </div>
             </div>
