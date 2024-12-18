@@ -113,33 +113,7 @@ public class UpdateProductControl extends HttpServlet {
 //        }
 //        String oldImg = request.getParameter("oldImg");
 //
-//
-//        // Tạo đối tượng Product mới để cập nhật
-//        Product product = new Product();
-//        product.setProductId(productId);
-//        product.setName(name);
-//        product.setDescription(description);
-//        product.setPrice(price);
-//        product.setStock(stock);
-//        product.setCategory(category);
-//        product.setDiscountPercentage(discountPercentage);
-//
-//        if (imagePath != null) {
-//            product.setImagePath(filePart.getSubmittedFileName());  // Nếu có ảnh mới thì set lại
-//        }else {
-//            product.setImagePath(oldImg);
-//        }
-//
-//        // Cập nhật sản phẩm trong cơ sở dữ liệu
-//        ProductDao productDao = new ProductDao();
-//        boolean isUpdated = productDao.updateProduct(product);
-//        if (isUpdated) {
-//           // response.sendRedirect(request.getContextPath() + "/admin/home");
-//            response.getWriter().write("Sản phẩm đã được cập nhật thành công.");
-//        } else {
-//            response.getWriter().write("Có lỗi xảy ra khi cập nhật sản phẩm.");
-//        }
-//    }
+
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

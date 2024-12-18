@@ -137,7 +137,6 @@ public class AddProductControl extends HttpServlet {
         System.out.println(product.getCategory());
 
         product.setDiscountPercentage(discountPercentage);
-        System.out.println(product.getDiscountPercentage());
 
         product.setImagePath(fileName);
 

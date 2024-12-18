@@ -175,9 +175,17 @@
                         <label for="productDescription" class="form-label">Mô tả</label>
                         <textarea class="form-control" id="productDescription" name="description" required></textarea>
                     </div>
+<%--                    <div class="mb-3">--%>
+<%--                        <label for="productCategory" class="form-label">Danh mục</label>--%>
+<%--                        <input type="text" class="form-control" id="productCategory" name="category" required>--%>
+<%--                    </div>--%>
                     <div class="mb-3">
                         <label for="productCategory" class="form-label">Danh mục</label>
-                        <input type="text" class="form-control" id="productCategory" name="category" required>
+                        <select class="form-control" id="productCategory" name="category" required>
+                            <option value="Laptop">Laptop</option>
+                            <option value="Phone">Phone</option>
+                            <option value="Tablet">Tablet</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="productImage" class="form-label">Ảnh sản phẩm</label>
@@ -229,9 +237,17 @@
                         <textarea class="form-control" id="editProductDescription" name="description"></textarea>
                     </div>
 
+<%--                    <div class="mb-3">--%>
+<%--                        <label for="editProductCategory" class="form-label">Danh mục</label>--%>
+<%--                        <input type="text" class="form-control" id="editProductCategory" name="category">--%>
+<%--                    </div>--%>
                     <div class="mb-3">
                         <label for="editProductCategory" class="form-label">Danh mục</label>
-                        <input type="text" class="form-control" id="editProductCategory" name="category">
+                        <select class="form-control" id="editProductCategory" name="category" required>
+                            <option value="Laptop">Laptop</option>
+                            <option value="Phone">Phone</option>
+                            <option value="Tablet">Tablet</option>
+                        </select>
                     </div>
 
                     <div class="mb-3">
