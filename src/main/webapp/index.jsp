@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 
 
@@ -123,107 +124,25 @@
         <!-- Product List Container -->
         <div class="row">
             <!-- Placeholder for 10 products (you can dynamically load them via JSP/Servlet) -->
-            <div class="col-md-2 product-item">
-                <div class="card">
-                    <img src="img/product1.webp" class="card-img-top" width=480 alt="Product 1">
-                    <div class="card-body">
-                        <h5 class="card-title">Product 1</h5>
-                        <p class="card-text">$499.99</p>
-                        <a href="product-detail.html" class="btn btn-primary">View Details</a>
+            <!-- Lặp qua danh sách sản phẩm mới nhất -->
+            <c:forEach var="product" items="${newestProduct}">
+                <div class="col-md-2 product-item">
+                    <div class="card">
+                        <img src="${pageContext.request.contextPath}/img/${product.imagePath}" class="card-img-top" alt="${product.name}" width="480">
+                        <div class="card-body">
+                            <h5 class="card-title">${product.name}</h5>
+                            <p class="card-text">
+                                <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="VND" pattern="#,##0.00"/>
+                            </p>
+                            <p class="card-text text-muted" style="text-decoration: line-through; font-size: 0.8em;">
+                                <fmt:formatNumber value="${product.price - (product.price * (product.discountPercentage / 100))}" type="currency" currencySymbol="đ" pattern="#,##0.00"/>
+                            </p>
+                            <a href="productdetail?id=${product.productId}" class="btn btn-primary">View Details</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-2 product-item">
-                <div class="card">
-                    <img src="img/product2.webp" class="card-img-top" width=480 alt="Product 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Product 2</h5>
-                        <p class="card-text">$799.99</p>
-                        <a href="product-detail.html" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2 product-item">
-                <div class="card">
-                    <img src="img/product1.webp" class="card-img-top" width=480 alt="Product 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Product 1</h5>
-                        <p class="card-text">$499.99</p>
-                        <a href="product-detail.html" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2 product-item">
-                <div class="card">
-                    <img src="img/product1.webp" class="card-img-top" width=480 alt="Product 4">
-                    <div class="card-body">
-                        <h5 class="card-title">Product 1</h5>
-                        <p class="card-text">$499.99</p>
-                        <a href="product-detail.html" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2 product-item">
-                <div class="card">
-                    <img src="img/product1.webp" class="card-img-top" width=480 alt="Product 5">
-                    <div class="card-body">
-                        <h5 class="card-title">Product 1</h5>
-                        <p class="card-text">$499.99</p>
-                        <a href="product-detail.html" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2 product-item">
-                <div class="card">
-                    <img src="img/product1.webp" class="card-img-top" width="480" alt="Product 6">
-                    <div class="card-body">
-                        <h5 class="card-title">Product 1</h5>
-                        <p class="card-text">$499.99</p>
-                        <a href="product-detail.html" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2 product-item">
-                <div class="card">
-                    <img src="img/product1.webp" class="card-img-top" alt="Product 7">
-                    <div class="card-body">
-                        <h5 class="card-title">Product 1</h5>
-                        <p class="card-text">$499.99</p>
-                        <a href="product-detail.html" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2 product-item">
-                <div class="card">
-                    <img src="img/product1.webp" class="card-img-top" alt="Product 8">
-                    <div class="card-body">
-                        <h5 class="card-title">Product 1</h5>
-                        <p class="card-text">$499.99</p>
-                        <a href="product-detail.html" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2 product-item">
-                <div class="card">
-                    <img src="img/product1.webp" class="card-img-top" alt="Product 9">
-                    <div class="card-body">
-                        <h5 class="card-title">Product 1</h5>
-                        <p class="card-text">$499.99</p>
-                        <a href="product-detail.html" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-2 product-item">
-                <div class="card">
-                    <img src="img/product1.webp" class="card-img-top" alt="Product 10">
-                    <div class="card-body">
-                        <h5 class="card-title">Product 1</h5>
-                        <p class="card-text">$499.99</p>
-                        <a href="product-detail.html" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Add 8 more products here for a total of 10 products -->
+            </c:forEach>
+
         </div>
 
         <!-- Navigation Buttons -->

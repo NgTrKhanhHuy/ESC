@@ -376,3 +376,8 @@ footer {
     text-align: center;
     padding: 10px 0;
 }
+/* Chỉ hiển thị menu Quản lý Đơn hàng khi hover vào Quản lý */
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0; /* Đảm bảo không bị lệch */
+}

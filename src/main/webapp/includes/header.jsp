@@ -14,7 +14,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
     <div class="container-fluid">
       <!-- Logo -->
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="home">
         <i class="fas fa-store"></i> MyShop
       </a>
       <!-- Toggle button for mobile view -->
@@ -35,10 +35,15 @@
               <i class="fas fa-box"></i> Products
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fas fa-tags"></i> Categories
             </a>
+            <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+              <li><a class="dropdown-item" href="product?category=laptop">Laptop</a></li>
+              <li><a class="dropdown-item" href="product?category=phone">Phone</a></li>
+              <li><a class="dropdown-item" href="product?category=tablet">Tablet</a></li>
+            </ul>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">
@@ -73,7 +78,7 @@
               </c:if>
               <c:if test="${not empty sessionScope.user}">
                 <li><a class="dropdown-item" href="user"><i class="fas fa-user-circle"></i>  ${sessionScope.user.username}</a></li>
-                <li><a class="dropdown-item" href="#"><i class="fas fa-box"></i> Orders</a></li>
+                <li><a class="dropdown-item" href="order-list"><i class="fas fa-box"></i> Orders</a></li>
                 <li><a class="dropdown-item" href="logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
               </c:if>
             </ul>

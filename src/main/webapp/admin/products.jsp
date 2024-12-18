@@ -17,9 +17,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+  <jsp:include page="admin_header.jsp" />
 <div class="container mt-5">
-    <h2>Quản lý Sản phẩm</h2>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="manageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Quản lý Sản phẩm
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="manageDropdown">
+            <!-- Quản lý sản phẩm (luôn hiển thị) -->
+            <li><a class="dropdown-item" href="home">Quản lý Sản phẩm</a></li>
 
+            <!-- Quản lý đơn hàng (hiển thị khi hover vào Quản lý) -->
+            <li><a class="dropdown-item" href="order-list">Quản lý Đơn hàng</a></li>
+        </ul>
+    </li>
     <!-- Tìm kiếm -->
     <div class="mb-3">
         <input type="text" id="search" class="form-control" placeholder="Tìm kiếm sản phẩm...">
@@ -203,7 +214,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary" onclick="return saveProduct()" >Lưu</button>
+                <button type="button" class="btn btn-primary" onclick="saveProduct()" >Lưu</button>
             </div>
         </div>
     </div>
@@ -276,39 +287,14 @@
     </div>
 </div>
 
+  <jsp:include page="admin_footer.jsp" />
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     //  Hàm lưu sản phẩm mới (thêm sản phẩm)
-    // function saveProduct() {
-    //     const form = document.getElementById('addProductForm');
-    //     const formData = new FormData(form);
-    //
-    //     // Gửi dữ liệu form qua AJAX
-    //     fetch('addProduct', {
-    //         method: 'POST',
-    //         body: formData
-    //     })
-    //         .then(response => response.text())  // Đọc phản hồi từ server dưới dạng text
-    //         .then(responseText => {
-    //             alert(responseText); // Hiển thị thông báo từ server
-    //             if (responseText.includes("Sản phẩm đã được thêm thành công")) {
-    //                 window.location.reload(); // Reload trang sản phẩm nếu thành công
-    //             }
-    //         })
-    //         .catch(error => {
-    //             console.error('Lỗi:', error);
-    //             alert('Có lỗi xảy ra');
-    //         });
-    // }
-
     function saveProduct() {
         const form = document.getElementById('addProductForm');
-        // Check if form is valid before submitting
-        if (!validateProductForm()) {
-            return; // Prevent form submission if validation fails
-        }
-
         const formData = new FormData(form);
 
         // Gửi dữ liệu form qua AJAX
@@ -327,37 +313,6 @@
                 console.error('Lỗi:', error);
                 alert('Có lỗi xảy ra');
             });
-    }
-
-    function validateProductForm() {
-        const form = document.getElementById('addProductForm');
-        let isValid = true;
-
-        // Check each required field for emptiness
-        const requiredFields = ['productName', 'productPrice', 'productDescription', 'productCategory', 'productImage', 'discountPercentage', 'stock'];
-        for (const field of requiredFields) {
-            const inputElement = document.getElementById(field);
-            if (!inputElement.value.trim()) {
-
-                isValid = false;
-
-                inputElement.classList.add('is-invalid'); // Add Bootstrap class for invalid field
-
-                // Display error message (optional)
-                const errorMessage = document.createElement('div');
-                errorMessage.classList.add('invalid-feedback');
-                errorMessage.textContent = 'Trường này không được để trống.';
-                inputElement.parentElement.appendChild(errorMessage);
-            } else {
-                inputElement.classList.remove('is-invalid'); // Remove invalid class if field is filled
-                const errorMessage = inputElement.parentElement.querySelector('.invalid-feedback');
-                if (errorMessage) {
-                    errorMessage.remove(); // Remove error message if previously displayed
-                }
-            }
-        }
-
-        return isValid; // Return true if all required fields are valid, false otherwise
     }
 
    // Hàm mở modal sửa sản phẩm

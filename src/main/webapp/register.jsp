@@ -113,7 +113,7 @@
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Register</button>
                     </form>
-                    <p class="mt-3">Already have an account? <a href="login.html">Login</a>.</p>
+                    <p class="mt-3">Already have an account? <a href="login">Login</a>.</p>
                 </div>
             </div>
         </div>
