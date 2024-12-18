@@ -17,6 +17,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+  <jsp:include page="admin_header.jsp" />
 <div class="container mt-5">
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="manageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -269,6 +270,8 @@
         </div>
     </div>
 </div>
+
+  <jsp:include page="admin_footer.jsp" />
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
