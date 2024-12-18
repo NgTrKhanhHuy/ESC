@@ -20,7 +20,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 @WebServlet("/admin/home")
 public class HomeControl extends HttpServlet {
-    private static final int PAGE_SIZE = 5; // Số sản phẩm mỗi trang
+    private static final int PAGE_SIZE = 10; // Số sản phẩm mỗi trang
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

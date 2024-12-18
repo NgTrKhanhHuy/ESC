@@ -18,8 +18,18 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h2>Quản lý Sản phẩm</h2>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="manageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Quản lý Sản phẩm
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="manageDropdown">
+            <!-- Quản lý sản phẩm (luôn hiển thị) -->
+            <li><a class="dropdown-item" href="home">Quản lý Sản phẩm</a></li>
 
+            <!-- Quản lý đơn hàng (hiển thị khi hover vào Quản lý) -->
+            <li><a class="dropdown-item" href="order-list">Quản lý Đơn hàng</a></li>
+        </ul>
+    </li>
     <!-- Tìm kiếm -->
     <div class="mb-3">
         <input type="text" id="search" class="form-control" placeholder="Tìm kiếm sản phẩm...">
