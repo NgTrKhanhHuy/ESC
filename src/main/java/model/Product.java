@@ -1,5 +1,6 @@
 package model;
 
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
@@ -116,6 +117,5 @@ public class Product {
     public void setName(String name) {
         this.name = name;
     }
-
 }
 

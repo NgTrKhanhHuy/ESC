@@ -26,6 +26,18 @@
 <!-- Header -->
 <jsp:include page="includes/header.jsp" />
 
+<!-- Category Filter Section -->
+<section class="container mt-4">
+    <form action="product" method="get" class="d-flex justify-content-between">
+        <select name="category" class="form-select" aria-label="Filter by Category">
+            <option value="" selected>All Categories</option>
+            <c:forEach var="category" items="${categories}">
+                <option value="${category}" ${category == param.category ? 'selected' : ''}>${category}</option>
+            </c:forEach>
+        </select>
+        <button type="submit" class="btn btn-primary">Filter</button>
+    </form>
+</section>
 
 <!-- Product List -->
 <section class="container mt-5">

@@ -36,7 +36,7 @@
                 <input type="hidden" name="productId" value="${product.productId}"/>
                 <div class="mb-3">
                     <label for="quantity" class="form-label">Quantity</label>
-                    <input type="number" name="quantity" id="quantity" class="form-control" value="1" min="1"/>
+                    <input type="number" name="quantity" id="quantity" class="form-control" value="1" min="1" style="width: 150px"/>
                 </div>
                 <button type="submit" class="btn btn-primary">Add to Cart</button>
             </form>
