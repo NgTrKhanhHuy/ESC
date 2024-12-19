@@ -27,17 +27,18 @@
 <jsp:include page="includes/header.jsp" />
 
 <!-- Category Filter Section -->
-<section class="container mt-4">
-    <form action="product" method="get" class="d-flex justify-content-between">
-        <select name="category" class="form-select" aria-label="Filter by Category">
-            <option value="" selected>All Categories</option>
-            <c:forEach var="category" items="${categories}">
-                <option value="${category}" ${category == param.category ? 'selected' : ''}>${category}</option>
-            </c:forEach>
-        </select>
-        <button type="submit" class="btn btn-primary">Filter</button>
-    </form>
-</section>
+<%--<section class="container mt-4">--%>
+<%--    <form action="product" method="get" class="d-flex justify-content-between">--%>
+<%--        <select name="category" class="form-select" aria-label="Filter by Category">--%>
+<%--&lt;%&ndash;                <option value="" selected>All Categories</option>&ndash;%&gt;--%>
+<%--            <c:forEach var="category" items="${categories}">--%>
+<%--                <option value="${category}" ${category == param.category ? 'selected' : ''}>${category}</option>--%>
+<%--            </c:forEach>--%>
+<%--        </select>--%>
+<%--        <input type="text" class="form-control" name="search" placeholder="Search products..." value="${param.search}">--%>
+<%--        <button type="submit" class="btn btn-primary">Filter</button>--%>
+<%--    </form>--%>
+<%--</section>--%>
 
 <!-- Product List -->
 <section class="container mt-5">
@@ -79,15 +80,15 @@
             <nav>
                 <ul class="pagination">
                     <c:if test="${currentPage > 1}">
-                        <li class="page-item"><a class="page-link" href="?page=${currentPage - 1}">Trang trước</a></li>
+                        <li class="page-item"><a class="page-link" href="?page=${currentPage - 1}&search=${param.search}&category=${param.category}">Trang trước</a></li>
                     </c:if>
                     <c:forEach var="i" begin="1" end="${totalPages}">
                         <li class="page-item ${i == currentPage ? 'active' : ''}">
-                            <a class="page-link" href="?page=${i}">${i}</a>
+                            <a class="page-link" href="?page=${i}&search=${param.search}&category=${param.category}">${i}</a>
                         </li>
                     </c:forEach>
                     <c:if test="${currentPage < totalPages}">
-                        <li class="page-item"><a class="page-link" href="?page=${currentPage + 1}">Trang sau</a></li>
+                        <li class="page-item"><a class="page-link" href="?page=${currentPage + 1}&search=${param.search}&category=${param.category}">Trang sau</a></li>
                     </c:if>
                 </ul>
             </nav>

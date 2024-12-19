@@ -57,8 +57,9 @@
           </li>
         </ul>
         <!-- Search form -->
-        <form class="d-flex mx-auto search-bar" role="search" method="get" action="product">
+        <form class="d-flex mx-auto search-bar" method="get" action="product">
           <input class="form-control me-2" type="text" name="search" value="${param.search}" placeholder="Search products..." aria-label="Search">
+<%--          <input type="hidden" name="category" value="${param.category}"> <!-- Giữ lại category -->--%>
           <button class="btn btn-outline-success" type="submit">
             <i class="fas fa-search"></i>
           </button>

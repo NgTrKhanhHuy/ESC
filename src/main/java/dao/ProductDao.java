@@ -99,6 +99,7 @@ public class ProductDao {
         List<Product> list = new ArrayList<>();
         String query = "SELECT * FROM product WHERE name LIKE ? ORDER BY product_id LIMIT ? OFFSET ?";
         try {
+            keyword = keyword.replace(" ", "%"); // Thay thế dấu cách bằng ký tự đại diện '%'
             conn = new DBConnection().getConnection();
             ps = conn.prepareStatement(query);
             ps.setString(1, "%" + keyword + "%"); // Tìm kiếm theo tên sản phẩm
@@ -319,37 +320,63 @@ public class ProductDao {
 //    }
 //}
 
-            ProductDao productDao = new ProductDao();
+//            ProductDao productDao = new ProductDao();
+//
+//            // ID của sản phẩm cần kiểm tra
+//            int productId = 2; // Thay đổi ID sản phẩm nếu cần
+//
+//            // Trước khi cập nhật, lấy thông tin sản phẩm để kiểm tra số lượng
+//            Product productBefore = productDao.getProductByID(productId);
+//            if (productBefore != null) {
+//                System.out.println("Sản phẩm trước khi cập nhật stock:");
+//                System.out.println("ID: " + productBefore.getProductId());
+//                System.out.println("Tên: " + productBefore.getName());
+//                System.out.println("Stock: " + productBefore.getStock());
+//            } else {
+//                System.out.println("Sản phẩm không tồn tại!");
+//                return;
+//            }
+//
+//            // Cập nhật stock của sản phẩm
+//            int newStock = 3; // Cập nhật số lượng còn lại là 2
+//            productDao.updateProductStock(productId, newStock);
+//
+//            // Lấy lại thông tin sản phẩm sau khi cập nhật
+//            Product productAfter = productDao.getProductByID(productId);
+//            if (productAfter != null) {
+//                System.out.println("\nSản phẩm sau khi cập nhật stock:");
+//                System.out.println("ID: " + productAfter.getProductId());
+//                System.out.println("Tên: " + productAfter.getName());
+//                System.out.println("Stock: " + productAfter.getStock());
+//            } else {
+//                System.out.println("Sản phẩm không tồn tại sau khi cập nhật!");
+//            }
+//        }
 
-            // ID của sản phẩm cần kiểm tra
-            int productId = 2; // Thay đổi ID sản phẩm nếu cần
+        // Khởi tạo đối tượng ProductDao để gọi phương thức getTotalProductBySearch
+        // Tạo đối tượng ProductDao
+        ProductDao productDao = new ProductDao();
 
-            // Trước khi cập nhật, lấy thông tin sản phẩm để kiểm tra số lượng
-            Product productBefore = productDao.getProductByID(productId);
-            if (productBefore != null) {
-                System.out.println("Sản phẩm trước khi cập nhật stock:");
-                System.out.println("ID: " + productBefore.getProductId());
-                System.out.println("Tên: " + productBefore.getName());
-                System.out.println("Stock: " + productBefore.getStock());
-            } else {
-                System.out.println("Sản phẩm không tồn tại!");
-                return;
-            }
+        // Thử tìm kiếm sản phẩm với từ khóa "laptop", lấy 12 sản phẩm mỗi trang, và đang ở trang 1
+        String keyword = "Product 12"; // Thay đổi từ khóa tìm kiếm nếu cần
+        int total = 12;            // Số sản phẩm mỗi trang
+        int page = 1;              // Trang hiện tại
 
-            // Cập nhật stock của sản phẩm
-            int newStock = 3; // Cập nhật số lượng còn lại là 2
-            productDao.updateProductStock(productId, newStock);
+        // Lấy danh sách sản phẩm tìm kiếm theo từ khóa
+        List<Product> products = productDao.searchProductPaging(keyword, total, page);
 
-            // Lấy lại thông tin sản phẩm sau khi cập nhật
-            Product productAfter = productDao.getProductByID(productId);
-            if (productAfter != null) {
-                System.out.println("\nSản phẩm sau khi cập nhật stock:");
-                System.out.println("ID: " + productAfter.getProductId());
-                System.out.println("Tên: " + productAfter.getName());
-                System.out.println("Stock: " + productAfter.getStock());
-            } else {
-                System.out.println("Sản phẩm không tồn tại sau khi cập nhật!");
+        // In kết quả ra console
+        if (products.isEmpty()) {
+            System.out.println("Không có sản phẩm nào tìm thấy.");
+        } else {
+            // In thông tin sản phẩm ra console
+            for (Product product : products) {
+                System.out.println("------------ Product Details ------------");
+                System.out.println(product.toString()); // Gọi phương thức toString để in thông tin sản phẩm
+                System.out.println("----------------------------------------");
             }
         }
+    }
+
 
 }

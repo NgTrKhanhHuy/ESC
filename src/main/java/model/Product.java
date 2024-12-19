@@ -117,5 +117,15 @@ public class Product {
     public void setName(String name) {
         this.name = name;
     }
+    public String toString() {
+        return "Product ID: " + productId + "\n" +
+                "Name: " + name + "\n" +
+                "Description: " + description + "\n" +
+                "Price: " + price + "\n" +
+                "Quantity: " + stock + "\n" +
+                "Category: " + category + "\n" +
+                "Created At: " + createdAt + "\n" +
+                "Discount: " + discountPercentage + "\n";
+    }
 }
 
