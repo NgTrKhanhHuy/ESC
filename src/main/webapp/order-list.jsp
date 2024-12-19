@@ -22,8 +22,8 @@
 
 <!-- Header -->
 <jsp:include page="includes/header.jsp" />
-
-<section class="container mt-5">
+<section class="content">
+<div class="container mt-5">
     <h2 class="text-center">Order List</h2>
 
     <!-- Hiển thị thông báo nếu không có đơn hàng -->
@@ -76,6 +76,7 @@
             </tbody>
         </table>
     </div>
+</div>
 </section>
 
 <!-- Footer -->

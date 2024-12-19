@@ -21,39 +21,12 @@ import java.util.ResourceBundle;
 public class LoginControl extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Lấy trang trước từ Referer hoặc mặc định về trang chủ
-        String referer = request.getHeader("Referer");
-        if (referer == null || referer.isEmpty()) {
-            referer = request.getContextPath() + "/home";
-        }
-        HttpSession session = request.getSession();
-
-        String lang = (String) session.getAttribute("lang");
-        if (lang == null) {
-            lang = "en";  // Mặc định là tiếng Anh nếu không có ngôn ngữ trong application scope
-        }
-        // Đặt locale theo ngôn ngữ người dùng chọn
-        Locale locale = new Locale(lang);
-       session.setAttribute("local",locale);
-
-        // Encode URL để hoạt động với session
-//        String encodedReferer = response.encodeURL(referer);
-
-        // Lưu vào session để sử dụng sau khi đăng nhập
-        session.setAttribute("previousPage", referer);
-        System.out.println("Previous page from session: " + session.getAttribute("previousPage"));
-
-
-        // Chuyển đến trang login.jsp
+        // Chỉ đơn giản tải trang login.jsp
         request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
-
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-
-        HttpSession session = request.getSession(false);
 
 
         String username = request.getParameter("username");
@@ -64,7 +37,7 @@ public class LoginControl extends HttpServlet{
         //User user = userDAO.getUserByUsername(username);
       //  ResourceBundle messages = ResourceBundle.getBundle("messages", Locale.getDefault());
         // Lấy ngôn ngữ từ application scope
-        String lang = (String) session.getAttribute("lang");
+        String lang = (String) getServletContext().getAttribute("lang");
         if (lang == null) {
             lang = "en";  // Mặc định là tiếng Anh nếu không có ngôn ngữ trong application scope
         }
@@ -74,6 +47,7 @@ public class LoginControl extends HttpServlet{
 
 
         if (user != null && BCrypt.checkpw(password, user.getPassword())) {
+            HttpSession session = request.getSession();
 
             session.setAttribute("user", user);
 
@@ -86,26 +60,20 @@ public class LoginControl extends HttpServlet{
             int totalItems = cartDao.getTotalItems(cart.getId());
             session.setAttribute("totalItems", totalItems);
             // Kiểm tra nếu có URL yêu cầu được lưu trong session (trường hợp người dùng truy cập trang yêu cầu đăng nhập trước đó)
-            // Lấy trang trước khi đăng nhập từ session
-            String previousPage = (String) session.getAttribute("previousPage");
-
-            if (previousPage == null || previousPage.isEmpty()) {
-                previousPage = request.getContextPath() + "/home";
-            }         //chuyển hướng đến trang trước khi đăng nhập
+            String redirectUrl = (String) session.getAttribute("redirectUrl");
+            //chuyển hướng đến trang trước khi đăng nhập
 //        if (redirectUrl != null){
 //            response.sendRedirect(response.encodeRedirectURL(redirectUrl));
 //
 //        }else {
 //            // Phân quyền
             if (user.getRole().equals(Role.ADMIN)) {
-                response.sendRedirect(request.getContextPath()+"/admin/home");
+                response.sendRedirect(response.encodeRedirectURL(request.getContextPath()+"/admin/home"));
             } else {
             //   request.getRequestDispatcher("/home").forward(request, response);
 //                response.sendRedirect( "home");
-                response.sendRedirect(previousPage);
-                System.out.println("Previous page from session: " + session.getAttribute("previousPage"));
-
-                System.out.println(session.getAttribute("user"));
+            response.sendRedirect(response.encodeRedirectURL(request.getContextPath()+"/home"));
+            System.out.println(session.getAttribute("user"));
             }
     //    }
         } else {
