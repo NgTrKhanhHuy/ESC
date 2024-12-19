@@ -7,8 +7,9 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
     <meta charset="UTF-8">
@@ -25,6 +26,8 @@
 <jsp:include page="includes/header.jsp" />
 
 <!-- Navigation Bar -->
+<fmt:setLocale value="${sessionScope.lang != null ? sessionScope.lang : 'en'}" />
+<fmt:setBundle basename="messages" />
 
 <!-- Login Form -->
 <section class="login-page">
@@ -32,23 +35,23 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card shadow-lg p-4">
-                    <h2 class="text-center mb-4">Login</h2>
+                    <h2 class="text-center mb-4"><fmt:message key="login.title" /></h2>
                     <c:if test="${not empty error}">
                         <p style="color: red;">${error}</p>
                     </c:if>
                     <form action="login" method="POST">
                         <div class="mb-3">
-                            <label for="loginUsername" class="form-label">User name</label>
+                            <label for="loginUsername" class="form-label"><fmt:message key="login.username" /></label>
                             <input type="text" class="form-control" id="loginUsername" name="username" required>
                         </div>
                         <div class="mb-3">
-                            <label for="loginPassword" class="form-label">Password</label>
+                            <label for="loginPassword" class="form-label"><fmt:message key="login.password" /></label>
                             <input type="password" class="form-control" id="loginPassword" name="password" required>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                        <button type="submit" class="btn btn-primary w-100"><fmt:message key="login.title" /></button>
                     </form>
-                    <p class="mt-3">Don't have an account? <a href="register">Register</a>.</p>
-                    <p class="mt-3">forgot password? <a href="forgot-password">Forgot Password</a>.</p>
+                    <p class="mt-3"><fmt:message key="login.text1" /><a href="register"><fmt:message key="login.link1" /></a>.</p>
+                    <p class="mt-3"><fmt:message key="login.text2" /> <a href="forgot-password"><fmt:message key="login.link2" /></a>.</p>
 
                 </div>
             </div>

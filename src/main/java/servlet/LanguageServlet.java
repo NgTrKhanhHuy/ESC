@@ -13,8 +13,8 @@ public class LanguageServlet extends HttpServlet {
         String lang = request.getParameter("lang");
 
         if (lang != null) {
-            // Lưu ngôn ngữ vào application scope
-            getServletContext().setAttribute("lang", lang);
+            // Lưu ngôn ngữ vào session scope
+            request.getSession().setAttribute("lang", lang);
         }
 
         // Chuyển hướng về trang trước đó hoặc trang home sau khi thay đổi ngôn ngữ
