@@ -39,9 +39,32 @@
 <%--        <button type="submit" class="btn btn-primary">Filter</button>--%>
 <%--    </form>--%>
 <%--</section>--%>
+<!-- Search and Sort Form -->
+<div class="container mt-5">
+    <form action="product" method="get" class="d-flex justify-content-center align-items-center gap-3">
+        <!-- Tìm kiếm sản phẩm -->
+<%--        <div class="col-md-6">--%>
+<%--            <input type="text" name="search" class="form-control" placeholder="Tìm kiếm sản phẩm..." value="${search}">--%>
+<%--        </div>--%>
+
+        <!-- Sắp xếp theo giá -->
+        <div class="col-md-4">
+            <select name="sort" class="form-select">
+                <option value="asc" ${sort == 'asc' ? 'selected' : ''}>Sắp xếp theo giá tăng dần</option>
+                <option value="desc" ${sort == 'desc' ? 'selected' : ''}>Sắp xếp theo giá giảm dần</option>
+            </select>
+        </div>
+
+        <!-- Nút tìm kiếm -->
+        <div class="col-md-2" style="width: 130px">
+            <input type="submit" value="Tìm kiếm" class="btn btn-primary w-100">
+        </div>
+    </form>
+</div>
 
 <!-- Product List -->
 <section class="container mt-5">
+
     <h2 class="text-center">All Products</h2>
     <div class="row">
         <c:forEach var="product" items="${prod}">

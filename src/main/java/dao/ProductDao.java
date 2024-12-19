@@ -62,12 +62,10 @@ public class ProductDao {
         return (int) Math.ceil((double) totalProduct / pageSize);
     }
 
-    public List<Product> getAllProductPaging(int page, int total) {
+    public List<Product> getAllProductPaging(int page, int total ) {
         List<Product> list = new ArrayList<>();
-        String query = "SELECT * \n" +
-                "FROM product\n" +
-                "ORDER BY product_id\n" +
-                "LIMIT ? OFFSET ?\n";
+        String query = "SELECT * FROM product ORDER BY product_id LIMIT ? OFFSET ?";
+
         try {
             conn = new DBConnection().getConnection();
             ps = conn.prepareStatement(query);
@@ -126,6 +124,7 @@ public class ProductDao {
         }
         return list;
     }
+
     // Lấy tổng số sản phẩm dựa trên từ khóa tìm kiếm
     public int getTotalProductBySearch(String keyword) {
         String query = "SELECT count(*) FROM product WHERE name LIKE ?";
@@ -270,113 +269,103 @@ public class ProductDao {
             throw new RuntimeException(e);
         }
     }
-
+    public List<Product> getAllProductPagingSorted(int page, int total, String sortProduct) {
+        List<Product> list = new ArrayList<>();
+        String query = "SELECT * FROM product ORDER BY price " + sortProduct.toUpperCase() + " LIMIT ? OFFSET ?";
+        try {
+            conn = new DBConnection().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, total);
+            ps.setInt(2, (page - 1) * total);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product(
+                        rs.getInt(1), rs.getString(2), rs.getString(3),
+                        rs.getBigDecimal(4), rs.getInt(5), rs.getString(6),
+                        rs.getString(7), rs.getTimestamp(8), rs.getBigDecimal(9)
+                );
+                list.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    public List<Product> getProductByCategoryPagingSorted(String category, int page, int total, String sortProduct) {
+        List<Product> list = new ArrayList<>();
+        String query = "SELECT * FROM product WHERE category = ? ORDER BY price " + sortProduct.toUpperCase() + " LIMIT ? OFFSET ?";
+        try {
+            conn = new DBConnection().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, category);
+            ps.setInt(2, total);
+            ps.setInt(3, (page - 1) * total);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product(
+                        rs.getInt(1), rs.getString(2), rs.getString(3),
+                        rs.getBigDecimal(4), rs.getInt(5), rs.getString(6),
+                        rs.getString(7), rs.getTimestamp(8), rs.getBigDecimal(9)
+                );
+                list.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    public List<Product> searchProductPagingSort(String keyword, int total, int page, String sortProduct) {
+        List<Product> list = new ArrayList<>();
+        String query = "SELECT * FROM product WHERE name LIKE ? ORDER BY price " + sortProduct.toUpperCase() + " LIMIT ? OFFSET ?";
+        try {
+            conn = new DBConnection().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, "%" + keyword + "%");
+            ps.setInt(2, total);
+            ps.setInt(3, (page - 1) * total);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Product product = new Product(
+                        rs.getInt(1), rs.getString(2), rs.getString(3),
+                        rs.getBigDecimal(4), rs.getInt(5), rs.getString(6),
+                        rs.getString(7), rs.getTimestamp(8), rs.getBigDecimal(9)
+                );
+                list.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
     public static void main(String[] args) {
-//    ProductDao dao = new ProductDao();
-//
-//    int page = 1;  // Ví dụ lấy trang 1
-//    int pageSize = 5;  // Ví dụ mỗi trang có 5 sản phẩm
-//
-////     Lấy danh sách sản phẩm phân trang
-//    List<Product> product = dao.getAllProductPaging(page, pageSize);
-////    List<Product> product = dao.getAllProduct();
-//
-//
-////     Kiểm tra và in ra kết quả
-//    if (product.isEmpty()) {
-//        System.out.println("Không có sản phẩm nào.");
-//    } else {
-//        System.out.println("Danh sách sản phẩm trang " + page);
-//        for (Product products : product) {
-//            System.out.println(products);  // In ra thông tin từng sản phẩm
-//        }
-//    }
-//}
+        // Thực hiện kiểm tra với các tham số
+        String keyword = "Product";
+        int page = 1;              // Trang hiện tại
+        int total = 10;            // Số sản phẩm mỗi trang
+        String sortProduct = "desc"; // Sắp xếp theo giá tăng dần ("asc" hoặc "desc")
 
-
-//
-//    ProductDao productDao = new ProductDao();
-//
-//    // ID của sản phẩm cần kiểm tra (Thay bằng ID sản phẩm thực tế trong cơ sở dữ liệu của bạn)
-//    int productId = 1; // Giả sử bạn muốn lấy sản phẩm có ID = 1
-//
-//    // Gọi phương thức getProductByID để lấy thông tin sản phẩm theo ID
-//    Product product = productDao.getProductByID(productId);
-//
-//    // Kiểm tra kết quả và in thông tin sản phẩm
-//    if (product != null) {
-//        System.out.println("Sản phẩm tìm thấy:");
-//        System.out.println("ID: " + product.getProductId());
-//        System.out.println("Tên: " + product.getName());
-//        System.out.println("Mô tả: " + product.getDescription());
-//        System.out.println("Giá: " + product.getPrice());
-//
-//
-//        System.out.println("Loại sản phẩm: " + product.getCategory());
-//        System.out.println("Ngày tạo: " + product.getCreatedAt());
-//
-//    } else {
-//        System.out.println("Không tìm thấy sản phẩm với ID: " + productId);
-//    }
-//}
-
-//            ProductDao productDao = new ProductDao();
-//
-//            // ID của sản phẩm cần kiểm tra
-//            int productId = 2; // Thay đổi ID sản phẩm nếu cần
-//
-//            // Trước khi cập nhật, lấy thông tin sản phẩm để kiểm tra số lượng
-//            Product productBefore = productDao.getProductByID(productId);
-//            if (productBefore != null) {
-//                System.out.println("Sản phẩm trước khi cập nhật stock:");
-//                System.out.println("ID: " + productBefore.getProductId());
-//                System.out.println("Tên: " + productBefore.getName());
-//                System.out.println("Stock: " + productBefore.getStock());
-//            } else {
-//                System.out.println("Sản phẩm không tồn tại!");
-//                return;
-//            }
-//
-//            // Cập nhật stock của sản phẩm
-//            int newStock = 3; // Cập nhật số lượng còn lại là 2
-//            productDao.updateProductStock(productId, newStock);
-//
-//            // Lấy lại thông tin sản phẩm sau khi cập nhật
-//            Product productAfter = productDao.getProductByID(productId);
-//            if (productAfter != null) {
-//                System.out.println("\nSản phẩm sau khi cập nhật stock:");
-//                System.out.println("ID: " + productAfter.getProductId());
-//                System.out.println("Tên: " + productAfter.getName());
-//                System.out.println("Stock: " + productAfter.getStock());
-//            } else {
-//                System.out.println("Sản phẩm không tồn tại sau khi cập nhật!");
-//            }
-//        }
-
-        // Khởi tạo đối tượng ProductDao để gọi phương thức getTotalProductBySearch
-        // Tạo đối tượng ProductDao
+        // Tạo đối tượng ProductDao để gọi phương thức getAllProductPagingSorted
         ProductDao productDao = new ProductDao();
 
-        // Thử tìm kiếm sản phẩm với từ khóa "laptop", lấy 12 sản phẩm mỗi trang, và đang ở trang 1
-        String keyword = "Product 12"; // Thay đổi từ khóa tìm kiếm nếu cần
-        int total = 12;            // Số sản phẩm mỗi trang
-        int page = 1;              // Trang hiện tại
+        // Gọi phương thức lấy sản phẩm với sắp xếp theo giá
+        List<Product> productList = productDao.searchProductPagingSort(keyword,total,page,sortProduct);
 
-        // Lấy danh sách sản phẩm tìm kiếm theo từ khóa
-        List<Product> products = productDao.searchProductPaging(keyword, total, page);
-
-        // In kết quả ra console
-        if (products.isEmpty()) {
-            System.out.println("Không có sản phẩm nào tìm thấy.");
+        // Kiểm tra và in ra kết quả
+        if (productList.isEmpty()) {
+            System.out.println("Không có sản phẩm nào được tìm thấy!");
         } else {
-            // In thông tin sản phẩm ra console
-            for (Product product : products) {
-                System.out.println("------------ Product Details ------------");
-                System.out.println(product.toString()); // Gọi phương thức toString để in thông tin sản phẩm
-                System.out.println("----------------------------------------");
+            System.out.println("Danh sách sản phẩm (sắp xếp theo giá " + sortProduct + "): ");
+            for (Product product : productList) {
+                System.out.println("ID: " + product.getProductId() +
+                        ", Tên: " + product.getName() +
+                        ", Giá: " + product.getPrice() +
+                        ", Danh mục: " + product.getCategory());
             }
         }
     }
+    }
 
 
-}
+
+
+

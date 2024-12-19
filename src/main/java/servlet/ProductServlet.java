@@ -26,6 +26,8 @@
                 String category = request.getParameter("category");
                 // Lấy từ khóa tìm kiếm từ request (nếu có)
                 String keyword = request.getParameter("search");
+                //lay tham so sap xep tang dan
+                String productSort = request.getParameter("sort");
 
                 // Tạo đối tượng ProductDao để truy vấn sản phẩm
                 ProductDao productDao = new ProductDao();
@@ -39,20 +41,36 @@
                     //neu co tim kiem ,lay san pham theo tu khoa
                     totalProducts = productDao.getTotalProductBySearch(keyword);
                     totalPages = (int) Math.ceil((double) totalProducts / PRODUCTS_PER_PAGE);
-                    products = productDao.searchProductPaging(keyword, PRODUCTS_PER_PAGE, page);
-                    System.out.println("Keyword: " + keyword);
-                }else
+//                    products = productDao.searchProductPaging(keyword, PRODUCTS_PER_PAGE, page);
+                    // Gọi phương thức sắp xếp theo từ khóa và theo sắp xếp giá
+                    if ("desc".equalsIgnoreCase(productSort)) {
+                        products = productDao.searchProductPagingSort(keyword,PRODUCTS_PER_PAGE,page,"desc");
+                } else {
+                        products = productDao.searchProductPagingSort(keyword, PRODUCTS_PER_PAGE, page, "asc");
+                    }
 
-                if (category != null && !category.isEmpty()) {
+
+               } else if (category != null && !category.isEmpty()) {
                     totalProducts = productDao.getTotalProductByCategory(category);
                     totalPages = (int) Math.ceil((double) totalProducts / PRODUCTS_PER_PAGE);
-                    products = productDao.getProductByCategoryPaging(category, page, PRODUCTS_PER_PAGE);
+//                    products = productDao.getProductByCategoryPaging(category, page, PRODUCTS_PER_PAGE);
+                    if ("desc".equalsIgnoreCase(productSort)) {
+                        products = productDao.getProductByCategoryPagingSorted(category, page, PRODUCTS_PER_PAGE, "desc");
+                    } else {
+                        products = productDao.getProductByCategoryPagingSorted(category, page, PRODUCTS_PER_PAGE, "asc");
+                    }
                 } else {
                     // Nếu không có category, hiển thị tất cả sản phẩm
                     totalProducts = productDao.getTotalProduct();
                     totalPages = (int) Math.ceil((double) totalProducts / PRODUCTS_PER_PAGE);
-                    products = productDao.getAllProductPaging(page, PRODUCTS_PER_PAGE);
+//                    products = productDao.getAllProductPaging(page, PRODUCTS_PER_PAGE);
+                    if ("desc".equalsIgnoreCase(productSort)) {
+                        products = productDao.getAllProductPagingSorted(page, PRODUCTS_PER_PAGE, "desc");
+                    } else {
+                        products = productDao.getAllProductPagingSorted(page, PRODUCTS_PER_PAGE, "asc");
+                    }
                 }
+
 
 
 
@@ -66,6 +84,7 @@
                 request.setAttribute("totalPages", totalPages);
                 request.setAttribute("category", category);  // Truyền thông tin category vào JSP
                 request.setAttribute("search", keyword); // Truyền từ khóa tìm kiếm vào JSP
+                request.setAttribute("sort", productSort);  // Truyền tham số sort vào JSP
 
                 // Forward đến product.jsp để hiển thị
                 request.getRequestDispatcher("product.jsp").forward(request, response);
