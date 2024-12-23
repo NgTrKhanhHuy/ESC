@@ -18,11 +18,12 @@
 
 <!-- Header -->
 <jsp:include page="includes/header.jsp" />
-
+<fmt:setLocale value="${sessionScope.lang != null ? sessionScope.lang : 'en'}" />
+<fmt:setBundle basename="messages" />
 <!-- Shopping Cart Section -->
 <section class="content">
 <div class="container mt-5">
-    <h2 class="text-center">Shopping Cart</h2>
+    <h2 class="text-center"><fmt:message key="cart.title" /></h2>
     <c:if test="${not empty error}">
         <p style="color: red;">${error}</p>
     </c:if>
@@ -31,12 +32,12 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col">Product</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Price</th>
-                <th scope="col">DiscountPercentage</th>
-                <th scope="col">Total</th>
-                <th scope="col">Action</th>
+                <th scope="col"><fmt:message key="cart.products" /></th>
+                <th scope="col"><fmt:message key="cart.quantity" /></th>
+                <th scope="col"><fmt:message key="cart.price" /></th>
+                <th scope="col"><fmt:message key="cart.discount" /></th>
+                <th scope="col"><fmt:message key="cart.total" /></th>
+                <th scope="col"><fmt:message key="cart.action" /></th>
             </tr>
             </thead>
             <tbody>
@@ -51,7 +52,7 @@
 
                             <input type="hidden" name="productId" value="${prod.product.productId}" />
                             <input type="number" name="quantity" value="${prod.quantity}" class="form-control" min="1" style="width: 150px" />
-                            <button type="submit" class="btn btn-warning btn-sm" >Update</button>
+                            <button type="submit" class="btn btn-warning btn-sm" ><fmt:message key="cart.update" /></button>
                         </form>
                     </td>
                     <td><fmt:formatNumber value="${prod.product.price-(prod.product.price * (prod.product.discountPercentage/100))}" type="currency" currencySymbol="VND" minFractionDigits="0" maxFractionDigits="0"/></td>
@@ -61,7 +62,7 @@
                         <!-- Xóa sản phẩm khỏi giỏ -->
                         <form action="cart?action=remove" method="post" style="display:inline;">
                             <input type="hidden" name="productId" value="${prod.product.productId}" />
-                            <button type="submit" class="btn btn-danger">Remove</button>
+                            <button type="submit" class="btn btn-danger"><fmt:message key="cart.remove" /></button>
                         </form>
                     </td>
                 </tr>
@@ -69,16 +70,16 @@
             </tbody>
         </table>
 
-        <p><strong>Total: <fmt:formatNumber value="${cart.total}" type="currency" currencySymbol="VND" minFractionDigits="0" maxFractionDigits="0" /></strong></p>
+        <p><strong><fmt:message key="cart.total" />: <fmt:formatNumber value="${cart.total}" type="currency" currencySymbol="VND" minFractionDigits="0" maxFractionDigits="0" /></strong></p>
 
         <!-- Tiến hành thanh toán -->
-        <a href="checkout" class="btn btn-success">Proceed to Checkout</a>
+        <a href="checkout" class="btn btn-success"><fmt:message key="cart.checkout" /></a>
 
     </c:if>
 
     <!-- Nếu giỏ hàng rỗng -->
     <c:if test="${empty cart.items}">
-        <p class="text-center">Your cart is empty.</p>
+        <p class="text-center"><fmt:message key="cart.empty" /></p>
     </c:if>
 
 </div>

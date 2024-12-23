@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +39,8 @@
 </head>
 
 <body>
-
+<fmt:setLocale value="${sessionScope.lang != null ? sessionScope.lang : 'en'}" />
+<fmt:setBundle basename="messages" />
 <!-- Header -->
 <jsp:include page="includes/header.jsp" />
 
@@ -73,12 +75,12 @@
 <!--</nav>-->
 
 <!-- Registration Form -->
-<section class="register-page">
+<section class="register-page content" >
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card shadow-lg p-4">
-                    <h2 class="text-center mb-4">Register</h2>
+                    <h2 class="text-center mb-4"><fmt:message key="register.title" /></h2>
 
                     <!-- Hiển thị thông báo lỗi nếu có -->
                     <c:if test="${not empty error}">
@@ -86,34 +88,34 @@
                     </c:if>
                     <form id="registerForm" action="register" method="POST">
                         <div class="mb-3">
-                            <label for="registerName" class="form-label">Username</label>
+                            <label for="registerName" class="form-label"><fmt:message key="register.username" /></label>
                             <input type="text" class="form-control" id="registerName" name="username" required>
                         </div>
                         <div class="mb-3">
-                            <label for="registerEmail" class="form-label">Email address</label>
+                            <label for="registerEmail" class="form-label">Email </label>
                             <input type="email" class="form-control" id="registerEmail" name="email" required>
                         </div>
                         <div class="mb-3">
-                            <label for="registerPassword" class="form-label">Password</label>
+                            <label for="registerPassword" class="form-label"><fmt:message key="register.password" /></label>
                             <input type="password" class="form-control" id="registerPassword" name="password" required>
                             <span class="eye-icon" id="togglePassword">
                                 👁️
                              </span>
                         </div>
                         <div class="mb-3">
-                            <label for="confirmPassword" class="form-label">Repeat Password</label>
+                            <label for="confirmPassword" class="form-label"><fmt:message key="register.re_password" /></label>
                             <input type="password" class="form-control" id="confirmPassword" required>
 
-                            <p id="errorMessage" class="error">Mật khẩu không khớp.</p>
-                            <p id="successMessage" class="success">Mật khẩu khớp!</p>
+                            <p id="errorMessage" class="error"><fmt:message key="register.false_pass" /></p>
+                            <p id="successMessage" class="success"><fmt:message key="register.true_pass" /></p>
                         </div>
                         <div class="mb-3">
-                            <label for="registerPhone" class="form-label">Phone</label>
+                            <label for="registerPhone" class="form-label"><fmt:message key="register.phone" /></label>
                             <input type="number" class="form-control" id="registerPhone" name="phone" required>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Register</button>
+                        <button type="submit" class="btn btn-primary w-100"><fmt:message key="register.title" /></button>
                     </form>
-                    <p class="mt-3">Already have an account? <a href="login">Login</a>.</p>
+                    <p class="mt-3"><fmt:message key="register.text1" /> <a href="login"><fmt:message key="register.link1" /></a>.</p>
                 </div>
             </div>
         </div>

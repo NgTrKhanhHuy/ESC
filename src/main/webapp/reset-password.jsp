@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,13 +16,14 @@
 <body>
 
 <jsp:include page="includes/header.jsp" />
-
+<fmt:setLocale value="${sessionScope.lang != null ? sessionScope.lang : 'en'}" />
+<fmt:setBundle basename="messages" />
 <section class="reset-password-page content">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div class="card shadow-lg p-4">
-          <h2 class="text-center mb-4">Reset Your Password</h2>
+          <h2 class="text-center mb-4"> <fmt:message key="reset-pass.title" /></h2>
 
           <!-- Hiển thị thông báo -->
           <c:if test="${not empty error}">
@@ -35,19 +37,19 @@
             <input type="hidden" name="token" value="${token}" />
 
             <div class="mb-3">
-              <label for="password" class="form-label">New Password:</label>
+              <label for="password" class="form-label"><fmt:message key="reset-pass.newpass" /></label>
               <input type="password" class="form-control" id="password" name="password" required>
             </div>
             <div class="mb-3">
-              <label for="confirmPassword" class="form-label">Repeat Password:</label>
+              <label for="confirmPassword" class="form-label"><fmt:message key="reset-pass.repass" /></label>
               <input type="password" class="form-control" id="confirmPassword" required>
-              <p id="errorMessage" class="text-danger" style="display: none;">Passwords do not match.</p>
-              <p id="successMessage" class="text-success" style="display: none;">Passwords match!</p>
+              <p id="errorMessage" class="text-danger" style="display: none;"><fmt:message key="reset-pass.match-error" /></p>
+              <p id="successMessage" class="text-success" style="display: none;"><fmt:message key="reset-pass.match-success" /></p>
             </div>
 
-            <button type="submit" class="btn btn-primary w-100">Reset Password</button>
+            <button type="submit" class="btn btn-primary w-100"><fmt:message key="reset-pass.submit" /></button>
           </form>
-          <p class="mt-3"><a href="login.jsp">Back to Login</a></p>
+          <p class="mt-3"><a href="login"><fmt:message key="reset-pass.login" /></a></p>
         </div>
       </div>
     </div>

@@ -11,7 +11,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
-
+<fmt:setLocale value="${sessionScope.lang != null ? sessionScope.lang : 'en'}" />
+<fmt:setBundle basename="messages" />
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,45 +28,25 @@
 <jsp:include page="includes/header.jsp" />
 
 <!-- Category Filter Section -->
-<%--<section class="container mt-4">--%>
-<%--    <form action="product" method="get" class="d-flex justify-content-between">--%>
-<%--        <select name="category" class="form-select" aria-label="Filter by Category">--%>
-<%--&lt;%&ndash;                <option value="" selected>All Categories</option>&ndash;%&gt;--%>
-<%--            <c:forEach var="category" items="${categories}">--%>
-<%--                <option value="${category}" ${category == param.category ? 'selected' : ''}>${category}</option>--%>
-<%--            </c:forEach>--%>
-<%--        </select>--%>
-<%--        <input type="text" class="form-control" name="search" placeholder="Search products..." value="${param.search}">--%>
-<%--        <button type="submit" class="btn btn-primary">Filter</button>--%>
-<%--    </form>--%>
-<%--</section>--%>
-<!-- Search and Sort Form -->
-<div class="container mt-5">
-    <form action="product" method="get" class="d-flex justify-content-center align-items-center gap-3">
-        <!-- Tìm kiếm sản phẩm -->
-<%--        <div class="col-md-6">--%>
-<%--            <input type="text" name="search" class="form-control" placeholder="Tìm kiếm sản phẩm..." value="${search}">--%>
-<%--        </div>--%>
+<section class="container mt-4">
+    <form action="product" method="get" class="d-flex justify-content-between">
+        <select name="category" class="form-select" aria-label="Filter by Category">
+            <option value="" selected><fmt:message key="product.all_category" /></option>
+            <option value="Laptop" >laptop</option>
+            <option value="Phone" >Phone</option>
+            <option value="Tablet" >Tablet</option>
 
-        <!-- Sắp xếp theo giá -->
-        <div class="col-md-4">
-            <select name="sort" class="form-select">
-                <option value="asc" ${sort == 'asc' ? 'selected' : ''}>Sắp xếp theo giá tăng dần</option>
-                <option value="desc" ${sort == 'desc' ? 'selected' : ''}>Sắp xếp theo giá giảm dần</option>
-            </select>
-        </div>
 
-        <!-- Nút tìm kiếm -->
-        <div class="col-md-2" style="width: 130px">
-            <input type="submit" value="Tìm kiếm" class="btn btn-primary w-100">
-        </div>
+        </select>
+        <button type="submit" class="btn btn-primary"><fmt:message key="product.filter" /></button>
     </form>
-</div>
+</section>
 
 <!-- Product List -->
-<section class="container mt-5">
+<section class="content">
 
-    <h2 class="text-center">All Products</h2>
+<div class="container mt-5">
+    <h2 class="text-center"><fmt:message key="product.all_product" /></h2>
     <div class="row">
         <c:forEach var="product" items="${prod}">
 
@@ -77,7 +58,7 @@
 
                         <!-- Giá sau khi giảm giá -->
                         <p class="card-text">
-                            <fmt:formatNumber value="${product.price-(product.price * (product.discountPercentage/100))}" type="currency" currencySymbol="VND" pattern="#,##0.00"/>đ
+                            <fmt:formatNumber value="${product.price-(product.price * (product.discountPercentage/100))}" type="currency" currencySymbol="VND" pattern="#,##0.00" minFractionDigits="0" maxFractionDigits="0"/>đ
                         </p>
 
                         <!-- Giá gốc với chữ nhỏ và dấu gạch ngang -->
@@ -91,32 +72,34 @@
                             <span style="margin-left: 5px; font-size: 10px; transform: rotate(45deg);">&#x2193;</span> <!-- Mũi tên đi xuống -->
                         </div>
 
-                        <a href="productdetail?id=${product.productId}"  class="btn btn-primary">View Details</a>
+                        <a href="productdetail?id=${product.productId}"  class="btn btn-primary"><fmt:message key="product.view_detail" /></a>
                     </div>
                 </div>
             </div>
 
         </c:forEach>
-
+    </div>
+</div>
+</section>
 
         <!-- Add more products similarly -->
             <nav>
                 <ul class="pagination">
                     <c:if test="${currentPage > 1}">
-                        <li class="page-item"><a class="page-link" href="?page=${currentPage - 1}&search=${param.search}&category=${param.category}">Trang trước</a></li>
+                        <li class="page-item"><a class="page-link" href="?page=${currentPage - 1}"><fmt:message key="product.previous" /></a></li>
                     </c:if>
                     <c:forEach var="i" begin="1" end="${totalPages}">
                         <li class="page-item ${i == currentPage ? 'active' : ''}">
-                            <a class="page-link" href="?page=${i}&search=${param.search}&category=${param.category}">${i}</a>
+                            <a class="page-link" href="?page=${i}">${i}</a>
                         </li>
                     </c:forEach>
                     <c:if test="${currentPage < totalPages}">
-                        <li class="page-item"><a class="page-link" href="?page=${currentPage + 1}&search=${param.search}&category=${param.category}">Trang sau</a></li>
+                        <li class="page-item"><a class="page-link" href="?page=${currentPage + 1}"><fmt:message key="product.next" /></a></li>
                     </c:if>
                 </ul>
             </nav>
 
-</section>
+</div>
 
 <!-- Footer -->
 <jsp:include page="includes/footer.jsp" />
@@ -124,6 +107,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="app.js"></script>
+
 </body>
 
 </html>

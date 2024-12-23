@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -34,7 +35,14 @@ public class RegisterControl extends HttpServlet {
         // Vai trò mặc định là CUSTOMER
         Role role = Role.CUSTOMER;
         //messgese bundle
-        ResourceBundle messages = ResourceBundle.getBundle("messages", Locale.getDefault());
+        HttpSession session = request.getSession(false);
+        String lang = (String) session.getAttribute("lang");
+        if (lang == null) {
+            lang = "en";  // Mặc định là tiếng Anh nếu không có ngôn ngữ trong application scope
+        }
+        // Đặt locale theo ngôn ngữ người dùng chọn
+        Locale locale = new Locale(lang);
+        ResourceBundle messages = ResourceBundle.getBundle("messages", locale);
 
         // Kiểm tra người dùng đã tồn tại chưa
         UserDao userDao = new UserDao();

@@ -10,16 +10,16 @@ import java.io.IOException;
 
 public class LogoutControl extends HttpServlet{
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         session.invalidate();
-        String referer = request.getHeader("Referer");
 
-        // Nếu không có Referer (trang hiện tại không có header), mặc định chuyển về trang chủ
-        if (referer == null || referer.isEmpty() ) {
+        // Lấy URL trước đó từ Referer hoặc chuyển về trang chủ nếu không có Referer
+        String referer = request.getHeader("Referer");
+        if (referer == null || referer.isEmpty() || !referer.startsWith(request.getContextPath())) {
             referer = request.getContextPath() + "/home";
         }
 
-        // Chuyển hướng về trang hiện tại
+        // Chuyển hướng về trang trước hoặc trang chủ
         response.sendRedirect(referer);
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

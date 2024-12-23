@@ -51,7 +51,8 @@ public class UserControl extends HttpServlet {
     // POST method để cập nhật thông tin người dùng
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Lấy ngôn ngữ từ application scope
-        String lang = (String) getServletContext().getAttribute("lang");
+        HttpSession session = request.getSession(false);
+        String lang = (String) session.getAttribute("lang");
         if (lang == null) {
             lang = "en";  // Mặc định là tiếng Anh nếu không có ngôn ngữ trong application scope
         }
@@ -87,7 +88,6 @@ public class UserControl extends HttpServlet {
 
         if (isUpdated) {
             // Cập nhật lại thông tin trong session
-            HttpSession session = request.getSession();
             session.setAttribute("user", user);
 
             // Sau khi cập nhật thành công, chuyển hướng về trang profile

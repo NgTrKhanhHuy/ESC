@@ -16,39 +16,42 @@
 <body>
 <!-- Header -->
 <jsp:include page="includes/header.jsp" />
+<fmt:setLocale value="${sessionScope.lang != null ? sessionScope.lang : 'en'}" />
+<fmt:setBundle basename="messages" />
 
 <!-- Main Content -->
-<section class="container mt-5">
-    <h2 class="text-center">Order Details</h2>
+<section class="content">
+<div class="container mt-5">
+    <h2 class="text-center"><fmt:message key="order.detail.title" /></h2>
 
     <!-- Thông tin đơn hàng -->
     <div class="row">
         <div class="col-md-6">
-            <h4>Thông tin đơn hàng</h4>
-            <p><strong>Order ID:</strong> ${order.orderId}</p>
-            <p><strong>Status:</strong> ${order.status}</p>
-            <p><strong>Total Price:</strong> <fmt:formatNumber value="${order.totalPrice}" pattern="#,##0.00" /> VND</p>
-            <p><strong>Shipping Address:</strong> ${order.shippingAddress}</p>
+            <h4><fmt:message key="checkout.summary" /></h4>
+            <p><strong><fmt:message key="order.code" />:</strong> ${order.orderId}</p>
+            <p><strong><fmt:message key="order.status" />:</strong> ${order.status}</p>
+            <p><strong><fmt:message key="order.price" />:</strong> <fmt:formatNumber value="${order.totalPrice}" pattern="#,##0.00" /> VND</p>
+            <p><strong><fmt:message key="order.address" />:</strong> ${order.shippingAddress}</p>
         </div>
         <div class="col-md-6">
-            <h4>Thông tin người nhận</h4>
-            <p><strong>Username:</strong> ${order.customer.username}</p>
-            <p><strong>Email:</strong> ${order.customer.email}</p>
-            <p><strong>Phone:</strong> ${order.customer.phone}</p>
+            <h4><fmt:message key="order.detail.customer" /></h4>
+            <p><strong><fmt:message key="user.username" />:</strong> ${order.customer.username}</p>
+            <p><strong><fmt:message key="user.email" />:</strong> ${order.customer.email}</p>
+            <p><strong><fmt:message key="user.phone" />:</strong> ${order.customer.phone}</p>
         </div>
     </div>
 
     <!-- Danh sách sản phẩm -->
     <div class="mt-4">
-        <h4>Danh sách sản phẩm</h4>
+        <h4><fmt:message key="order.detail.product" /></h4>
         <table class="table table-bordered">
             <thead>
             <tr>
                 <th>#</th>
-                <th>Tên sản phẩm</th>
-                <th>Giá</th>
-                <th>Số lượng</th>
-                <th>Tổng</th>
+                <th><fmt:message key="cart.products" /></th>
+                <th><fmt:message key="cart.price" /></th>
+                <th><fmt:message key="cart.quantity" /></th>
+                <th><fmt:message key="cart.total" /></th>
             </tr>
             </thead>
             <tbody>
@@ -64,6 +67,7 @@
             </tbody>
         </table>
     </div>
+</div>
 </section>
 
 <!-- Footer -->

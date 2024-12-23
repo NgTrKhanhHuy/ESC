@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -17,13 +18,15 @@
 <body>
 
 <jsp:include page="includes/header.jsp" />
+<fmt:setLocale value="${sessionScope.lang != null ? sessionScope.lang : 'en'}" />
+<fmt:setBundle basename="messages" />
 
 <section class="content forgot-password-page">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card shadow-lg p-4">
-                    <h2 class="text-center mb-4">Forgot Password</h2>
+                    <h2 class="text-center mb-4"><fmt:message key="forgot-pass.title" /></h2>
 
                     <!-- Hiển thị thông báo -->
                     <c:if test="${not empty error}">
@@ -35,12 +38,12 @@
 
                     <form action="forgot-password" method="POST">
                         <div class="mb-3">
-                            <label for="email" class="form-label">Enter your email to reset password:</label>
+                            <label for="email" class="form-label"><fmt:message key="forgot-pass.email" /></label>
                             <input type="email" class="form-control" id="email" name="email" required>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Submit</button>
+                        <button type="submit" class="btn btn-primary w-100"><fmt:message key="forgot-pass.submit" /></button>
                     </form>
-                    <p class="mt-3"><a href="login">Back to Login</a></p>
+                    <p class="mt-3"><a href="login"><fmt:message key="forgot-pass.login" /></a></p>
                 </div>
             </div>
         </div>

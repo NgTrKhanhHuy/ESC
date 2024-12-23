@@ -9,7 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 @WebServlet("/user_new_password")
 
@@ -44,6 +47,14 @@ public class NewPasswordControl extends HttpServlet {
         // Cập nhật mật khẩu trong cơ sở dữ liệu
         UserDao userDAO = new UserDao();
         boolean isUpdated = userDAO.updatePassword(userId, hashedPassword);
+        HttpSession session = request.getSession(false);
+        String lang = (String) session.getAttribute("lang");
+        if (lang == null) {
+            lang = "en";  // Mặc định là tiếng Anh nếu không có ngôn ngữ trong application scope
+        }
+        // Đặt locale theo ngôn ngữ người dùng chọn
+        Locale locale = new Locale(lang);
+        ResourceBundle messages = ResourceBundle.getBundle("messages", locale);
 
         if (isUpdated) {
             // Cập nhật thành công, chuyển hướng về trang profile
@@ -51,7 +62,8 @@ public class NewPasswordControl extends HttpServlet {
             response.sendRedirect(request.getContextPath()+ "/user");
         } else {
             // Nếu có lỗi, hiển thị thông báo lỗi
-            request.setAttribute("error", "An error occurred while updating the password.");
+            String newpassErr = messages.getString("new_pass.error");
+            request.setAttribute("error", newpassErr);
             request.getRequestDispatcher("newPassword.jsp").forward(request, response);
         }
     }

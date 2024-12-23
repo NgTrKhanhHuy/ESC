@@ -1,5 +1,6 @@
 package servlet;
 
+import com.fasterxml.jackson.databind.SerializerProvider;
 import dao.UserDao;
 import model.User;
 import org.mindrot.jbcrypt.BCrypt;
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -21,7 +23,8 @@ public class ChangePasswordControl extends HttpServlet {
         @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Lấy ngôn ngữ từ application scope
-        String lang = (String) getServletContext().getAttribute("lang");
+            HttpSession session= request.getSession(false);
+            String lang = (String) session.getAttribute("lang");
         if (lang == null) {
             lang = "en";  // Mặc định là tiếng Anh nếu không có ngôn ngữ trong application scope
         }

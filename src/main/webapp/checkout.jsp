@@ -17,45 +17,17 @@
 
 <!-- Header -->
 <jsp:include page="includes/header.jsp" />
-
-<!-- Navigation Bar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="home">Home</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="product" id="navbarDropdown" role="button">Products</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Laptops</a></li>
-                        <li><a class="dropdown-item" href="#">Smartphones</a></li>
-                        <li><a class="dropdown-item" href="#">Accessories</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="login">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<fmt:setLocale value="${sessionScope.lang != null ? sessionScope.lang : 'en'}" />
+<fmt:setBundle basename="messages" />
 
 <!-- Checkout Section -->
-<section class="container mt-5">
-    <h2 class="text-center">Checkout</h2>
+<section class="content">
+<div class="container mt-5">
+    <h2 class="text-center"><fmt:message key="checkout.title" /></h2>
     <form action="checkout" method="post">
         <div class="row">
             <div class="col-md-6">
-                <h4>Billing Details</h4>
+                <h4><fmt:message key="checkout.bill" /></h4>
 <%--                <div class="mb-3">--%>
 <%--                    <label for="fullName" class="form-label">Full Name</label>--%>
 <%--                    <input type="text" class="form-control" id="fullName" name="fullName" required>--%>
@@ -65,7 +37,7 @@
 <%--                    <input type="email" class="form-control" id="email" name="email" required>--%>
 <%--                </div>--%>
                 <div class="mb-3">
-                    <label for="address" class="form-label">Shipping Address</label>
+                    <label for="address" class="form-label"><fmt:message key="checkout.address" /></label>
                     <input type="text" class="form-control" id="address" name="shippingAddress" required>
                 </div>
 <%--                <div class="mb-3">--%>
@@ -88,7 +60,7 @@
             </div>
 
             <div class="col-md-6">
-                <h4>Order Summary</h4>
+                <h4><fmt:message key="checkout.summary" /></h4>
                 <ul class="list-group mb-3">
                     <c:forEach var="item" items="${cart.items}">
                         <c:set var="prod" value="${item}" />
@@ -99,21 +71,22 @@
 
                         </li>
                         <li class="list-group-item d-flex justify-content-between">
-                            <span>Quantity</span>
+                            <span><fmt:message key="cart.quantity" /></span>
                             <strong>${prod.quantity}</strong>
                         </li>
                     </c:forEach>
                     <li class="list-group-item d-flex justify-content-between">
-                        <span>Total (VND)</span>
+                        <span><fmt:message key="cart.total" /> (VND)</span>
                         <strong>
                             <fmt:formatNumber value="${cart.total}" type="currency" currencySymbol="VND" minFractionDigits="0" maxFractionDigits="0" />
                         </strong>
                     </li>
                 </ul>
-                <button type="submit" class="btn btn-primary btn-lg btn-block">Place Order</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block"><fmt:message key="checkout.order" /></button>
             </div>
         </div>
     </form>
+</div>
 </section>
 
 <!-- Footer -->

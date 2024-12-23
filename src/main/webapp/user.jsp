@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: Khanh Huy Studios
@@ -25,10 +26,11 @@
 
 <!-- Navigation Bar -->
 <jsp:include page="includes/header.jsp" />
-
+<fmt:setLocale value="${sessionScope.lang != null ? sessionScope.lang : 'en'}" />
+<fmt:setBundle basename="messages" />
 <!-- User Profile Section -->
 <section class="container mt-5">
-    <h2 class="text-center">User Profile</h2>
+    <h2 class="text-center"><fmt:message key="user.title" /></h2>
 <c:if test="${not empty sessionScope.user}">
 <div class="row justify-content-center">
         <div class="col-md-6">
@@ -37,23 +39,23 @@
             </c:if>
             <form>
                 <div class="mb-3">
-                    <label for="fullName" class="form-label">Full Name</label>
+                    <label for="fullName" class="form-label"><fmt:message key="user.username" /></label>
                     <input type="text" class="form-control" id="fullName" value="${sessionScope.user.username}"  readonly>
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email address</label>
+                    <label for="email" class="form-label"><fmt:message key="user.email" /></label>
                     <input type="email" class="form-control" id="email" value="${sessionScope.user.email}" readonly>
                 </div>
                 <div class="mb-3">
-                    <label for="phone" class="form-label">Phone</label>
+                    <label for="phone" class="form-label"><fmt:message key="user.phone" /></label>
                     <input type="text" class="form-control" id="phone" value="${sessionScope.user.phone}" readonly>
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
+                    <label for="password" class="form-label"><fmt:message key="user.password" /></label>
                     <input type="password" class="form-control" id="password" value="********" readonly>
                 </div>
-                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#editModal">Edit Profile</button>
-                <button class="btn btn-secondary ms-2" type="button" data-bs-toggle="modal" data-bs-target="#changePasswordModal">Change Password</button>
+                <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#editModal"><fmt:message key="user.edit" /></button>
+                <button class="btn btn-secondary ms-2" type="button" data-bs-toggle="modal" data-bs-target="#changePasswordModal"><fmt:message key="user.change_pass" /></button>
             </form>
         </div>
     </c:if>
@@ -78,7 +80,7 @@
                 </c:if>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><fmt:message key="user.close" /></button>
             </div>
         </div>
     </div>
@@ -89,29 +91,29 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel">Edit Profile</h5>
+                <h5 class="modal-title" id="editModalLabel"><fmt:message key="user.edit" /></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="editProfileForm" method="post" action="">
                     <div class="mb-3">
-                        <label for="editFullName" class="form-label">Full Name</label>
+                        <label for="editFullName" class="form-label"><fmt:message key="user.username" /></label>
                         <input type="text" class="form-control" id="editFullName" name="username" value="${sessionScope.user.username}" required>
                     </div>
                     <div class="mb-3">
-                        <label for="editEmail" class="form-label">Email address</label>
+                        <label for="editEmail" class="form-label"><fmt:message key="user.email" /></label>
                         <input type="email" class="form-control" id="editEmail" name="email" value="${sessionScope.user.email}" required>
                     </div>
                     <div class="mb-3">
-                        <label for="editPhone" class="form-label">Phone</label>
+                        <label for="editPhone" class="form-label"><fmt:message key="user.phone" /></label>
                         <input type="text" class="form-control" id="editPhone" name="phone" value="${sessionScope.user.phone}" >
                     </div>
                     <input type="hidden" name="userId" value="${sessionScope.user.id}">
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" form="editProfileForm" class="btn btn-primary">Save Changes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><fmt:message key="user.close" /></button>
+                <button type="submit" form="editProfileForm" class="btn btn-primary"><fmt:message key="user.save" /></button>
             </div>
         </div>
     </div>
@@ -123,16 +125,16 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+                <h5 class="modal-title" id="changePasswordModalLabel"><fmt:message key="user.change_pass" /></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="changePasswordForm" action="user_change_password" method="post">
                     <div class="mb-3">
-                        <label for="oldPassword" class="form-label">Old Password</label>
+                        <label for="oldPassword" class="form-label"><fmt:message key="user.old_pass" /></label>
                         <input type="password" class="form-control" id="oldPassword" name="oldPassword" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary"><fmt:message key="user.submit" /></button>
                 </form>
             </div>
         </div>

@@ -6,6 +6,8 @@
 
 <!DOCTYPE html>
 <html lang="en">
+<fmt:setLocale value="${sessionScope.lang != null ? sessionScope.lang : 'en'}" />
+<fmt:setBundle basename="messages" />
 
 <head>
     <meta charset="UTF-8">
@@ -108,16 +110,17 @@
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#heroSlider" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+        <span class="visually-hidden"> <fmt:message key="index.previous" /></span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#heroSlider" data-bs-slide="next">
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+        <span class="visually-hidden"><fmt:message key="index.next" /></span>
     </button>
 </div>
+<section class="content">
 
-<section class="container mt-5">
-    <h2 class="text-center">Newest Products</h2>
+<div class="container mt-5">
+    <h2 class="text-center"><fmt:message key="index.new_product" /></h2>
 
     <!-- Product Slider -->
     <div class="product-slider">
@@ -132,12 +135,18 @@
                         <div class="card-body">
                             <h5 class="card-title">${product.name}</h5>
                             <p class="card-text">
-                                <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="VND" pattern="#,##0.00"/>
-                            </p>
-                            <p class="card-text text-muted" style="text-decoration: line-through; font-size: 0.8em;">
                                 <fmt:formatNumber value="${product.price - (product.price * (product.discountPercentage / 100))}" type="currency" currencySymbol="đ" pattern="#,##0.00"/>
                             </p>
-                            <a href="productdetail?id=${product.productId}" class="btn btn-primary">View Details</a>
+                            <p class="card-text text-muted" style="text-decoration: line-through; font-size: 0.8em;">
+                                <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="VND" pattern="#,##0.00"/>
+
+                            </p>
+                            <!-- Giảm giá phần trăm với mũi tên đi xuống -->
+                            <div class="discount-badge" style="position: absolute; top: 10px; right: 10px; background-color: #ff6f61; color: white; padding: 5px 10px; border-radius: 5px; display: flex; align-items: center;">
+                                <span>${product.discountPercentage}%</span>
+                                <span style="margin-left: 5px; font-size: 10px; transform: rotate(45deg);">&#x2193;</span> <!-- Mũi tên đi xuống -->
+                            </div>
+                            <a href="productdetail?id=${product.productId}" class="btn btn-primary"><fmt:message key="index.view_detail" /></a>
                         </div>
                     </div>
                 </div>
@@ -148,15 +157,15 @@
         <!-- Navigation Buttons -->
         <div class="text-center mt-4">
             <button id="prevBtn" class="btn btn-secondary" onclick="changeSlide(-1)">
-                <i class="fas fa-arrow-left"></i> Previous
+                <i class="fas fa-arrow-left"></i> <fmt:message key="index.previous" />
             </button>
             <button id="nextBtn" class="btn btn-secondary" onclick="changeSlide(1)">
-                Next <i class="fas fa-arrow-right"></i>
+                <fmt:message key="index.next" /> <i class="fas fa-arrow-right"></i>
             </button>
         </div>
     </div>
+</div>
 </section>
-
 <!-- Footer -->
 <jsp:include page="includes/footer.jsp" />
 

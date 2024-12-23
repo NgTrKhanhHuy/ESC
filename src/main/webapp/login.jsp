@@ -30,7 +30,8 @@
 <fmt:setBundle basename="messages" />
 
 <!-- Login Form -->
-<section class="login-page">
+
+<section class="content login-page">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-6">

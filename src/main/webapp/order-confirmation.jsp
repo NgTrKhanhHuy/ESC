@@ -24,28 +24,31 @@
 
 <!-- Header -->
 <jsp:include page="includes/header.jsp" />
+<fmt:setLocale value="${sessionScope.lang != null ? sessionScope.lang : 'en'}" />
+<fmt:setBundle basename="messages" />
 
 <!-- Main Content -->
-<section class="container mt-5">
-    <h2 class="text-center">Order Confirm</h2>
+<section class="content">
+<div class="container mt-5">
+    <h2 class="text-center"><fmt:message key="order.confirm.title" /></h2>
 
     <!-- Hiển thị thông tin đơn hàng -->
     <div class="row">
         <div class="col-md-6">
-            <h4>Thông tin đơn hàng</h4>
-            <p><strong>Order ID:</strong> ${orderId}</p>
-            <p><strong>Status:</strong> ${order.status}</p>
-            <p><strong>TotalPrice:</strong> <fmt:formatNumber value="${order.totalPrice}" type="currency" currencySymbol="VND" minFractionDigits="0" maxFractionDigits="0"/>
+            <h4><fmt:message key="checkout.summary" /></h4>
+            <p><strong><fmt:message key="order.code" /></strong> ${orderId}</p>
+            <p><strong><fmt:message key="order.status" /></strong> ${order.status}</p>
+            <p><strong><fmt:message key="order.price" /></strong> <fmt:formatNumber value="${order.totalPrice}" type="currency" currencySymbol="VND" minFractionDigits="0" maxFractionDigits="0"/>
 <%--                ${order.totalPrice}--%>
             </p>
         </div>
 
         <div class="col-md-6">
-            <h4>Thông tin người nhận</h4>
-            <p><strong>Username:</strong> ${order.customer.username}</p>
-            <p><strong>Email:</strong> ${order.customer.email}</p>
-            <p><strong>Phone:</strong> ${order.customer.phone}</p>
-            <p><strong>Address:</strong> ${order.shippingAddress}</p>
+            <h4><fmt:message key="order.detail.customer" /></h4>
+            <p><strong><fmt:message key="user.username" />:</strong> ${order.customer.username}</p>
+            <p><strong><fmt:message key="user.email" />:</strong> ${order.customer.email}</p>
+            <p><strong><fmt:message key="user.phone" />:</strong> ${order.customer.phone}</p>
+            <p><strong><fmt:message key="order.address" />:</strong> ${order.shippingAddress}</p>
 
 <%--            <p><strong>Thành phố:</strong> ${order.customerCity}</p>--%>
 <%--            <p><strong>Mã bưu điện:</strong> ${order.customerPostalCode}</p>--%>
@@ -54,8 +57,9 @@
 
     <div class="text-center mt-4">
         <!-- Nút để xem chi tiết đơn hàng -->
-        <a href="order-detail?id=${orderId}" class="btn btn-primary">Xem Chi Tiết Đơn Hàng</a>
+        <a href="order-detail?id=${orderId}" class="btn btn-primary"><fmt:message key="order.confirm.detail" /></a>
     </div>
+</div>
 </section>
 
 <!-- Footer -->

@@ -9,8 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.UUID;
 
 @WebServlet("/forgot-password")
@@ -24,6 +27,18 @@ public class ForgotPasswordServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
+        //messgese bundle
+        HttpSession session = request.getSession(false);
+        String lang = (String) session.getAttribute("lang");
+        if (lang == null) {
+            lang = "en";  // Mặc định là tiếng Anh nếu không có ngôn ngữ trong application scope
+        }
+        // Đặt locale theo ngôn ngữ người dùng chọn
+        Locale locale = new Locale(lang);
+        ResourceBundle messages = ResourceBundle.getBundle("messages", locale);
+        String resetpassErrUser = messages.getString("forgot-pass.error-user");
+        String resetpassErrEmail = messages.getString("forgot-pass.error-email");
+        String resetpassMess = messages.getString("forgot-pass.message");
 
         // Tìm người dùng theo email
         User user = userDao.findByEmail(email);
@@ -46,17 +61,17 @@ public class ForgotPasswordServlet extends HttpServlet {
                 SendEmailUtil.sendPasswordResetEmail(user.getEmail(), resetLink);
             } catch (IOException e) {
                 e.printStackTrace();
-                request.setAttribute("error", "Error sending email.");
+                request.setAttribute("error", resetpassErrUser);
                 request.getRequestDispatcher("forgot-password.jsp").forward(request, response);
                 return;
             }
 
             // Thông báo thành công
-            request.setAttribute("message", "We have sent you a link to reset your password.");
+            request.setAttribute("message", resetpassMess);
             request.getRequestDispatcher("forgot-password.jsp").forward(request, response);
         } else {
             // Người dùng không tồn tại
-            request.setAttribute("error", "No account found with that email.");
+            request.setAttribute("error", resetpassErrEmail);
             request.getRequestDispatcher("forgot-password.jsp").forward(request, response);
         }
     }

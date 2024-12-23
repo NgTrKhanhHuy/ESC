@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 @WebServlet("/Addtocart")
 public class AddToCartServlet extends HttpServlet {
@@ -40,8 +42,17 @@ public class AddToCartServlet extends HttpServlet {
                 // Sau khi thêm sản phẩm, chuyển hướng về giỏ hàng
                 response.sendRedirect("cart");
             } else {
+                String lang = (String) session.getAttribute("lang");
+                if (lang == null) {
+                    lang = "en";  // Mặc định là tiếng Anh nếu không có ngôn ngữ trong application scope
+                }
+                // Đặt locale theo ngôn ngữ người dùng chọn
+                Locale locale = new Locale(lang);
+                ResourceBundle messages = ResourceBundle.getBundle("messages", locale);
+                String addErr = messages.getString("cart.add-err");
+
                 // Nếu có lỗi trong quá trình thêm sản phẩm
-                request.setAttribute("error", "Failed to add product to cart.");
+                request.setAttribute("error", addErr);
                 request.getRequestDispatcher("product-detail.jsp").forward(request, response);
             }
         } else {

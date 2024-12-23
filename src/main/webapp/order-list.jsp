@@ -22,9 +22,11 @@
 
 <!-- Header -->
 <jsp:include page="includes/header.jsp" />
+<fmt:setLocale value="${sessionScope.lang != null ? sessionScope.lang : 'en'}" />
+<fmt:setBundle basename="messages" />
 <section class="content">
 <div class="container mt-5">
-    <h2 class="text-center">Order List</h2>
+    <h2 class="text-center"><fmt:message key="order.title" /></h2>
 
     <!-- Hiển thị thông báo nếu không có đơn hàng -->
     <c:if test="${not empty message}">
@@ -38,12 +40,12 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>Order Code</th>
-                <th>Total Price</th>
-                <th>Delivery Address</th>
-                <th>Status</th>
-                <th>Order Date</th>
-                <th>Action</th>
+                <th><fmt:message key="order.code" /></th>
+                <th><fmt:message key="order.price" /></th>
+                <th><fmt:message key="order.address" /></th>
+                <th><fmt:message key="order.status" /></th>
+                <th><fmt:message key="order.date" /></th>
+                <th><fmt:message key="order.action" /></th>
                 <th></th>
             </tr>
             </thead>
@@ -60,14 +62,14 @@
                             <form action="order-list" method="POST">
                                 <input type="hidden" name="orderId" value="${order.orderId}">
                                 <input type="hidden" name="action" value="cancel">
-                                <button type="submit" class="btn btn-danger">Order Cancel</button>
+                                <button type="submit" class="btn btn-danger"><fmt:message key="order.cancel" /></button>
                             </form>
                         </c:if>
                         <c:if test="${order.status == 'CANCELLED'}">
                             <form action="order-list" method="POST">
                                 <input type="hidden" name="orderId" value="${order.orderId}">
                                 <input type="hidden" name="action" value="delete">
-                                <button type="submit" class="btn btn-danger">Order Delete</button>
+                                <button type="submit" class="btn btn-danger"><fmt:message key="order.delete" /></button>
                             </form>
                         </c:if>
                     </td>

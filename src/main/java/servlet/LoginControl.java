@@ -37,7 +37,8 @@ public class LoginControl extends HttpServlet{
         //User user = userDAO.getUserByUsername(username);
       //  ResourceBundle messages = ResourceBundle.getBundle("messages", Locale.getDefault());
         // Lấy ngôn ngữ từ application scope
-        String lang = (String) getServletContext().getAttribute("lang");
+        HttpSession session = request.getSession(false);
+        String lang = (String) session.getAttribute("lang");
         if (lang == null) {
             lang = "en";  // Mặc định là tiếng Anh nếu không có ngôn ngữ trong application scope
         }
@@ -47,7 +48,7 @@ public class LoginControl extends HttpServlet{
 
 
         if (user != null && BCrypt.checkpw(password, user.getPassword())) {
-            HttpSession session = request.getSession();
+           //  session = request.getSession();
 
             session.setAttribute("user", user);
 

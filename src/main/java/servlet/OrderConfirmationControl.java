@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 @WebServlet("/order-confirmation")
 public class OrderConfirmationControl extends HttpServlet {
@@ -33,8 +35,16 @@ public class OrderConfirmationControl extends HttpServlet {
         List<Order> orders = orderDao.getOrderByUserId(user.getId());
 
         if (orders.isEmpty()) {
+            String lang = (String) session.getAttribute("lang");
+            if (lang == null) {
+                lang = "en";  // Mặc định là tiếng Anh nếu không có ngôn ngữ trong application scope
+            }
+            // Đặt locale theo ngôn ngữ người dùng chọn
+            Locale locale = new Locale(lang);
+            ResourceBundle messages = ResourceBundle.getBundle("messages", locale);
+            String orderEmpt = messages.getString("order.empty");
             // Nếu không có đơn hàng, bạn có thể thêm một thông báo hoặc xử lý phù hợp
-            request.setAttribute("message", "Bạn chưa có đơn hàng nào.");
+            request.setAttribute("message", orderEmpt);
         }
 
 

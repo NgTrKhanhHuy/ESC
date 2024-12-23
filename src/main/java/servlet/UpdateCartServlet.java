@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import dao.CartDao;
 import model.User;
 @WebServlet("/update")
@@ -38,8 +41,17 @@ public class UpdateCartServlet extends HttpServlet {
                 // Nếu cập nhật thành công, chuyển hướng về trang giỏ hàng
                 response.sendRedirect("cart"); // Giả sử giỏ hàng có URL là /cart
             } else {
+                String lang = (String) session.getAttribute("lang");
+                if (lang == null) {
+                    lang = "en";  // Mặc định là tiếng Anh nếu không có ngôn ngữ trong application scope
+                }
+                // Đặt locale theo ngôn ngữ người dùng chọn
+                Locale locale = new Locale(lang);
+                ResourceBundle messages = ResourceBundle.getBundle("messages", locale);
+                String updateErr = messages.getString("cart.update-err");
+
                 // Nếu có lỗi trong quá trình cập nhật
-                request.setAttribute("error", "Không thể cập nhật số lượng sản phẩm.");
+                request.setAttribute("error", updateErr);
                 request.getRequestDispatcher("cart.jsp").forward(request, response);
             }
         } else {

@@ -17,6 +17,8 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 @WebServlet("/checkout")
 public class CheckoutControl extends HttpServlet {
@@ -25,7 +27,13 @@ public class CheckoutControl extends HttpServlet {
         // Lấy thông tin từ session
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-
+        String lang = (String) session.getAttribute("lang");
+        if (lang == null) {
+            lang = "en";  // Mặc định là tiếng Anh nếu không có ngôn ngữ trong application scope
+        }
+        // Đặt locale theo ngôn ngữ người dùng chọn
+        Locale locale = new Locale(lang);
+        ResourceBundle messages = ResourceBundle.getBundle("messages", locale);
 
 
 
@@ -37,8 +45,11 @@ public class CheckoutControl extends HttpServlet {
 // Lấy giỏ hàng từ session
         Cart cart = (Cart) session.getAttribute("cart");  // Lấy Cart từ session
         if (cart == null || cart.isEmpty()) {
+
+            String updateErr = messages.getString("cart.empty");
+
             // Giỏ hàng trống, chuyển hướng về trang giỏ hàng
-            request.setAttribute("error", "Giỏ hàng của bạn đang trống.");
+            request.setAttribute("error", updateErr);
             request.getRequestDispatcher("cart.jsp").forward(request, response);
             return;
         }
@@ -116,14 +127,18 @@ public class CheckoutControl extends HttpServlet {
             session.setAttribute("totalItems", totalItems);
 
             // Chuyển hướng về trang xác nhận đơn hàng
-            request.setAttribute("message", "Đơn hàng của bạn đã được đặt thành công!");
+            String updateSucc = messages.getString("checkout.success");
+
+            request.setAttribute("message", updateSucc);
             request.setAttribute("order", order);
             request.setAttribute("orderItems", cart);
             request.setAttribute("orderId", orderId);
             request.getRequestDispatcher("order-confirmation.jsp").forward(request, response);
         } else {
+            String updateErr = messages.getString("checkout.error");
+
             // Xử lý lỗi nếu thêm đơn hàng thất bại
-            request.setAttribute("error", "Đã xảy ra lỗi trong quá trình đặt hàng. Vui lòng thử lại.");
+            request.setAttribute("error", updateErr);
             request.getRequestDispatcher("checkout.jsp").forward(request, response);
         }
     }
