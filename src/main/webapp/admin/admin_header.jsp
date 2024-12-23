@@ -14,7 +14,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
         <div class="container-fluid">
             <!-- Logo -->
-            <a class="navbar-brand" href="adminHome">
+            <a class="navbar-brand" href="home">
                 <i class="fas fa-cogs"></i> Tech Shop
             </a>
             <!-- Toggle button for mobile view -->
@@ -46,7 +46,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="adminUserManagement">
+                        <a class="nav-link" href="user-detail">
                             <i class="fas fa-users"></i> User Management
                         </a>
                     </li>
