@@ -16,19 +16,20 @@ public class UserDao {
     Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
+
     public boolean addUser(User admin, User newUser) {
-        if(admin.getRole() == Role.ADMIN) {
+        if (admin.getRole() == Role.ADMIN) {
             String query = "INSERT INTO `user` (username, password, email, phone, role) VALUES (?, ?, ?, ?, ?)";
-            try{
-             conn = new DBConnection().getConnection();
-             ps = conn.prepareStatement(query);
-             ps.setString(1, newUser.getUsername());
-             ps.setString(2, newUser.getPassword());
-             ps.setString(3, newUser.getEmail());
-             ps.setString(4, newUser.getPhone());
-             ps.setString(5, newUser.getRole().toString());
-             int row = ps.executeUpdate();
-             return row > 0;
+            try {
+                conn = new DBConnection().getConnection();
+                ps = conn.prepareStatement(query);
+                ps.setString(1, newUser.getUsername());
+                ps.setString(2, newUser.getPassword());
+                ps.setString(3, newUser.getEmail());
+                ps.setString(4, newUser.getPhone());
+                ps.setString(5, newUser.getRole().toString());
+                int row = ps.executeUpdate();
+                return row > 0;
 
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -36,8 +37,9 @@ public class UserDao {
         }
         return false;
     }
+
     public boolean updateUser(User admin, User newUser) {
-        if(admin.getRole() == Role.ADMIN) {
+        if (admin.getRole() == Role.ADMIN) {
             String query = "UPDATE `user` SET username = ?, password = ?, email = ?, phone = ?, role = ? WHERE user_id = ?";
             try {
                 conn = new DBConnection().getConnection();
@@ -55,9 +57,10 @@ public class UserDao {
             }
         }
         return false;
-        }
-        public boolean deleteUser(User admin, int newUser) {
-        if(admin.getRole() == Role.ADMIN) {
+    }
+
+    public boolean deleteUser(User admin, int newUser) {
+        if (admin.getRole() == Role.ADMIN) {
             String query = "DELETE FROM `user` WHERE user_id = ?";
             try {
                 conn = new DBConnection().getConnection();
@@ -70,15 +73,16 @@ public class UserDao {
             }
         }
         return false;
-        }
-        public List<User> getAllUser() {
+    }
+
+    public List<User> getAllUser() {
         List<User> users = new ArrayList<>();
         String query = "SELECT * FROM `user`";
         try {
             conn = new DBConnection().getConnection();
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 int id = rs.getInt("user_id");
                 String username = rs.getString("username");
                 String password = rs.getString("password");
@@ -94,7 +98,8 @@ public class UserDao {
             throw new RuntimeException(e);
         }
         return users;
-        }
+    }
+
     // Phương thức lấy người dùng theo ID
     public User getUserById(int userId) {
         User user = null;
@@ -130,5 +135,27 @@ public class UserDao {
 
         return user;  // Trả về đối tượng User (nếu tìm thấy) hoặc null nếu không có
     }
+
+    public int getUserCount() {
+        int count = 0;
+        String query = "SELECT COUNT(*) FROM `user` WHERE `role` != 'ADMIN'";  // Lấy tổng số người dùng từ bảng `user`
+
+        try {
+            // Kết nối đến cơ sở dữ liệu
+            conn = new DBConnection().getConnection();
+            ps = conn.prepareStatement(query);  // Chuẩn bị câu lệnh truy vấn
+            rs = ps.executeQuery();  // Thực thi câu lệnh truy vấn
+
+            // Nếu có dữ liệu trả về, lấy kết quả từ query
+            if (rs.next()) {
+                count = rs.getInt(1);  // Lấy tổng số người dùng từ cột đầu tiên của kết quả query
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  // In ra lỗi nếu có vấn đề với kết nối hoặc truy vấn
+        }  // Đảm bảo đóng kết nối sau khi xong
+
+
+        return count;  // Trả về tổng số người dùng
     }
+}
 

@@ -5,6 +5,7 @@ import model.Order;
 import model.Role;
 import model.User;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,6 +42,7 @@ public class OrderDao {
         }
         return orders;
     }
+
     public void updateOrderStatus(int orderId, String status) {
         String query = "UPDATE `order` SET status = ? WHERE order_id = ?";
         try {
@@ -96,14 +98,15 @@ public class OrderDao {
         }
         return orders;
     }
+
     public int getTotalPages(int pageSize) {
         int totalPages = 0;
         String query = "SELECT COUNT(*) FROM `order`";
-        try{
+        try {
             conn = new DBConnection().getConnection();
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 int totalOrders = rs.getInt(1);
                 totalPages = (int) Math.ceil(totalOrders / (double) pageSize);
             }
@@ -128,52 +131,146 @@ public class OrderDao {
         }
     }
 
-
-
-
-        // Đóng kết nối
-        private void closeConnection() {
-            try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }}
-
-    public static void main(String[] args) {
-            // Tạo đối tượng OrderDao để gọi phương thức getAllOrders
-            OrderDao orderDao = new OrderDao();
-
-            // Sử dụng các tham số phân trang. Ví dụ: pageNumber = 1, pageSize = 10
-            int pageNumber = 1; // Trang số 1
-            int pageSize = 10;  // Mỗi trang hiển thị 10 đơn hàng
-
-            // Lấy danh sách các đơn hàng từ database
-            List<Order> orders = orderDao.getAllOrders(pageNumber, pageSize);
-
-            // Kiểm tra kết quả và in ra thông tin các đơn hàng
-            if (orders != null && !orders.isEmpty()) {
-                for (Order order : orders) {
-                    System.out.println("Order ID: " + order.getOrderId());
-                    System.out.println("User ID: " + order.getUserId());
-                    System.out.println("Total Price: " + order.getTotalPrice());
-                    System.out.println("Shipping Address: " + order.getShippingAddress());
-                    System.out.println("Status: " + order.getStatus());
-                    System.out.println("Order Date: " + order.getOrderDate());
-                    // In ra thông tin người dùng liên quan đến đơn hàng
-                    User user = order.getCustomer();
-                    if (user != null) {
-                        System.out.println("Username: " + user.getUsername());
-                        System.out.println("Email: " + user.getEmail());
-                        System.out.println("Phone: " + user.getPhone());
-                        System.out.println("Role: " + user.getRole());
-                    }
-                    System.out.println("----------------------------------------------------");
-                }
-            } else {
-                System.out.println("No orders found.");
+    public BigDecimal getTotalRevenue() {
+        BigDecimal totalRevenue = BigDecimal.ZERO;
+        String query = "SELECT SUM(total_price) FROM `order` WHERE status = 'SHIPPED'";
+        try {
+            conn = new DBConnection().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                totalRevenue = rs.getBigDecimal(1);
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return totalRevenue;
+    }
+
+    public int getCompletedOrdersCount() {
+        int count = 0;
+        String query = "SELECT COUNT(*) FROM `order` WHERE status = 'SHIPPED'";
+        try {
+            conn = new DBConnection().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return count;
+    }
+
+    // Đóng kết nối
+    private void closeConnection() {
+        try {
+            if (rs != null) rs.close();
+            if (ps != null) ps.close();
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
+    // Lấy doanh thu từng tháng trong năm (tính từ tháng 1 đến tháng 12)
+    public BigDecimal[] getMonthlyRevenue(int year) {
+        BigDecimal[] monthlyRevenue = new BigDecimal[12];  // Mảng chứa doanh thu cho từng tháng, 12 tháng trong năm
+
+        // Khởi tạo tất cả doanh thu bằng 0
+        for (int i = 0; i < 12; i++) {
+            monthlyRevenue[i] = BigDecimal.ZERO;
+        }
+
+        String query = "SELECT MONTH(order_date) AS month, SUM(total_price) AS total_revenue " +
+                "FROM `order` " +
+                "WHERE YEAR(order_date) = ?  AND status = 'SHIPPED' " +
+                "GROUP BY MONTH(order_date)";
+
+        try {
+            conn = new DBConnection().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, year);  // Truyền vào năm cần lấy doanh thu
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int month = rs.getInt("month") - 1;  // Cộng -1 vì mảng index bắt đầu từ 0
+                monthlyRevenue[month] = rs.getBigDecimal("total_revenue");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+
+        return monthlyRevenue;
+    }
+
+    public static void main(String[] args) {
+        // Tạo đối tượng OrderDao để gọi phương thức getAllOrders
+        OrderDao orderDao = new OrderDao();
+        UserDao userDao = new UserDao();
+
+        // Sử dụng các tham số phân trang. Ví dụ: pageNumber = 1, pageSize = 10
+//            int pageNumber = 1; // Trang số 1
+//            int pageSize = 10;  // Mỗi trang hiển thị 10 đơn hàng
+//
+//            // Lấy danh sách các đơn hàng từ database
+//            List<Order> orders = orderDao.getAllOrders(pageNumber, pageSize);
+//
+//            // Kiểm tra kết quả và in ra thông tin các đơn hàng
+//            if (orders != null && !orders.isEmpty()) {
+//                for (Order order : orders) {
+//                    System.out.println("Order ID: " + order.getOrderId());
+//                    System.out.println("User ID: " + order.getUserId());
+//                    System.out.println("Total Price: " + order.getTotalPrice());
+//                    System.out.println("Shipping Address: " + order.getShippingAddress());
+//                    System.out.println("Status: " + order.getStatus());
+//                    System.out.println("Order Date: " + order.getOrderDate());
+//                    // In ra thông tin người dùng liên quan đến đơn hàng
+//                    User user = order.getCustomer();
+//                    if (user != null) {
+//                        System.out.println("Username: " + user.getUsername());
+//                        System.out.println("Email: " + user.getEmail());
+//                        System.out.println("Phone: " + user.getPhone());
+//                        System.out.println("Role: " + user.getRole());
+//                    }
+//                    System.out.println("----------------------------------------------------");
+//                }
+//            } else {
+//                System.out.println("No orders found.");
+//            }
+//        }
+
+
+//        // Kiểm tra tổng doanh thu
+//        BigDecimal totalRevenue = orderDao.getTotalRevenue();
+//        System.out.println("Tổng doanh thu: " + totalRevenue);
+//
+//        // Kiểm tra số lượng đơn hàng đã hoàn thành
+//        int completedOrders = orderDao.getCompletedOrdersCount();
+//        System.out.println("Số lượng đơn hàng đã hoàn thành: " + completedOrders);
+//
+//        // Kiểm tra số lượng người dùng
+//        int userCount = userDao.getUserCount();
+//        System.out.println("Tổng số người dùng: " + userCount);
+//    }
+
+        // Kiểm tra doanh thu của năm 2023
+        int year = 2024;
+        BigDecimal[] monthlyRevenue = orderDao.getMonthlyRevenue(year);
+
+        // In kết quả doanh thu theo từng tháng
+        System.out.println("Doanh thu theo từng tháng trong năm " + year + ":");
+        for (int i = 0; i < 12; i++) {
+            System.out.println("Tháng " + (i + 1) + ": " + monthlyRevenue[i] + " VND");
+        }
+    }
+}
+
 

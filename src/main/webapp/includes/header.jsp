@@ -57,12 +57,13 @@
           </li>
         </ul>
         <!-- Search form -->
-        <form class="d-flex mx-auto search-bar" role="search" method="get" action="product">
-          <input class="form-control me-2" type="text" name="search" value="${param.search}" placeholder="Search products..." aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">
-            <i class="fas fa-search"></i>
-          </button>
-        </form>
+<%--        <form class="d-flex mx-auto search-bar" method="get" action="product">--%>
+<%--&lt;%&ndash;          <input class="form-control me-2" type="text" name="search" value="${param.search}" placeholder="Search products..." aria-label="Search">&ndash;%&gt;--%>
+<%--  <input type="text" name="search" class="form-control" placeholder="Tìm kiếm sản phẩm..." value="${search}">--%>
+<%--          <button class="btn btn-outline-success" type="submit">--%>
+<%--            <i class="fas fa-search"></i>--%>
+<%--          </button>--%>
+<%--        </form>--%>
         <!-- Right side (user and cart) -->
         <ul class="navbar-nav ms-auto">
           <!-- User dropdown -->

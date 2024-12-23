@@ -26,18 +26,13 @@
             <div class="collapse navbar-collapse" id="navbarAdminNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="adminHome">
+                        <a class="nav-link active" href="dashboard">
                             <i class="fas fa-tachometer-alt"></i> Dashboard
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="home">
                             <i class="fas fa-box"></i> Manage Products
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="adminCategory">
-                            <i class="fas fa-tags"></i> Categories
                         </a>
                     </li>
                     <li class="nav-item">

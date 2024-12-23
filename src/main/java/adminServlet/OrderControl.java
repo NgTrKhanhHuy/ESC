@@ -63,12 +63,20 @@ public class OrderControl extends HttpServlet {
 
         }
             }
+        // Sau khi xử lý, chuyển tiếp đến trang hiện tại (order-list.jsp) mà không làm mới trang
+        String page = request.getParameter("page"); // Lấy tham số trang từ yêu cầu (nếu có)
+        if (page == null) {
+            page = "1"; // Trang mặc định nếu không có tham số
+        }
+//        System.out.println(page);
 
 
 
 
         // Sau khi xử lý xong, chuyển hướng lại về trang order list
-        response.sendRedirect("order-list");
+        response.sendRedirect("order-list?page=" + page);
+
+//        response.sendRedirect("order-list");
     }
 
 
