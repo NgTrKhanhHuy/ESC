@@ -59,7 +59,7 @@ public class AddProductControl extends HttpServlet {
         String imagePath = "img/" + fileName;
 
         // Lưu file ảnh vào thư mục
-        String uploadPath = "D:/LT_FE/ESC/src/main/webapp/" + imagePath;
+        String uploadPath = "D:/LT_FE/" + imagePath;
         try (InputStream inputStream = filePart.getInputStream();
              OutputStream outputStream = new FileOutputStream(uploadPath)) {
             byte[] buffer = new byte[4096];
