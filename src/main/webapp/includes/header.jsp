@@ -60,12 +60,12 @@
           </li>
         </ul>
         <!-- Search form -->
-        <form class="d-flex mx-auto search-bar" role="search" method="get" action="product">
-          <input class="form-control me-2" type="text" name="search" value="${param.search}" placeholder=" <fmt:message key="header.search" />" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">
-            <i class="fas fa-search"></i>
-          </button>
-        </form>
+<%--        <form class="d-flex mx-auto search-bar" role="search" method="get" action="product">--%>
+<%--          <input class="form-control me-2" type="text" name="search" value="${param.search}" placeholder=" <fmt:message key="header.search" />" aria-label="Search">--%>
+<%--          <button class="btn btn-outline-success" type="submit">--%>
+<%--            <i class="fas fa-search"></i>--%>
+<%--          </button>--%>
+<%--        </form>--%>
         <!-- Right side (user and cart) -->
         <ul class="navbar-nav ms-auto">
           <!-- User dropdown -->
