@@ -101,11 +101,11 @@
         <div class="carousel-item active">
             <img src="img/banner1.webp" class="d-block w-100" alt="Banner 1">
         </div>
-        <div class="carousel-item">
-            <img src="banner2.jpg" class="d-block w-100" alt="Banner 2">
+        <div class="carousel-item active" >
+            <img src="img/banner2.webp" class="d-block w-100" alt="Banner 2">
         </div>
-        <div class="carousel-item">
-            <img src="banner3.jpg" class="d-block w-100" alt="Banner 3">
+        <div class="carousel-item active">
+            <img src="img/banner3.webp" class="d-block w-100" alt="Banner 3">
         </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#heroSlider" data-bs-slide="prev">
