@@ -180,7 +180,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="productPrice" class="form-label">Giá</label>
-                        <input type="number" class="form-control" id="productPrice" name="price" required>
+                        <input type="number" class="form-control" id="productPrice" name="price" value="1" min="1"required>
                     </div>
                     <div class="mb-3">
                         <label for="productDescription" class="form-label">Mô tả</label>
@@ -204,11 +204,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="discountPercentage" class="form-label">Giảm giá (%)</label>
-                        <input type="number" step="0.01" class="form-control" id="discountPercentage" name="discountPercentage" required>
+                        <input type="number" step="0.01" class="form-control" id="discountPercentage" name="discountPercentage"value="1" min="1"required>
                     </div>
                     <div class="mb-3">
                         <label for="stock" class="form-label">Số lượng</label>
-                        <input type="number" class="form-control" id="stock" name="stock" required>
+                        <input type="number" class="form-control" id="stock" name="stock" value="1" min="1"required>
                     </div>
                 </form>
             </div>
@@ -240,7 +240,7 @@
 
                     <div class="mb-3">
                         <label for="editProductPrice" class="form-label">Giá</label>
-                        <input type="number" class="form-control" id="editProductPrice" name="price">
+                        <input type="number" class="form-control" id="editProductPrice" name="price" value="1" min="1">
                     </div>
 
                     <div class="mb-3">
@@ -269,12 +269,12 @@
 
                     <div class="mb-3">
                         <label for="editDiscountPercentage" class="form-label">Giảm giá (%)</label>
-                        <input type="number" class="form-control" id="editDiscountPercentage" name="discountPercentage" step="0.01">
+                        <input type="number" class="form-control" id="editDiscountPercentage" name="discountPercentage" value="1" min="1" step="0.01">
                     </div>
 
                     <div class="mb-3">
                         <label for="editProductStock" class="form-label">Số lượng</label>
-                        <input type="number" class="form-control" id="editProductStock" name="stock">
+                        <input type="number" class="form-control" id="editProductStock" name="stock" value="1" min="1">
                     </div>
 
                 </form>
