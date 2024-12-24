@@ -74,11 +74,16 @@
               <form action="order-list" method="POST" class="d-inline">
                 <input type="hidden" name="id" value="${order.orderId}">
                 <input type="hidden" name="action" value="acceptOrder">
+                <input type="hidden" name="page" value="${currentPage}">
+<%--                <input type="hidden" name="page" value="${currentPage}">--%>
+
                 <button type="submit" class="btn btn-success">Chấp nhận</button>
               </form>
               <form action="order-list" method="POST" class="d-inline">
                 <input type="hidden" name="id" value="${order.orderId}">
                 <input type="hidden" name="action" value="cancelOrder">
+                <input type="hidden" name="page" value="${currentPage}">
+
                 <button type="submit" class="btn btn-danger">Từ chối</button>
               </form>
             </c:when>
@@ -87,6 +92,8 @@
               <form action="order-list" method="POST" class="d-inline">
                 <input type="hidden" name="id" value="${order.orderId}">
                 <input type="hidden" name="action" value="shipOrder">
+                <input type="hidden" name="page" value="${currentPage}">
+
                 <button type="submit" class="btn btn-info">Đã giao hàng</button>
               </form>
             </c:when>
@@ -95,6 +102,8 @@
               <form action="order-list" method="POST" class="d-inline">
                 <input type="hidden" name="id" value="${order.orderId}">
                 <input type="hidden" name="action" value="deleteOrder">
+                <input type="hidden" name="page" value="${currentPage}">
+
                 <button type="submit" class="btn btn-danger">Xoá đơn hàng</button>
               </form>
             </c:when>
@@ -103,6 +112,8 @@
               <form action="order-list" method="POST" class="d-inline">
                 <input type="hidden" name="id" value="${order.orderId}">
                 <input type="hidden" name="action" value="deleteOrder">
+                <input type="hidden" name="page" value="${currentPage}">
+
                 <button type="submit" class="btn btn-danger">Xoá đơn hàng</button>
               </form>
             </c:when>
