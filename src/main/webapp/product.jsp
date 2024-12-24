@@ -52,14 +52,14 @@
         <!-- Sắp xếp theo giá -->
         <div class="col-md-4">
             <select name="sort" class="form-select">
-                <option value="asc" ${sort == 'asc' ? 'selected' : ''}>Sắp xếp theo giá tăng dần</option>
-                <option value="desc" ${sort == 'desc' ? 'selected' : ''}>Sắp xếp theo giá giảm dần</option>
+                <option value="asc" ${sort == 'asc' ? 'selected' : ''}><fmt:message key="product.asc" /></option>
+                <option value="desc" ${sort == 'desc' ? 'selected' : ''}><fmt:message key="product.desc" /></option>
             </select>
         </div>
 
         <!-- Nút tìm kiếm -->
         <div class="col-md-2" style="width: 130px">
-            <input type="submit" value="Tìm kiếm" class="btn btn-primary w-100">
+            <input type="submit" value="<fmt:message key="product.filter" />" class="btn btn-primary w-100">
         </div>
     </form>
 </div>
