@@ -27,23 +27,23 @@
   </li>
 
   <!-- Tìm kiếm và Hiển thị tài khoản -->
-  <div class="d-flex justify-content-between mb-3">
-    <input type="text" id="search" class="form-control w-75" placeholder="Tìm kiếm đơn hàng...">
-    <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <i class="fas fa-user"></i> Tài khoản
-      </a>
-      <ul class="dropdown-menu" aria-labelledby="userDropdown">
-        <c:if test="${empty sessionScope.user}">
-          <li><a class="dropdown-item" href="login"><i class="fas fa-sign-in-alt"></i> Đăng nhập</a></li>
-        </c:if>
-        <c:if test="${not empty sessionScope.user}">
-          <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i> ${sessionScope.user.username}</a></li>
-          <li><a class="dropdown-item" href="logout"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a></li>
-        </c:if>
-      </ul>
-    </li>
-  </div>
+<%--  <div class="d-flex justify-content-between mb-3">--%>
+<%--    <input type="text" id="search" class="form-control w-75" placeholder="Tìm kiếm đơn hàng...">--%>
+<%--    <li class="nav-item dropdown">--%>
+<%--      <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">--%>
+<%--        <i class="fas fa-user"></i> Tài khoản--%>
+<%--      </a>--%>
+<%--      <ul class="dropdown-menu" aria-labelledby="userDropdown">--%>
+<%--        <c:if test="${empty sessionScope.user}">--%>
+<%--          <li><a class="dropdown-item" href="login"><i class="fas fa-sign-in-alt"></i> Đăng nhập</a></li>--%>
+<%--        </c:if>--%>
+<%--        <c:if test="${not empty sessionScope.user}">--%>
+<%--          <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i> ${sessionScope.user.username}</a></li>--%>
+<%--          <li><a class="dropdown-item" href="logout"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a></li>--%>
+<%--        </c:if>--%>
+<%--      </ul>--%>
+<%--    </li>--%>
+<%--  </div>--%>
 
   <!-- Bảng danh sách đơn hàng -->
   <table class="table table-bordered">

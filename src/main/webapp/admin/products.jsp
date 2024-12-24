@@ -19,43 +19,43 @@
 <body>
   <jsp:include page="admin_header.jsp" />
 <div class="container mt-5">
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="manageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Quản lý Sản phẩm
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="manageDropdown">
-            <!-- Quản lý sản phẩm (luôn hiển thị) -->
-            <li><a class="dropdown-item" href="home">Quản lý Sản phẩm</a></li>
+<%--    <li class="nav-item dropdown">--%>
+<%--        <a class="nav-link dropdown-toggle" href="#" id="manageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">--%>
+<%--            Quản lý Sản phẩm--%>
+<%--        </a>--%>
+<%--        <ul class="dropdown-menu" aria-labelledby="manageDropdown">--%>
+<%--            <!-- Quản lý sản phẩm (luôn hiển thị) -->--%>
+<%--            <li><a class="dropdown-item" href="home">Quản lý Sản phẩm</a></li>--%>
 
-            <!-- Quản lý đơn hàng (hiển thị khi hover vào Quản lý) -->
-            <li><a class="dropdown-item" href="order-list">Quản lý Đơn hàng</a></li>
-        </ul>
-    </li>
-    <!-- Tìm kiếm -->
-    <div class="mb-3">
-        <input type="text" id="search" class="form-control" placeholder="Tìm kiếm sản phẩm...">
-    </div>
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-           data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fas fa-user"></i> Account
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="userDropdown">
-            <c:if test="${empty sessionScope.user}">
-                <li><a class="dropdown-item" href="login"><i class="fas fa-sign-in-alt"></i> Login</a>
-                </li>
-                <%--                                <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i>  ${sessionScope.user.username}</a></li>--%>
+<%--            <!-- Quản lý đơn hàng (hiển thị khi hover vào Quản lý) -->--%>
+<%--            <li><a class="dropdown-item" href="order-list">Quản lý Đơn hàng</a></li>--%>
+<%--        </ul>--%>
+<%--    </li>--%>
+<%--    <!-- Tìm kiếm -->--%>
+<%--    <div class="mb-3">--%>
+<%--        <input type="text" id="search" class="form-control" placeholder="Tìm kiếm sản phẩm...">--%>
+<%--    </div>--%>
+<%--    <li class="nav-item dropdown">--%>
+<%--        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"--%>
+<%--           data-bs-toggle="dropdown" aria-expanded="false">--%>
+<%--            <i class="fas fa-user"></i> Account--%>
+<%--        </a>--%>
+<%--        <ul class="dropdown-menu" aria-labelledby="userDropdown">--%>
+<%--            <c:if test="${empty sessionScope.user}">--%>
+<%--                <li><a class="dropdown-item" href="login"><i class="fas fa-sign-in-alt"></i> Login</a>--%>
+<%--                </li>--%>
+<%--                &lt;%&ndash;                                <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i>  ${sessionScope.user.username}</a></li>&ndash;%&gt;--%>
 
-            </c:if>
-            <c:if test="${not empty sessionScope.user}">
-                <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i>  ${sessionScope.user.username}</a></li>
-                <li><a class="dropdown-item" href="logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-            </c:if>
+<%--            </c:if>--%>
+<%--            <c:if test="${not empty sessionScope.user}">--%>
+<%--                <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle"></i>  ${sessionScope.user.username}</a></li>--%>
+<%--                <li><a class="dropdown-item" href="logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>--%>
+<%--            </c:if>--%>
 
 
 
-        </ul>
-    </li>
+<%--        </ul>--%>
+<%--    </li>--%>
 
     <!-- Bảng sản phẩm -->
     <table class="table table-bordered">
