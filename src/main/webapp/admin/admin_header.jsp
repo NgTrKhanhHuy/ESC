@@ -45,6 +45,19 @@
                             <i class="fas fa-users"></i> User Management
                         </a>
                     </li>
+                    <c:if test="${not empty sessionScope.user}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-users"></i> Xin Chào, ${sessionScope.user.username}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="logout">
+                                <i class="fas fa-users"></i>Logout
+                            </a>
+                        </li>
+
+                    </c:if>
                 </ul>
             </div>
         </div>
