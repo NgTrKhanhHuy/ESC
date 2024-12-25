@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-
 <body>
 
 <!-- Header -->
@@ -46,6 +45,53 @@
             </form>
         </div>
     </div>
+    <hr>
+    <!-- Comments Section -->
+    <h3><fmt:message key="p_detail.comment"/></h3>
+
+    <form action="productdetail" method="post" accept-charset="UTF-8">
+        <input type="hidden" name="action" value="add">
+        <input type="hidden" name="productId" value="${product.productId}">
+        <div class="mb-3">
+            <textarea class="form-control" name="content" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary"><fmt:message key="p_detail.sub_comment"/></button>
+    </form>
+
+    <ul class="list-group mt-4">
+        <c:forEach var="comment" items="${comments}">
+            <li class="list-group-item">
+                <strong>${comment.user.username}</strong> <span class="text-muted">(${comment.createdAt})</span>
+                <p>${comment.content}</p>
+                <!-- Chỉ hiển thị nút sửa và xoá nếu người dùng là chủ của bình luận -->
+                <c:if test="${sessionScope.user != null && sessionScope.user.id == comment.user.id}">
+                    <!-- Nút sửa -->
+                    <!-- Form chỉnh sửa bình luận -->
+                    <form action="productdetail" method="post" style="display:inline;">
+                        <input type="hidden" name="action" value="update">
+                        <input type="hidden" name="commentId" value="${comment.commentId}">
+                        <input type="hidden" name="productId" value="${product.productId}">
+                        <textarea name="content" class="form-control" rows="2">${comment.content}</textarea>
+                        <button type="submit" class="btn btn-success btn-sm mt-2">Lưu</button>
+                    </form>
+
+                    <!-- Delete form -->
+                    <form action="productdetail" method="post" style="display:inline;">
+                        <input type="hidden" name="action" value="delete">
+                        <input type="hidden" name="commentId" value="${comment.commentId}">
+                        <input type="hidden" name="productId" value="${product.productId}">
+                        <button type="submit" class="btn btn-danger btn-sm">Xoá</button>
+                    </form>
+
+
+                </c:if>
+
+            </li>
+
+        </c:forEach>
+    </ul>
+
+
 </div>
 </section>
 
