@@ -2,8 +2,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-<html lang="vi">
-
+<html lang="en">
+<fmt:setLocale value="${sessionScope.lang != null ? sessionScope.lang : 'en'}" />
+<fmt:setBundle basename="messages" />
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,8 +17,7 @@
 <body>
 <!-- Header -->
 <jsp:include page="includes/header.jsp" />
-<fmt:setLocale value="${sessionScope.lang != null ? sessionScope.lang : 'en'}" />
-<fmt:setBundle basename="messages" />
+
 
 <!-- Main Content -->
 <section class="content">

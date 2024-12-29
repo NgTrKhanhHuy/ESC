@@ -23,7 +23,7 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-6">
-            <img src="${product.imagePath}" class="img-fluid" alt="${product.name}">
+            <img src="${pageContext.request.contextPath}/img/${product.imagePath}" class="img-fluid" alt="${product.name}">
         </div>
         <div class="col-md-6">
             <h2>${product.name}</h2>
@@ -72,7 +72,7 @@
                         <input type="hidden" name="commentId" value="${comment.commentId}">
                         <input type="hidden" name="productId" value="${product.productId}">
                         <textarea name="content" class="form-control" rows="2">${comment.content}</textarea>
-                        <button type="submit" class="btn btn-success btn-sm mt-2">Lưu</button>
+                        <button type="submit" class="btn btn-success btn-sm mt-2"><fmt:message key = "p_detail.fix"/></button>
                     </form>
 
                     <!-- Delete form -->
@@ -80,7 +80,7 @@
                         <input type="hidden" name="action" value="delete">
                         <input type="hidden" name="commentId" value="${comment.commentId}">
                         <input type="hidden" name="productId" value="${product.productId}">
-                        <button type="submit" class="btn btn-danger btn-sm">Xoá</button>
+                        <button type="submit" class="btn btn-danger btn-sm"><fmt:message key = "p_detail.delete"/></button>
                     </form>
 
 

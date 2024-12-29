@@ -22,6 +22,40 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+<style>
+    .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%; /* Đảm bảo các thẻ có chiều cao bằng nhau */
+    }
+
+    .card img {
+        object-fit: cover;
+        height: 200px; /* Cố định chiều cao cho ảnh để đồng đều */
+    }
+
+    .card-body {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .discount-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #ff6f61;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        font-size: 0.8em;
+    }
+
+</style>
 
 <body>
 
@@ -68,11 +102,11 @@
 <section class="container mt-5">
 
     <h2 class="text-center"><fmt:message key="product.all_product" /></h2>
-    <div class="row">
+    <div class="row row-cols-1 row-cols-md-4 g-4 mt-4">
         <c:forEach var="product" items="${prod}">
 
             <div class="col-md-3">
-                <div class="card">
+                <div class="card h-100">
                     <img src="${pageContext.request.contextPath}/img/${product.imagePath}" alt="image" loading="lazy">
                     <div class="card-body">
                         <h5 class="card-title">${product.name}</h5>
