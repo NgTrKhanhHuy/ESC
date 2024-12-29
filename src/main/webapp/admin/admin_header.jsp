@@ -15,7 +15,7 @@
         <div class="container-fluid">
             <!-- Logo -->
             <a class="navbar-brand" href="home">
-                <i class="fas fa-cogs"></i> Tech Shop
+                <i class="fas fa-cogs"></i> ESC admin
             </a>
             <!-- Toggle button for mobile view -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarAdminNav"
