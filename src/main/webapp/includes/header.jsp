@@ -49,7 +49,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="about">
               <i class="fas fa-info-circle"></i>  <fmt:message key="header.about" />
             </a>
           </li>
