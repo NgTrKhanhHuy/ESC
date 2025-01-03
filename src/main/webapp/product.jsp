@@ -113,13 +113,22 @@
 
                         <!-- Giá sau khi giảm giá -->
                         <p class="card-text">
-                            <fmt:formatNumber value="${product.price-(product.price * (product.discountPercentage/100))}" type="currency" currencySymbol="VND" pattern="#,##0.00"/>đ
+                            <fmt:formatNumber value="${product.price-(product.price * (product.discountPercentage/100))}" minFractionDigits="0" maxFractionDigits="0"/>
+                            <span class="currency">VND</span>
                         </p>
 
                         <!-- Giá gốc với chữ nhỏ và dấu gạch ngang -->
-                        <p class="card-text text-muted" style="text-decoration: line-through; font-size: 0.8em;">
-                            <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="đ" pattern="#,##0.00"/>đ
-                        </p>
+<%--                        <p class="card-text text-muted" style="text-decoration: line-through; font-size: 0.8em;">--%>
+<%--                            <fmt:formatNumber value="${product.price}" minFractionDigits="0" maxFractionDigits="0"/>--%>
+<%--                            <span class="currency">VND</span>--%>
+<%--                        </p>--%>
+                        <!-- Kiểm tra nếu có giảm giá (discountPercentage > 0) để hiển thị giá gốc -->
+                        <c:if test="${product.discountPercentage > 0}">
+                            <p class="card-text text-muted" style="text-decoration: line-through; font-size: 0.8em;">
+                                <fmt:formatNumber value="${product.price}" minFractionDigits="0" maxFractionDigits="0"/>
+                                <span class="currency">VND</span>
+                            </p>
+                        </c:if>
 
                         <!-- Giảm giá phần trăm với mũi tên đi xuống -->
                         <div class="discount-badge" style="position: absolute; top: 10px; right: 10px; background-color: #ff6f61; color: white; padding: 5px 10px; border-radius: 5px; display: flex; align-items: center;">
