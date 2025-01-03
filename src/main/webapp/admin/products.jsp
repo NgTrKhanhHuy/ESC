@@ -7,10 +7,13 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+    <fmt:setLocale value="${sessionScope.lang != null ? sessionScope.lang : 'en'}" />
+    <fmt:setBundle basename="messages" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quản lý Sản phẩm</title>
@@ -292,27 +295,85 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    function validateForm() {
+        const productName = document.getElementById('productName').value.trim();
+        const productPrice = document.getElementById('productPrice').value.trim();
+        const productDescription = document.getElementById('productDescription').value.trim();
+        const productCategory = document.getElementById('productCategory').value.trim();
+        const productImage = document.getElementById('productImage').value.trim();
+        const discountPercentage = document.getElementById('discountPercentage').value.trim();
+        const stock = document.getElementById('stock').value.trim();
+
+        let isValid = true;
+        let errorMessage = '';
+
+        if (!productName) {
+            errorMessage += "Tên sản phẩm không được để trống.\n";
+            isValid = false;
+        }
+        if (!productPrice || parseFloat(productPrice) <= 0) {
+            errorMessage += "Giá sản phẩm phải lớn hơn 0.\n";
+            isValid = false;
+        }
+        if (!productDescription) {
+            errorMessage += "Mô tả không được để trống.\n";
+            isValid = false;
+        }
+        if (!productCategory) {
+            errorMessage += "Danh mục không được để trống.\n";
+            isValid = false;
+        }
+        if (!productImage) {
+            errorMessage += "Ảnh sản phẩm không được để trống.\n";
+            isValid = false;
+        }
+        if (!discountPercentage || parseFloat(discountPercentage) < 0) {
+            errorMessage += "Giảm giá phải lớn hơn hoặc bằng 0.\n";
+            isValid = false;
+        }
+        if (!stock || parseInt(stock) <= 0) {
+            errorMessage += "Số lượng phải lớn hơn 0.\n";
+            isValid = false;
+        }
+
+        if (!isValid) {
+            alert(errorMessage);
+        }
+        return isValid;
+    }
+
+    // function saveProduct() {
+    //     if (validateForm()) {
+    //         // Nếu form hợp lệ, gửi form đi
+    //     }
+    // }
+
+
     //  Hàm lưu sản phẩm mới (thêm sản phẩm)
     function saveProduct() {
-        const form = document.getElementById('addProductForm');
-        const formData = new FormData(form);
+        if (validateForm()) {
+            // Nếu form hợp lệ, gửi form đi
+            const form = document.getElementById('addProductForm');
+            const formData = new FormData(form);
 
-        // Gửi dữ liệu form qua AJAX
-        fetch('addProduct', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.text())  // Đọc phản hồi từ server dưới dạng text
-            .then(responseText => {
-                alert(responseText); // Hiển thị thông báo từ server
-                if (responseText.includes("Sản phẩm đã được thêm thành công")) {
-                    window.location.reload(); // Reload trang sản phẩm nếu thành công
-                }
+            // Gửi dữ liệu form qua AJAX
+            fetch('addProduct', {
+                method: 'POST',
+                body: formData
             })
-            .catch(error => {
-                console.error('Lỗi:', error);
-                alert('Có lỗi xảy ra');
-            });
+                .then(response => response.text())  // Đọc phản hồi từ server dưới dạng text
+                .then(responseText => {
+                    alert(responseText); // Hiển thị thông báo từ server
+                    if (responseText.includes("<fmt:message key="add.success" />")) {
+                        window.location.reload(); // Reload trang sản phẩm nếu thành công
+                    }
+                })
+                .catch(error => {
+                    console.error('Lỗi:', error);
+                    alert('Có lỗi xảy ra');
+                });
+        }
+
     }
 
    // Hàm mở modal sửa sản phẩm
@@ -336,31 +397,34 @@
 
     // Hàm cập nhật sản phẩm
     function updateProduct() {
-        const form = document.getElementById('editProductForm');
-        const formData = new FormData(form);
+        if (validateForm()) {
+            const form = document.getElementById('editProductForm');
+            const formData = new FormData(form);
 
-        // Lấy id của sản phẩm cần cập nhật
-        const productId = document.getElementById('editProductId').value;
+            // Lấy id của sản phẩm cần cập nhật
+            const productId = document.getElementById('editProductId').value;
 
-        // Thêm id vào formData để server biết cần cập nhật sản phẩm nào
-        formData.append('productId', productId);
+            // Thêm id vào formData để server biết cần cập nhật sản phẩm nào
+            formData.append('productId', productId);
 
-        // Gửi dữ liệu form qua AJAX
-        fetch('updateProduct', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.text())
-            .then(responseText => {
-                alert(responseText); // Hiển thị thông báo từ server
-                if (responseText.includes("Sản phẩm đã được cập nhật thành công")) {
-                    window.location.reload(); // Reload trang sản phẩm nếu thành công
-                }
+            // Gửi dữ liệu form qua AJAX
+            fetch('updateProduct', {
+                method: 'POST',
+                body: formData
             })
-            .catch(error => {
-                console.error('Lỗi:', error);
-                alert('Có lỗi xảy ra');
-            });
+                .then(response => response.text())
+                .then(responseText => {
+                    alert(responseText); // Hiển thị thông báo từ server
+                    if (responseText.includes("<fmt:message key="update.success" />")) {
+                        window.location.reload(); // Reload trang sản phẩm nếu thành công
+                    }
+                })
+                .catch(error => {
+                    console.error('Lỗi:', error);
+                    alert('Có lỗi xảy ra');
+                });
+        }
+
     }
 
     // // Hàm mở modal Sửa và điền dữ liệu sản phẩm vào modal
