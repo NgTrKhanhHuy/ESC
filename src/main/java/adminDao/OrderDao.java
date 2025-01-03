@@ -6,12 +6,10 @@ import model.Role;
 import model.User;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class OrderDao {
     Connection conn = null;
@@ -177,6 +175,30 @@ public class OrderDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    // Phương thức lấy danh sách các năm từ bảng orders
+    public List<Integer> getDistinctYears() {
+        List<Integer> years = new ArrayList<>();
+        String sql = "SELECT DISTINCT YEAR(order_date) AS year FROM `order` ORDER BY year";
+
+        try {
+
+            conn = new DBConnection().getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                years.add(rs.getInt("year"));
+            }
+
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(); // Đảm bảo đóng kết nối khi xong
+        }
+
+        return years;
     }
     // Lấy doanh thu từng tháng trong năm (tính từ tháng 1 đến tháng 12)
     public BigDecimal[] getMonthlyRevenue(int year) {
