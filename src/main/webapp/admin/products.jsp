@@ -347,6 +347,43 @@
     //         // Nếu form hợp lệ, gửi form đi
     //     }
     // }
+    function validateForm2() {
+        const productName = document.getElementById('productName').value.trim();
+        const productPrice = document.getElementById('productPrice').value.trim();
+        const productDescription = document.getElementById('productDescription').value.trim();
+        const productCategory = document.getElementById('productCategory').value.trim();
+        const productImage = document.getElementById('productImage').value.trim();
+        const discountPercentage = document.getElementById('discountPercentage').value.trim();
+        const stock = document.getElementById('stock').value.trim();
+
+        let isValid = true;
+        let errorMessage = '';
+
+
+        if (!productPrice || parseFloat(productPrice) <= 0) {
+            errorMessage += "Giá sản phẩm phải lớn hơn 0.\n";
+            isValid = false;
+        }
+
+        if (!productCategory) {
+            errorMessage += "Danh mục không được để trống.\n";
+            isValid = false;
+        }
+
+        if (!discountPercentage || parseFloat(discountPercentage) < 0) {
+            errorMessage += "Giảm giá phải lớn hơn hoặc bằng 0.\n";
+            isValid = false;
+        }
+        if (!stock || parseInt(stock) <= 0) {
+            errorMessage += "Số lượng phải lớn hơn 0.\n";
+            isValid = false;
+        }
+
+        if (!isValid) {
+            alert(errorMessage);
+        }
+        return isValid;
+    }
 
 
     //  Hàm lưu sản phẩm mới (thêm sản phẩm)
@@ -388,6 +425,14 @@
         document.getElementById('editProductStock').value = stock;
         document.getElementById('editOldProductImage').value = imagePath;
 
+        // Chọn đúng danh mục trong dropdown
+        const categorySelect = document.getElementById('editProductCategory');
+        for (let option of categorySelect.options) {
+            if (option.value === category) {
+                option.selected = true;
+                break;
+            }
+        }
         // Nếu có ảnh sản phẩm, ta có thể hiển thị ảnh này cho người dùng
         // Nếu bạn muốn hiển thị ảnh, cần phải cập nhật phần này
 
@@ -397,7 +442,7 @@
 
     // Hàm cập nhật sản phẩm
     function updateProduct() {
-        if (validateForm()) {
+        if (validateForm2()) {
             const form = document.getElementById('editProductForm');
             const formData = new FormData(form);
 

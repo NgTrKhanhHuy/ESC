@@ -120,6 +120,7 @@ public class UpdateProductControl extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
 
+        request.setCharacterEncoding("UTF-8");
         //ResourceBundle messages = ResourceBundle.getBundle("messages", Locale.getDefault());
         // Lấy ngôn ngữ từ application scope
         String lang = (String) getServletContext().getAttribute("lang");
