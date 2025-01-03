@@ -142,9 +142,12 @@
             </div>
 
         </c:forEach>
+    </div>
+</section>
 
 
         <!-- Add more products similarly -->
+<div class="container mt-4">
             <nav>
                 <ul class="pagination">
                     <c:if test="${currentPage > 1}">
@@ -160,8 +163,9 @@
                     </c:if>
                 </ul>
             </nav>
+</div>
 
-</section>
+
 
 <!-- Footer -->
 <jsp:include page="includes/footer.jsp" />
