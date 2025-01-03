@@ -46,6 +46,40 @@
         }
     }
 
+    .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%; /* Đảm bảo các thẻ có chiều cao bằng nhau */
+    }
+
+    .card img {
+        object-fit: cover;
+        height: 200px; /* Cố định chiều cao cho ảnh để đồng đều */
+    }
+
+    .card-body {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .discount-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #ff6f61;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        font-size: 0.8em;
+    }
+
+</style>
+
 </style>
 </head>
 
@@ -126,7 +160,7 @@
     <!-- Product Slider -->
     <div class="product-slider">
         <!-- Product List Container -->
-        <div class="row">
+        <div class="row row-cols-1 row-cols-md-4 g-4 mt-4">
             <!-- Placeholder for 10 products (you can dynamically load them via JSP/Servlet) -->
             <!-- Lặp qua danh sách sản phẩm mới nhất -->
             <c:forEach var="product" items="${newestProduct}">
@@ -136,11 +170,12 @@
                         <div class="card-body">
                             <h5 class="card-title">${product.name}</h5>
                             <p class="card-text">
-                                <fmt:formatNumber value="${product.price - (product.price * (product.discountPercentage / 100))}" type="currency" currencySymbol="đ" pattern="#,##0.00"/>
+                                <fmt:formatNumber value="${product.price - (product.price * (product.discountPercentage / 100))}"  minFractionDigits="0" maxFractionDigits="0"/>
+                                <span class="currency">VND</span>
                             </p>
                             <p class="card-text text-muted" style="text-decoration: line-through; font-size: 0.8em;">
-                                <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="VND" pattern="#,##0.00"/>
-
+                                <fmt:formatNumber value="${product.price}" minFractionDigits="0" maxFractionDigits="0"/>
+                                <span class="currency">VND</span>
                             </p>
                             <!-- Giảm giá phần trăm với mũi tên đi xuống -->
                             <div class="discount-badge" style="position: absolute; top: 10px; right: 10px; background-color: #ff6f61; color: white; padding: 5px 10px; border-radius: 5px; display: flex; align-items: center;">
