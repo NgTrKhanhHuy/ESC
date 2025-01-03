@@ -34,7 +34,7 @@
 <jsp:include page="admin_header.jsp" />
 
 <div class="container mt-5">
-  <h2>Dashboard - Thống kê</h2>
+  <h2>Dashboard - Thống kê năm ${curYear}</h2>
 <%--    <ul>--%>
 <%--<c:forEach var="year" items="${years}">--%>
 <%--  <a href=dashboard?year=${year}>${year}</a>--%>

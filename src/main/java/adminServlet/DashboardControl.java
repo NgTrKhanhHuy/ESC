@@ -42,7 +42,10 @@ public class DashboardControl  extends HttpServlet {
             }
 
             // Đưa dữ liệu vào request để hiển thị trong Dashboard
+            String curYear = String.valueOf(currentYear);
             request.setAttribute("years", years);
+            request.setAttribute("curYear", curYear);
+
 
             request.setAttribute("userCount", userCount);
             request.setAttribute("totalRevenue", totalRevenue); // Đưa doanh thu vào request
@@ -77,7 +80,9 @@ public class DashboardControl  extends HttpServlet {
         }
 
         // Đưa dữ liệu vào request để hiển thị trong Dashboard
+        String curYear = String.valueOf(year);
         request.setAttribute("years", years);
+        request.setAttribute("curYear", curYear);
 
         request.setAttribute("userCount", userCount);
         request.setAttribute("totalRevenue", totalRevenue); // Đưa doanh thu vào request
