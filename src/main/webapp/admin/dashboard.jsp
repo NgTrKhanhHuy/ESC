@@ -35,21 +35,21 @@
 
 <div class="container mt-5">
   <h2>Dashboard - Thống kê năm ${curYear}</h2>
-<%--    <ul>--%>
-<%--<c:forEach var="year" items="${years}">--%>
-<%--  <a href=dashboard?year=${year}>${year}</a>--%>
-<%--</c:forEach>--%>
-<%--    </ul>--%>
+    <ul>
 <c:forEach var="year" items="${years}">
-
-<%-- Tạo một form với method="POST" và action là đường dẫn bạn muốn gửi --%>
-  <form action="dashboard" method="POST" style="display:inline;">
-    <input type="hidden" name="year" value="${year}" />
-    <button type="submit" class="btn btn-link" style="text-decoration: none;">
-      ${year}
-    </button>
-  </form>
+  <a  class="btn btn-link" style="text-decoration: none;" href=dashboard?year=${year}>${year}</a>
 </c:forEach>
+    </ul>
+<%--<c:forEach var="year" items="${years}">--%>
+
+<%--&lt;%&ndash; Tạo một form với method="POST" và action là đường dẫn bạn muốn gửi &ndash;%&gt;--%>
+<%--  <form action="dashboard" method="POST" style="display:inline;">--%>
+<%--    <input type="hidden" name="year" value="${year}" />--%>
+<%--    <button type="submit" class="btn btn-link" style="text-decoration: none;">--%>
+<%--      ${year}--%>
+<%--    </button>--%>
+<%--  </form>--%>
+<%--</c:forEach>--%>
 
   <!-- Biểu đồ Doanh Thu Theo Tháng -->
   <h3 style="text-align: center; margin-bottom: 100px">Biểu đồ Doanh Thu Theo Tháng</h3>
