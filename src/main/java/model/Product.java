@@ -1,6 +1,5 @@
 package model;
 
-
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
@@ -14,6 +13,7 @@ public class Product {
     private String imagePath;
     private Timestamp createdAt;
     private BigDecimal discountPercentage;
+    private BigDecimal discountedPrice;  // Thuộc tính giá đã giảm
 
     // Constructor và getter/setter cho các thuộc tính
     public Product(int productId, String name, String description, BigDecimal price, int stock, String category, String imagePath, Timestamp createdAt, BigDecimal discountPercentage) {
@@ -26,7 +26,9 @@ public class Product {
         this.imagePath = imagePath;
         this.createdAt = createdAt;
         this.discountPercentage = discountPercentage;
+        this.discountedPrice = calculateDiscountedPrice();  // Tính giá giảm ngay khi khởi tạo
     }
+
     // Constructor không bao gồm productId (do database tự tạo)
     public Product(String name, String description, BigDecimal price, int stock, String category, String imagePath, BigDecimal discountPercentage) {
         this.name = name;
@@ -36,14 +38,13 @@ public class Product {
         this.category = category;
         this.imagePath = imagePath;
         this.discountPercentage = discountPercentage;
+        this.discountedPrice = calculateDiscountedPrice();  // Tính giá giảm ngay khi khởi tạo
     }
 
     public Product() {
-
     }
 
-
-    // Getter and setter methods (các getter và setter)
+    // Getter và setter cho các thuộc tính
     public int getProductId() {
         return productId;
     }
@@ -56,7 +57,9 @@ public class Product {
         return name;
     }
 
-
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getDescription() {
         return description;
@@ -72,6 +75,7 @@ public class Product {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+        this.discountedPrice = calculateDiscountedPrice();  // Tính lại giá giảm khi thay đổi giá
     }
 
     public int getStock() {
@@ -112,20 +116,33 @@ public class Product {
 
     public void setDiscountPercentage(BigDecimal discountPercentage) {
         this.discountPercentage = discountPercentage;
+        this.discountedPrice = calculateDiscountedPrice();  // Tính lại giá giảm khi thay đổi phần trăm giảm
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public BigDecimal getDiscountedPrice() {
+        return discountedPrice;
     }
+
+    // Phương thức tính giá đã giảm
+    private BigDecimal calculateDiscountedPrice() {
+        if (discountPercentage != null && discountPercentage.compareTo(BigDecimal.ZERO) > 0) {
+            BigDecimal discountFactor = BigDecimal.ONE.subtract(discountPercentage.divide(BigDecimal.valueOf(100)));
+            return price.multiply(discountFactor);
+        } else {
+            return price;  // Nếu không có giảm giá, giá giảm là giá gốc
+        }
+    }
+
+    @Override
     public String toString() {
         return "Product ID: " + productId + "\n" +
                 "Name: " + name + "\n" +
                 "Description: " + description + "\n" +
                 "Price: " + price + "\n" +
+                "Discounted Price: " + discountedPrice + "\n" +  // In ra giá giảm
                 "Quantity: " + stock + "\n" +
                 "Category: " + category + "\n" +
                 "Created At: " + createdAt + "\n" +
                 "Discount: " + discountPercentage + "\n";
     }
 }
-

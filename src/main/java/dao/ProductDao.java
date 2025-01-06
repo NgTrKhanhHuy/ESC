@@ -289,6 +289,12 @@ public class ProductDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        // Sắp xếp theo giá đã giảm (discounted price)
+        if ("desc".equalsIgnoreCase(sortProduct)) {
+            list.sort((p1, p2) -> p2.getDiscountedPrice().compareTo(p1.getDiscountedPrice()));
+        } else {
+            list.sort((p1, p2) -> p1.getDiscountedPrice().compareTo(p2.getDiscountedPrice()));
+        }
         return list;
     }
     public List<Product> getProductByCategoryPagingSorted(String category, int page, int total, String sortProduct) {
@@ -312,6 +318,12 @@ public class ProductDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        // Sắp xếp theo giá đã giảm (discounted price)
+        if ("desc".equalsIgnoreCase(sortProduct)) {
+            list.sort((p1, p2) -> p2.getDiscountedPrice().compareTo(p1.getDiscountedPrice()));
+        } else {
+            list.sort((p1, p2) -> p1.getDiscountedPrice().compareTo(p2.getDiscountedPrice()));
+        }
         return list;
     }
     public List<Product> searchProductPagingSort(String keyword, int total, int page, String sortProduct) {
@@ -334,6 +346,12 @@ public class ProductDao {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        // Sắp xếp theo giá đã giảm (discounted price)
+        if ("desc".equalsIgnoreCase(sortProduct)) {
+            list.sort((p1, p2) -> p2.getDiscountedPrice().compareTo(p1.getDiscountedPrice()));
+        } else {
+            list.sort((p1, p2) -> p1.getDiscountedPrice().compareTo(p2.getDiscountedPrice()));
         }
         return list;
     }
