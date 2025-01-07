@@ -26,7 +26,7 @@
             <div class="collapse navbar-collapse" id="navbarAdminNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="dashboard">
+                        <a class="nav-link active" href="dashboard?year=">
                             <i class="fas fa-tachometer-alt"></i> Dashboard
                         </a>
                     </li>

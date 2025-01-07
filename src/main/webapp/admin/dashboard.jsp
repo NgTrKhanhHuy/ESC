@@ -35,11 +35,20 @@
 
 <div class="container mt-5">
   <h2>Dashboard - Thống kê năm ${curYear}</h2>
-    <ul>
-<c:forEach var="year" items="${years}">
-  <a  class="btn btn-link" style="text-decoration: none;" href=dashboard?year=${year}>${year}</a>
-</c:forEach>
+  <div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+      Chọn năm
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <!-- Listbox items -->
+
+        <c:forEach var="year" items="${years}">
+<%--          <a  class="btn btn-link" style="text-decoration: none;" href=></a>--%>
+          <li><a class="dropdown-item" href="dashboard?year=${year}">${year}</a></li>
+        </c:forEach>
     </ul>
+  </div>
+
 <%--<c:forEach var="year" items="${years}">--%>
 
 <%--&lt;%&ndash; Tạo một form với method="POST" và action là đường dẫn bạn muốn gửi &ndash;%&gt;--%>
