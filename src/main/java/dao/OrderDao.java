@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDao {
-    Connection conn = null;
-    PreparedStatement ps = null;
-    ResultSet rs = null;
+    static Connection conn = null;
+    static PreparedStatement ps = null;
+    static ResultSet rs = null;
 
     // Thêm một đơn hàng vào bảng "order"
         public int addOrder(Order order) {
@@ -130,7 +130,7 @@ public class OrderDao {
     }
 
     // Lấy danh sách chi tiết đơn hàng theo order_id
-    public List<OrderItem> getOrderItemsByOrderId(int orderId) {
+    public static List<OrderItem> getOrderItemsByOrderId(int orderId) {
         List<OrderItem> orderItems = new ArrayList<>();
         String query = "SELECT oi.*, p.product_id, p.name, p.price, p.description, p.stock, p.category, p.imagePath,p.created_at, p.discount_percentage\n" +
                 "FROM `order_item` oi\n" +
@@ -176,7 +176,7 @@ public class OrderDao {
     }
 
     // Đóng kết nối
-    private void closeConnection() {
+    private static void closeConnection() {
         try {
             if (rs != null) rs.close();
             if (ps != null) ps.close();
@@ -212,6 +212,11 @@ public class OrderDao {
         public boolean cancelOrder(int orderId) {
             String query = "UPDATE `order` SET status = 'CANCELLED' WHERE order_id = ? AND status = 'PENDING'";
             try {
+                List<OrderItem> orderItems = OrderDao.getOrderItemsByOrderId(orderId);
+                // Cập nhật lại kho cho từng sản phẩm trong đơn hàng
+                for (OrderItem item : orderItems) {
+                   ProductDao.updatStock(item.getProductId(), item.getQuantity());
+                }
                 conn = new DBConnection().getConnection();
                 ps = conn.prepareStatement(query);
                 ps.setInt(1, orderId);

@@ -33,7 +33,17 @@
             <ul>
                 <li>${product.description}</li>
             </ul>
-
+            <p>
+                <strong>Còn lại: </strong>
+                <c:choose>
+                    <c:when test="${product.stock <= 0}">
+                        Hết hàng
+                    </c:when>
+                    <c:otherwise>
+                        ${product.stock} sản phẩm
+                    </c:otherwise>
+                </c:choose>
+            </p>
             <!-- Form to add product to cart -->
             <form action="Addtocart" method="post">
                 <input type="hidden" name="productId" value="${product.productId}"/>

@@ -24,6 +24,9 @@
 <section class="content">
 <div class="container mt-5">
     <h2 class="text-center"><fmt:message key="checkout.title" /></h2>
+    <c:if test="${not empty error}">
+        <p style="color: red;">${error}</p>
+    </c:if>
     <form action="checkout" method="post">
         <div class="row">
             <div class="col-md-6">

@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDao {
-    Connection conn = null;
-    PreparedStatement ps = null;
+    static Connection conn = null;
+    static PreparedStatement ps = null;
     ResultSet rs = null;
 
     public List<Product> getAllProduct() {
@@ -145,6 +145,22 @@ public class ProductDao {
         int totalProducts = getTotalProductBySearch(keyword);
         return (int) Math.ceil((double) totalProducts / productsPerPage);  // Tính số trang tổng
     }
+    public static int getStockByProductId(int productId) throws SQLException {
+        String query = "SELECT stock FROM product WHERE product_id = ?";
+        int quantityInStock = 0;
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, productId);
+            ResultSet rs = stmt.executeQuery();
+
+            // Kiểm tra nếu có kết quả trả về
+            if (rs.next()) {
+                quantityInStock = rs.getInt("stock");
+            }
+        }
+        return quantityInStock;
+    }
+
     public Product getProductByID(int id) {
         String query = "SELECT * FROM product WHERE product_id = ?";
         try {
@@ -354,6 +370,21 @@ public class ProductDao {
             list.sort((p1, p2) -> p1.getDiscountedPrice().compareTo(p2.getDiscountedPrice()));
         }
         return list;
+    }
+    // Cập nhật số lượng sản phẩm trong kho
+    public static void updatStock(int productId, int newStock) {
+        String query = "UPDATE product SET stock = stock + ? WHERE product_id = ?";
+        try {
+            conn = new DBConnection().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, newStock);
+            ps.setInt(2, productId);
+            ps.executeUpdate();
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
     public static void main(String[] args) {
         // Thực hiện kiểm tra với các tham số

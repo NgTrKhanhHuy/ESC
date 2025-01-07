@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +61,26 @@ public class CheckoutControl extends HttpServlet {
         // Tính tổng giá trị đơn hàng từ giỏ hàng
         BigDecimal totalPrice = cart.getTotal(); // Tổng tiền từ Cart
 
+        for (CartItem cartItem : cart.getItems()) {
+            Product product = cartItem.getProduct();
+        int id = product.getProductId();
+        String name = product.getName();
+            int stock = 0;
+            try {
+                stock = ProductDao.getStockByProductId(id);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            if(stock<0 ||  stock==0){
+            String updateErr = messages.getString("order.run_out");
+
+            // Xử lý lỗi nếu thêm đơn hàng thất bại
+            request.setAttribute("error", name +" " +updateErr);
+            request.getRequestDispatcher("cart.jsp").forward(request, response);
+            System.out.println(stock);
+            return;
+        }
+        }
 
 
         // Tạo đối tượng Order
