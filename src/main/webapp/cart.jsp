@@ -55,9 +55,9 @@
                             <button type="submit" class="btn btn-warning btn-sm" ><fmt:message key="cart.update" /></button>
                         </form>
                     </td>
-                    <td><fmt:formatNumber value="${prod.product.price-(prod.product.price * (prod.product.discountPercentage/100))}" type="currency" currencySymbol="VND" minFractionDigits="0" maxFractionDigits="0"/></td>
+                    <td><fmt:formatNumber value="${prod.product.price-(prod.product.price * (prod.product.discountPercentage/100))}" minFractionDigits="0" maxFractionDigits="0"/> <span class="currency">VND</span></td>
                     <td><fmt:formatNumber value="${prod.product.discountPercentage / 100}" type="percent" minFractionDigits="0" maxFractionDigits="0" /></td>
-                    <td><fmt:formatNumber value="${prod.total}" type="currency" currencySymbol="VND" minFractionDigits="0" maxFractionDigits="0"/></td>
+                    <td><fmt:formatNumber value="${prod.total}" minFractionDigits="0" maxFractionDigits="0"/> <span class="currency">VND</span></td>
                     <td>
                         <!-- Xóa sản phẩm khỏi giỏ -->
                         <form action="cart?action=remove" method="post" style="display:inline;">

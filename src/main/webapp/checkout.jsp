@@ -70,7 +70,7 @@
                         <li class="list-group-item d-flex justify-content-between">
                             <span>${prod.product.name}</span>
 <%--                            <strong>${prod.product.price-(prod.product.price * (prod.product.discountPercentage/100))}</strong>--%>
-                            <strong><fmt:formatNumber value="${prod.product.price-(prod.product.price * (prod.product.discountPercentage/100))}" type="currency" currencySymbol="VND" minFractionDigits="0" maxFractionDigits="0"/></strong>
+                            <strong><fmt:formatNumber value="${prod.product.price-(prod.product.price * (prod.product.discountPercentage/100))}" minFractionDigits="0" maxFractionDigits="0"/> <span class="currency">VND</span></strong>
 
                         </li>
                         <li class="list-group-item d-flex justify-content-between">
@@ -81,7 +81,8 @@
                     <li class="list-group-item d-flex justify-content-between">
                         <span><fmt:message key="cart.total" /> (VND)</span>
                         <strong>
-                            <fmt:formatNumber value="${cart.total}" type="currency" currencySymbol="VND" minFractionDigits="0" maxFractionDigits="0" />
+                            <fmt:formatNumber value="${cart.total}" minFractionDigits="0" maxFractionDigits="0" />
+                            <span class="currency">VND</span>
                         </strong>
                     </li>
                 </ul>
