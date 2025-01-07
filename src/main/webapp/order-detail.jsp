@@ -59,7 +59,7 @@
                 <tr>
                     <td>${item.product.productId}</td>
                     <td>${item.product.name}</td>
-                    <td><fmt:formatNumber value="${item.price}" pattern="#,##0.00" /> VND</td>
+                    <td><fmt:formatNumber value="${item.price}" minFractionDigits="0" maxFractionDigits="0" /> <span class="currency">VND</span></td>
                     <td>${item.quantity}</td>
                     <td><fmt:formatNumber value="${item.quantity * item.price}" pattern="#,##0.00" /> VND</td>
                 </tr>
